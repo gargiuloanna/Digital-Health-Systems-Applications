@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" spacing="20.0" style="-fx-background-color: E3E6F4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PrimaryController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" spacing="20.0" style="-fx-background-color: E3E6F4;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PrimaryController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -36,7 +36,7 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="250.0">
                                  <children>
-                                    <Button fx:id="patient_admission_btn" mnemonicParsing="false" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="Patient Admission" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
+                                    <Button mnemonicParsing="false" onAction="#patient_admission_btn" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="Patient Admission" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
                                        <VBox.margin>
                                           <Insets left="70.0" top="50.0" />
                                        </VBox.margin>
@@ -48,7 +48,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="250.0">
                                  <children>
-                                    <Button fx:id="order_registration_btn" mnemonicParsing="false" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="Order Registration" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                    <Button mnemonicParsing="false" onAction="#order_registration_btn" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="Order Registration" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                        <VBox.margin>
                                           <Insets left="70.0" top="50.0" />
                                        </VBox.margin>
@@ -64,7 +64,7 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="250.0">
                                  <children>
-                                    <Button fx:id="mri_btn" mnemonicParsing="false" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="MRI" textAlignment="CENTER" textFill="#fffbfb" wrapText="true">
+                                    <Button fx:id="mri_btn" mnemonicParsing="false" onAction="#mri_btn" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="MRI" textAlignment="CENTER" textFill="#fffbfb" wrapText="true">
                                        <VBox.margin>
                                           <Insets left="70.0" top="50.0" />
                                        </VBox.margin>
@@ -74,7 +74,7 @@
                                     </Button>
                                  </children>
                               </VBox>
-                              <Button fx:id="patient_discharge_btn" mnemonicParsing="false" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="Patient Discharge" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                              <Button fx:id="patient_discharge_btn" mnemonicParsing="false" onAction="#patient_discharge_btn" prefHeight="66.0" prefWidth="149.0" style="-fx-background-color: #4C43AA;" text="Patient Discharge" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <HBox.margin>
                                     <Insets left="70.0" top="50.0" />
                                  </HBox.margin>

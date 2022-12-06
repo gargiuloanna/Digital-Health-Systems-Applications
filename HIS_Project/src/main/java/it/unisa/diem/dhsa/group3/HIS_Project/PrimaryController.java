@@ -5,9 +5,24 @@ import javafx.fxml.FXML;
 
 public class PrimaryController {
 
+    
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-        System.out.println("che palle");
+    private void mri_btn()throws IOException{
+    	System.out.println("mri");
+    }
+
+    @FXML
+    private void order_registration_btn ()throws IOException{
+    	System.out.println("order registration");
+    }
+
+    @FXML
+    private void patient_admission_btn()throws IOException{
+    	System.out.println("patient admission");
+    }
+
+    @FXML
+    private void patient_discharge_btn()throws IOException{
+    	System.out.println("patient discharge");
     }
 }
