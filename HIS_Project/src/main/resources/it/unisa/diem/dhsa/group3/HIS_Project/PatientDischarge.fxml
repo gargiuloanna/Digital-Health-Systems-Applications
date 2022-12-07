@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientDischargeController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <VBox prefHeight="650.0" prefWidth="1000.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Discharge" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </Text>
+            <Button mnemonicParsing="false" onAction="#SwitchToOpeningPage" text="RETURN TO OPENING PAGE" textAlignment="CENTER" wrapText="true">
+               <VBox.margin>
+                  <Insets left="350.0" top="400.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

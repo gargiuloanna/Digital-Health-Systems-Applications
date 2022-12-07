@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
+   <children>
+      <VBox prefHeight="650.0" prefWidth="1000.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ORDER REGISTRATION" textAlignment="CENTER" wrappingWidth="205.43310546875" />
+            <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#SwitchToOpeningPage" text="RETURN TO OPENING PAGE" textAlignment="CENTER" wrapText="true" />
+         </children>
+         <padding>
+            <Insets left="350.0" top="325.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.MRIController">
+   <children>
+      <VBox prefHeight="650.0" prefWidth="1000.0">
+         <children>
+            <Label prefHeight="365.0" prefWidth="474.0" text="MRI">
+               <font>
+                  <Font size="52.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#SwitchToOpeningPage" text="RETURN TO OPENING PAGE" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="350.0" top="400.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
