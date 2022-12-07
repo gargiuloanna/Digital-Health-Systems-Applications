@@ -1,5 +1,4 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.hl7.fhir.r4.model.Resource;
-
 public abstract class CSVParser {
 
 	List<Resource> resources;
