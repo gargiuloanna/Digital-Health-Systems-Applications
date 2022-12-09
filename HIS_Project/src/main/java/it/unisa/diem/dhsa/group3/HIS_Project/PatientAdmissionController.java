@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 
-public class PatientAdmissionController {
+public class PatientAdmissionController implements Initializable{
 
     @FXML
     private TextField LONField;
@@ -102,10 +103,32 @@ public class PatientAdmissionController {
     @FXML
     private TextField MaritalField;
 
-    
-    public void initialize(URL url, ResourceBundle rb) {
-    
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+    	
+    	MgenderButton.selectedProperty().addListener((p, o, n) -> {
+    		if (n == true) {
+    			FgenderButton.setSelected(false);
+    			NOgenderButton.setSelected(false);
+    		}
+        });
+    	
+    	FgenderButton.selectedProperty().addListener((p, o, n) -> {
+    		if (n == true) {
+    			MgenderButton.setSelected(false);
+    			NOgenderButton.setSelected(false);
+    			
+    		}
+        });
+    	
+    	NOgenderButton.selectedProperty().addListener((p, o, n) -> {
+    		if (n == true) {
+    			FgenderButton.setSelected(false);
+    			MgenderButton.setSelected(false);
+    		}
+        });
     }
+    
    
     @FXML
     void searchCode(ActionEvent event){
