@@ -8,8 +8,8 @@
 
 }
 
-.tab-pane .tabselected {
-    -fx-background-color: #0c0c0c;
+.tab-pane .tab:selected {
+    -fx-background-color:  #B2B8D4;
 }
 
 .tab .tab-label {
@@ -19,7 +19,7 @@
     -fx-font-weight: bold;
 }
 
-.tabselected .tab-label {
+.tab:selected .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #1f2c71;
 }
