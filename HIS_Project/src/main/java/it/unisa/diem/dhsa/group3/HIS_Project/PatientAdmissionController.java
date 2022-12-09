@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Label;
 
 
 public class PatientAdmissionController implements Initializable{
@@ -102,6 +104,13 @@ public class PatientAdmissionController implements Initializable{
 
     @FXML
     private TextField MaritalField;
+    
+    @FXML
+    private TabPane TabPane;
+
+    @FXML
+    private Label patientID;
+   
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -128,8 +137,19 @@ public class PatientAdmissionController implements Initializable{
         });
     	
     	NOgenderButton.setSelected(true);
+    	    	
+    	TabPane.setDisable(true);
+    	IDField.setDisable(true);
+    	patientID.setDisable(true);
+    	SubmitButton.disableProperty().bind(Bindings.isEmpty(searchPatientField.textProperty()));
+    	
+    
     }
     
+    @FXML
+    void backPressed(ActionEvent event) throws IOException {
+    	App.setRoot("OpeningPage");
+    }
    
     @FXML
     void searchCode(ActionEvent event){
@@ -137,7 +157,10 @@ public class PatientAdmissionController implements Initializable{
     }
     @FXML
     void submitPressed(ActionEvent event) throws IOException {
-    	App.setRoot("OpeningPage");
+    	TabPane.setDisable(false);
+    	IDField.setDisable(false);
+    	patientID.setDisable(false);
+    	searchPatientField.clear();
     }
 
 }

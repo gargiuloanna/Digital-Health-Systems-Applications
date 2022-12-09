@@ -10,27 +10,41 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="60.0" prefWidth="1000.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
-                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Admission" textAlignment="CENTER">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#backPressed" style="-fx-background-color: #E3E6F4#E3E6F4;">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Admission" textAlignment="CENTER" wrappingWidth="283.681640625">
                      <HBox.margin>
-                        <Insets left="30.0" top="15.0" />
+                        <Insets left="50.0" />
                      </HBox.margin>
                      <font>
                         <Font name="Georgia Bold" size="30.0" />
                      </font>
                   </Text>
                </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="1000.0">
                <children>
@@ -57,7 +71,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Separator>
-            <TabPane prefHeight="338.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="TabPane" prefHeight="338.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Personal Information">
                      <content>
@@ -616,7 +630,7 @@
             <Separator prefHeight="34.0" prefWidth="1000.0" />
             <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="123.0" prefWidth="1000.0">
                <children>
-                  <Label text="Patient ID" textFill="#1f2c71">
+                  <Label fx:id="patientID" text="Patient ID" textFill="#1f2c71">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
