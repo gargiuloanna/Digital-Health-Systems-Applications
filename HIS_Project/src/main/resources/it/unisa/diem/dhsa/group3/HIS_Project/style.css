@@ -1,0 +1,25 @@
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+
+.tab-pane .tab {
+    -fx-background-color: #1f2c71;
+
+}
+
+.tab-pane .tabselected {
+    -fx-background-color: #0c0c0c;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tabselected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+}
