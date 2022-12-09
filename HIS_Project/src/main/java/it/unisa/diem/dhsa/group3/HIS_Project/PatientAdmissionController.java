@@ -127,6 +127,8 @@ public class PatientAdmissionController implements Initializable{
     			MgenderButton.setSelected(false);
     		}
         });
+    	
+    	NOgenderButton.setSelected(true);
     }
     
    
