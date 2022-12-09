@@ -116,8 +116,7 @@ public class PatientAdmissionController implements Initializable{
     	FgenderButton.selectedProperty().addListener((p, o, n) -> {
     		if (n == true) {
     			MgenderButton.setSelected(false);
-    			NOgenderButton.setSelected(false);
-    			
+    			NOgenderButton.setSelected(false);			
     		}
         });
     	
