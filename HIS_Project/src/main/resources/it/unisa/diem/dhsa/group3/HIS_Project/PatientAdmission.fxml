@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -408,11 +410,23 @@
                                                 <Insets left="60.0" top="30.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <TextField fx:id="MaritalField" prefHeight="39.0" prefWidth="240.0">
+                                          <MenuButton fx:id="MaritalMenuButton" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Select one...">
+                                            <items>
+                                              <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared null and not have existed" />
+                                                <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared dissolved and inactive" />
+                                                <MenuItem onAction="#maritalSelected" text="Subject to an Interlocutory Decree." />
+                                                <MenuItem onAction="#maritalSelected" text="Legally Separated" />
+                                                <MenuItem onAction="#maritalSelected" text="A current marriage contract is active" />
+                                                <MenuItem onAction="#maritalSelected" text="More than 1 current spouseMore than 1 current spouse" />
+                                                <MenuItem onAction="#maritalSelected" text="No marriage contract has ever been entered" />
+                                                <MenuItem onAction="#maritalSelected" text="Person declares that a domestic partner relationship exists." />
+                                                <MenuItem onAction="#maritalSelected" text="Currently not in a marriage contract." />
+                                                <MenuItem onAction="#maritalSelected" text="The spouse has died" />
+                                            </items>
                                              <HBox.margin>
                                                 <Insets left="20.0" top="20.0" />
                                              </HBox.margin>
-                                          </TextField>
+                                          </MenuButton>
                                        </children>
                                        <HBox.margin>
                                           <Insets />
@@ -420,7 +434,6 @@
                                     </HBox>
                                  </children>
                               </HBox>
-                              <HBox layoutX="-1.0" layoutY="374.0" prefHeight="76.0" prefWidth="1000.0" />
                            </children>
                         </AnchorPane>
                      </content>
