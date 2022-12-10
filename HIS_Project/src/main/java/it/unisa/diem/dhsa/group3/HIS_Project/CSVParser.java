@@ -11,17 +11,17 @@ import org.hl7.fhir.r4.model.Resource;
 
 public abstract class CSVParser {
 
-	List<Resource> resources;
-	String pathToCSV;
-	Map<String, Integer> head;
+	private ArrayList<Resource> resources;
+	private String pathToCSV;
+	private Map<String, Integer> head;
 	
 	public CSVParser(String pathToCSV) {
 		this.resources = new ArrayList<Resource>();
 		this.pathToCSV = pathToCSV;
-		this.head = new HashMap<>();
+		this.head = new HashMap<String, Integer>();
 	}
 	
-	public void readCSV() {
+	public ArrayList<Resource> readCSV() {
 		String headers; 
 		String line;
 		Resource res;
@@ -44,6 +44,7 @@ public abstract class CSVParser {
 		} 
 		catch (Exception e){ System.out.println(e);
 		}
+		return resources;
 	}
 
 	public abstract Resource createResource(String[] args, Map<String, Integer> head);
