@@ -673,9 +673,9 @@
                         <Insets left="30.0" top="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="LoadPatient" mnemonicParsing="false" onAction="#LoadPatientPressed" prefHeight="45.0" prefWidth="110.0" style="-fx-background-color: #1F2C71;" text="Load from CSV" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                  <Button fx:id="LoadPatient" mnemonicParsing="false" onAction="#LoadPatientPressed" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #1F2C71;" text="Load from CSV" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="300.0" top="40.0" />
