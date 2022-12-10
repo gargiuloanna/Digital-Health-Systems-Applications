@@ -224,12 +224,12 @@ public class EncounterResource {
 
 	public Resource createResource() {
 
-		Encounter e = new Encounter();
+		Encounter e = new Encounter() ;
 		// Definition of the considered profile
 		e.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter"));
 		
 		//set identifier
-		e.addIdentifier().setId(Id);
+		e.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
 		
 		return e;
 		
