@@ -17,8 +17,11 @@ import ca.uhn.fhir.rest.client.api.IGenericClient;
 public class prova {
 
 	public static void main(String[] args) {
-
-		String path = "C:\\Users\\Luigina\\Downloads\\coherent-11-17-2022\\output\\csv\\patients.csv";
+		
+		String currentDir = System.getProperty("user.dir");
+		System.out.println("Current dir using System:" + currentDir);
+		
+		String path = "../csv/patients.csv";
 		FhirContext ctx = FhirContext.forR4();
 		String serverBase = "https://hapi.fhir.org/baseR4";
 
