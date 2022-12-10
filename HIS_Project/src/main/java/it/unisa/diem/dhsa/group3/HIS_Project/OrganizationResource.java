@@ -10,61 +10,47 @@ import com.opencsv.bean.CsvDate;
 
 public class OrganizationResource {
 	
-	//Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,ENCOUNTERCLASS,CODE,DESCRIPTION,BASE_ENCOUNTER_COST,TOTAL_CLAIM_COST,
-	//PAYER_COVERAGE,REASONCODE,REASONDESCRIPTION
+	//Id	NAME	ADDRESS	CITY	STATE	ZIP	LAT	LON	PHONE	REVENUE	UTILIZATION
 	
 	
 	@CsvBindByName
 	private String Id;
+	
+	@CsvBindByName
+	private String NAME = "";
+	
+	@CsvBindByName
+	private String ADDRESS = "";
+	
+	@CsvBindByName
+	private String CITY = "";
+	
+	@CsvBindByName
+	private String STATE = "";
+	
+	@CsvBindByName
+	private String ZIP;
+	
+	@CsvBindByName
+	private Float LAT;
+	
+	@CsvBindByName
+	private Float LON;
+	
+	@CsvBindByName
+	private String PHONE;
+	
+	@CsvBindByName
+	private Float REVENUE;
+	
+	@CsvBindByName
+	private int UTILIZATION;
+	
 
-	@CsvBindByName
-	@CsvDate("yyyy-MM-dd")
-	private Date START;
-	
-	@CsvBindByName
-	@CsvDate("yyyy-MM-dd")
-	private Date STOP;
-	
-	@CsvBindByName
-	private String PATIENT = "";
-	
-	@CsvBindByName
-	private String ORGANIZATION = "";
-	
-	@CsvBindByName
-	private String PROVIDER = "";
-	
-	@CsvBindByName
-	private String PAYER = "";
-	
-	@CsvBindByName
-	private String ENCOUNTERCLASS = "";
-	
-	@CsvBindByName
-	private Float CODE;
-	
-	@CsvBindByName
-	private String DESCRIPTION = "";
-	
-	@CsvBindByName
-	private Float BASE_ENCOUNTER_COST;
-	
-	@CsvBindByName
-	private Float TOTAL_CLAIM_COST;
-	
-	@CsvBindByName
-	private Float PAYER_COVERAGE;
-	
-	@CsvBindByName
-	private String REASONCODE; //o è un numero o è null
-	
-	@CsvBindByName
-	private String REASONDESCRIPTION;
-	
-	
 	public String getId() {
 		return Id;
 	}
+
 
 
 	public void setId(String id) {
@@ -72,165 +58,141 @@ public class OrganizationResource {
 	}
 
 
-	public Date getSTART() {
-		return START;
+
+	public String getNAME() {
+		return NAME;
 	}
 
 
-	public void setSTART(Date sTART) {
-		START = sTART;
+
+	public void setNAME(String nAME) {
+		NAME = nAME;
 	}
 
 
-	public Date getSTOP() {
-		return STOP;
+
+	public String getADDRESS() {
+		return ADDRESS;
 	}
 
 
-	public void setSTOP(Date sTOP) {
-		STOP = sTOP;
+
+	public void setADDRESS(String aDDRESS) {
+		ADDRESS = aDDRESS;
 	}
 
 
-	public String getPATIENT() {
-		return PATIENT;
+
+	public String getCITY() {
+		return CITY;
 	}
 
 
-	public void setPATIENT(String pATIENT) {
-		PATIENT = pATIENT;
+
+	public void setCITY(String cITY) {
+		CITY = cITY;
 	}
 
 
-	public String getORGANIZATION() {
-		return ORGANIZATION;
+
+	public String getSTATE() {
+		return STATE;
 	}
 
 
-	public void setORGANIZATION(String oRGANIZATION) {
-		ORGANIZATION = oRGANIZATION;
+
+	public void setSTATE(String sTATE) {
+		STATE = sTATE;
 	}
 
 
-	public String getPROVIDER() {
-		return PROVIDER;
+
+	public String getZIP() {
+		return ZIP;
 	}
 
 
-	public void setPROVIDER(String pROVIDER) {
-		PROVIDER = pROVIDER;
+
+	public void setZIP(String zIP) {
+		ZIP = zIP;
 	}
 
 
-	public String getPAYER() {
-		return PAYER;
+
+	public Float getLAT() {
+		return LAT;
 	}
 
 
-	public void setPAYER(String pAYER) {
-		PAYER = pAYER;
+
+	public void setLAT(Float lAT) {
+		LAT = lAT;
 	}
 
 
-	public String getENCOUNTERCLASS() {
-		return ENCOUNTERCLASS;
+
+	public Float getLON() {
+		return LON;
 	}
 
 
-	public void setENCOUNTERCLASS(String eNCOUNTERCLASS) {
-		ENCOUNTERCLASS = eNCOUNTERCLASS;
+
+	public void setLON(Float lON) {
+		LON = lON;
 	}
 
 
-	public Float getCODE() {
-		return CODE;
+
+	public String getPHONE() {
+		return PHONE;
 	}
 
 
-	public void setCODE(Float cODE) {
-		CODE = cODE;
+
+	public void setPHONE(String pHONE) {
+		PHONE = pHONE;
 	}
 
 
-	public String getDESCRIPTION() {
-		return DESCRIPTION;
+
+	public Float getREVENUE() {
+		return REVENUE;
 	}
 
 
-	public void setDESCRIPTION(String dESCRIPTION) {
-		DESCRIPTION = dESCRIPTION;
+
+	public void setREVENUE(Float rEVENUE) {
+		REVENUE = rEVENUE;
 	}
 
 
-	public Float getBASE_ENCOUNTER_COST() {
-		return BASE_ENCOUNTER_COST;
+
+	public int getUTILIZATION() {
+		return UTILIZATION;
 	}
 
 
-	public void setBASE_ENCOUNTER_COST(Float bASE_ENCOUNTER_COST) {
-		BASE_ENCOUNTER_COST = bASE_ENCOUNTER_COST;
+
+	public void setUTILIZATION(int uTILIZATION) {
+		UTILIZATION = uTILIZATION;
 	}
-
-
-	public Float getTOTAL_CLAIM_COST() {
-		return TOTAL_CLAIM_COST;
-	}
-
-
-	public void setTOTAL_CLAIM_COST(Float tOTAL_CLAIM_COST) {
-		TOTAL_CLAIM_COST = tOTAL_CLAIM_COST;
-	}
-
-
-	public Float getPAYER_COVERAGE() {
-		return PAYER_COVERAGE;
-	}
-
-
-	public void setPAYER_COVERAGE(Float pAYER_COVERAGE) {
-		PAYER_COVERAGE = pAYER_COVERAGE;
-	}
-
-
-	public String getREASONCODE() {
-		return REASONCODE;
-	}
-
-
-	public void setREASONCODE(String rEASONCODE) {
-		REASONCODE = rEASONCODE;
-	}
-
-
-	public String getREASONDESCRIPTION() {
-		return REASONDESCRIPTION;
-	}
-
-
-	public void setREASONDESCRIPTION(String rEASONDESCRIPTION) {
-		REASONDESCRIPTION = rEASONDESCRIPTION;
-	}
-
 	
+
 	@Override
 	public String toString() {
-		return "EncounterResource [Id=" + Id + ", START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT
-				+ ", ORGANIZATION=" + ORGANIZATION + ", PROVIDER=" + PROVIDER + ", PAYER=" + PAYER + ", ENCOUNTERCLASS="
-				+ ENCOUNTERCLASS + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + ", BASE_ENCOUNTER_COST="
-				+ BASE_ENCOUNTER_COST + ", TOTAL_CLAIM_COST=" + TOTAL_CLAIM_COST + ", PAYER_COVERAGE=" + PAYER_COVERAGE
-				+ ", REASONCODE=" + REASONCODE + ", REASONDESCRIPTION=" + REASONDESCRIPTION + "]";
+		return "EncounterResource [Id=" + Id + ", NAME=" + NAME + ", ADDRESS=" + ADDRESS + ", CITY=" + CITY + ", STATE="
+				+ STATE + ", ZIP=" + ZIP + ", LAT=" + LAT + ", LON=" + LON + ", PHONE=" + PHONE + ", REVENUE=" + REVENUE
+				+ ", UTILIZATION=" + UTILIZATION + "]";
 	}
+
 
 
 	public Resource createResource() {
-
 		return null;
 		
 		
-		/*Patient p = new Patient();
-		// Definition of the considered profile
-		p.setMeta(new Meta().addProfile("https://hl7.org/fhir/us/core/StructureDefinition-us-core-patient"));
-
+		/*
+		
 		//p.setId(args[head.get("id")]);
 
 		// Definition of the birthdate and deathdate(fields: birthdate, deathdate)
