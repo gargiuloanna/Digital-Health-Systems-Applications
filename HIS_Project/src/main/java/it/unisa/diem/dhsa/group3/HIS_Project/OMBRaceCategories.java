@@ -8,7 +8,7 @@ public enum OMBRaceCategories {
 
 	public static OMBRaceCategories fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
-			return null;
+			return NULL;
 		if ("1002-5".equals(codeString))
 			return _10025;
 		if ("2028-9".equals(codeString))
@@ -28,13 +28,17 @@ public enum OMBRaceCategories {
 	
 	public static OMBRaceCategories fromCSV(String description) {
 		if (description == null || "".equals(description))
-			return null;
+			return NULL;
 		if("asian".equals(description))
 			return _20289;
 		if("black".equals(description))
 			return _20545;
 		if("white".equals(description))
 			return _21063;
+		if("other".equals(description))
+			return _21311;
+		if("native".equals(description))
+			return _20768;
 		return null;
 			
 	}
@@ -53,6 +57,8 @@ public enum OMBRaceCategories {
 			return "2106-3";
 		case _21311:
 			return "2131-1";
+		case NULL:
+			return null;
 		}
 		return null;
 	}
@@ -75,6 +81,8 @@ public enum OMBRaceCategories {
 			return "White";
 		case _21311:
 			return "Other race";
+		case NULL:
+			return null; 
 		}
 		return null;
 	}

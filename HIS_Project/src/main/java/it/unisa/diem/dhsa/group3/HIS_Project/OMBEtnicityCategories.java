@@ -7,7 +7,7 @@ public enum OMBEtnicityCategories {
 
 	public static OMBEtnicityCategories fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
-			return null;
+			return NULL;
 		if ("2135-2".equals(codeString))
 			return _21352;
 		if ("2186-5".equals(codeString))
@@ -18,7 +18,7 @@ public enum OMBEtnicityCategories {
 	
 	public static OMBEtnicityCategories fromCSV(String description) {
 		if (description == null || "".equals(description))
-			return null;
+			return NULL;
 		if("hispanic".equals(description))
 			return _21352;
 		if("nonhispanic".equals(description))
@@ -34,6 +34,8 @@ public enum OMBEtnicityCategories {
 			return "2135-2";
 		case _21865:
 			return "2186-5";
+		case NULL:
+			return null;
 
 		}
 		return null;
@@ -49,7 +51,8 @@ public enum OMBEtnicityCategories {
 			return "Hispanic or Latino";
 		case _21865:
 			return "Not Hispanic or Latino";
-
+		case NULL:
+			return null;
 		}
 		return null;
 	}
