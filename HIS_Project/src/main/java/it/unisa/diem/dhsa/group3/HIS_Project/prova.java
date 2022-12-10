@@ -18,17 +18,12 @@ public class prova {
 
 	public static void main(String[] args) {
 		
-		String currentDir = System.getProperty("user.dir");
-		System.out.println("Current dir using System:" + currentDir);
-		
 		String path = "../csv/patients.csv";
 		FhirContext ctx = FhirContext.forR4();
 		String serverBase = "https://hapi.fhir.org/baseR4";
 
 		IGenericClient client = ctx.newRestfulGenericClient(serverBase);
 
-		// PatientsParser pa = new PatientsParser(path);
-		// ArrayList <Resource> li = pa.readCSV();
 
 		Iterator<PatientResource> iter;
 		Map<String, Resource> patients = new HashMap<String, Resource>();
