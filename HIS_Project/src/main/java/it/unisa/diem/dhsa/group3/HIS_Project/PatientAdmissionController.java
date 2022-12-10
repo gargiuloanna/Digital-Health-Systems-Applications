@@ -61,6 +61,9 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	private Button SubmitButton;
+	
+	@FXML
+    private Button LoadPatient;
 
 	@FXML
 	private TextField SSNField;
@@ -161,6 +164,11 @@ public class PatientAdmissionController implements Initializable {
 			searchCode(event);
 
 	}
+	 
+	@FXML
+	 void LoadPatientPressed(ActionEvent event) {
+
+	 }
 
 	@FXML
 	void maritalSelected(ActionEvent event) {

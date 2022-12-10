@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -673,12 +673,20 @@
                         <Insets left="30.0" top="30.0" />
                      </HBox.margin>
                   </TextField>
+                  <Button fx:id="LoadPatient" mnemonicParsing="false" onAction="#LoadPatientPressed" prefHeight="45.0" prefWidth="110.0" style="-fx-background-color: #1F2C71;" text="Load from CSV" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="300.0" top="40.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="SubmitButton" mnemonicParsing="false" onAction="#submitPressed" prefHeight="45.0" prefWidth="110.0" style="-fx-background-color: #1F2C71;" text="Submit" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="450.0" top="40.0" />
+                        <Insets left="50.0" top="40.0" />
                      </HBox.margin>
                   </Button>
                </children>
