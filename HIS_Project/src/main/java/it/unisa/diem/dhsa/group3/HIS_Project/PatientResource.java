@@ -84,10 +84,10 @@ public class PatientResource {
 	private Float LON;
 
 	@CsvBindByName
-	private int HEALTHCARE_EXPENSES;
+	private Float HEALTHCARE_EXPENSES;
 
 	@CsvBindByName
-	private int HEALTHCARE_COVERAGE;
+	private Float HEALTHCARE_COVERAGE;
 
 	public String getId() {
 		return Id;
@@ -273,19 +273,19 @@ public class PatientResource {
 		LON = lON;
 	}
 
-	public int getHEALTHCARE_EXPENSES() {
+	public Float getHEALTHCARE_EXPENSES() {
 		return HEALTHCARE_EXPENSES;
 	}
 
-	public void setHEALTHCARE_EXPENSES(int hEALTHCARE_EXPENSES) {
+	public void setHEALTHCARE_EXPENSES(Float hEALTHCARE_EXPENSES) {
 		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
 	}
 
-	public int getHEALTHCARE_COVERAGE() {
+	public Float getHEALTHCARE_COVERAGE() {
 		return HEALTHCARE_COVERAGE;
 	}
 
-	public void setHEALTHCARE_COVERAGE(int hEALTHCARE_COVERAGE) {
+	public void setHEALTHCARE_COVERAGE(Float hEALTHCARE_COVERAGE) {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
