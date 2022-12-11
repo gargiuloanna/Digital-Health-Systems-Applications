@@ -14,6 +14,11 @@ import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 
+import org.hl7.fhir.r4.model.Address;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.r4.model.Extension;
+
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -185,25 +190,25 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	void LoadPatientPressed(ActionEvent event) {
-		/*FileChooser chooser = new FileChooser();
-		File filename = chooser.showOpenDialog(null);
-		if (filename != null) {
-			//System.out.println(filename);
-			try {*/
-				//patientLogic.setPath(filename.getCanonicalPath());
-				Map<String, Resource> patients = patientLogic.readCSV();
-				fillFields((Patient) patients
-						//.get("ce9bd436-6b59-0452-86a4-61f3642736bc")); 
-						.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846")); 
-				// TODO remove selecting patient
+		/*
+		 * FileChooser chooser = new FileChooser(); File filename =
+		 * chooser.showOpenDialog(null); if (filename != null) {
+		 * //System.out.println(filename); try {
+		 */
+		// patientLogic.setPath(filename.getCanonicalPath());
+		Map<String, Resource> patients = patientLogic.readCSV();
+		fillFields((Patient) patients
+				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
+				.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
+		// TODO remove selecting patient
 
-			/*} catch (IOException e) {
-				// TODO Dovrebbe generare l'eccezione su getCanonicalPath quando non viene
-				// scelto nulla - ma sarebbe null e facciamo già l'if
-				//e.printStackTrace();
-			}
-
-		}*/
+		/*
+		 * } catch (IOException e) { // TODO Dovrebbe generare l'eccezione su
+		 * getCanonicalPath quando non viene // scelto nulla - ma sarebbe null e
+		 * facciamo già l'if //e.printStackTrace(); }
+		 * 
+		 * }
+		 */
 	}
 
 	@FXML
@@ -228,30 +233,72 @@ public class PatientAdmissionController implements Initializable {
 	}
 
 	private void fillFields(Patient patient) {
-		
+
 		int index = 0;
-		//it insert the first name in the field of the name
+		// it insert the first name in the field of the name
 		HumanName humanName = patient.getNameFirstRep();
 		index = humanName.getGiven().size() - 1;
 		FirstNameField.setText(humanName.getGiven().get(index).toString());
-		//it insert the last name in the field of the names
+		// it insert the last name in the field of the names
 		LastNameField.setText(humanName.getFamily());
-		//it insert the prefix in the corresponding field 
+		// it insert the prefix in the corresponding field
 		index = humanName.getPrefix().size() - 1;
 		PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
-		//it insert the first name in the corresponding field 
+		// it insert the first name in the corresponding field
 		index = humanName.getSuffix().size() - 1;
 		SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
-		//it insert the first name in the corresponding field 
+		// it insert the first name in the corresponding field
 		Date date = patient.getBirthDate();
-		//selecting birth and death date
-		if (date!=null)
-			BirthDatePicker.setValue(LocalDate.parse(date.toString())); //other methods are deprecated or don't work
-		if(patient.hasDeceasedDateTimeType()) {
+		// selecting birth and death date
+		if (date != null) {
+			BirthDatePicker.setValue(LocalDate.parse(date.toString())); // other methods are deprecated or don't work
+			BirthDatePicker.setDisable(true);
+		}
+		if (patient.hasDeceasedDateTimeType()) {
 			date = patient.getDeceasedDateTimeType().getValue();
-			DeathDatePicker.setValue(LocalDate.parse(date.toString())); //other methods are deprecated or don't work
-		}// else System.out.println("he is not dead");
+			DeathDatePicker.setValue(LocalDate.parse(date.toString())); // other methods are deprecated or don't work
+			DeathDatePicker.setDisable(true);
+		} // else System.out.println("he is not dead");
 
+		// set gender
+		if (patient.getGender().equals(AdministrativeGender.FEMALE))
+			FgenderButton.setSelected(true);
+		else if (patient.getGender().equals(AdministrativeGender.MALE))
+			MgenderButton.setSelected(true);
+		else
+			NOgenderButton.setSelected(true); // this is when it is null, other or unknown
+		
+		String url = "http://hl7.org/fhir/StructureDefinition/patient-birthPlace";
+		// set birth place
+		if (patient.getExtensionByUrl(url) != null) {
+			Address ad = (Address) patient
+					.getExtensionByUrl(url).getValue();
+			BirthPlaceField.setText(ad.getText());
+			BirthPlaceField.setDisable(true);
+		}
+
+		// set race
+		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race";
+		
+		if (patient.getExtensionByUrl(url) != null) {
+			CodeableConcept code = (CodeableConcept) patient
+					.getExtensionByUrl(url)
+					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-race-category")
+					.getValue();
+			RacePicker.setText(code.getCodingFirstRep().getDisplay());
+		}
+		
+		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity";
+		if (patient.getExtensionByUrl(url) != null) {
+			CodeableConcept code = (CodeableConcept) patient
+					.getExtensionByUrl(url)
+					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category")
+					.getValue();
+			EthnicityField.setText(code.getCodingFirstRep().getDisplay());
+		}
+		
+		// RacePicker.setText(patient.getExtensionByUrl(
+		// "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race").getValue().toString());
 
 	}
 
