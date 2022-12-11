@@ -2,15 +2,21 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
-public class OrderRegistrationController {
+public class OrderRegistrationController implements Initializable{
 
     @FXML
     private TextField CodeField;
@@ -41,7 +47,20 @@ public class OrderRegistrationController {
 
     @FXML
     private CheckBox summaryButton;
+    
+    @FXML
+    private VBox VboxContainer;
 
+    
+    @Override
+	public void initialize(URL url, ResourceBundle rb) {
+
+    	VboxContainer.setDisable(true);
+    	SendOrderButton.disableProperty().bind(Bindings.isEmpty(searchPatientField.textProperty())
+				.and(Bindings.isEmpty(IDField.textProperty())));
+
+	}
+    
     @FXML
     void SwitchToOpeningPage() throws IOException {
     	App.setRoot("OpeningPage");
@@ -50,12 +69,16 @@ public class OrderRegistrationController {
 
     @FXML
     void searchCode(ActionEvent event) {
-
+		VboxContainer.setDisable(false);
+		searchPatientField.setDisable(true);
+		searchPatientField.clear();
     }
 
     @FXML
     void sendOrderPressed(ActionEvent event) {
-
+    	if (VboxContainer.isDisable()) {
+    		searchCode(event);
+    	}
     }
 
     @FXML
