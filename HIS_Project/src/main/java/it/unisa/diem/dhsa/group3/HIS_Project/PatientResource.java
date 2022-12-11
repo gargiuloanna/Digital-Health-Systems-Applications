@@ -51,31 +51,31 @@ public class PatientResource {
 	private String MARITAL = "";
 
 	@CsvBindByName
-	private String RACE;
+	private String RACE = "";
 
 	@CsvBindByName
-	private String ETHNICITY;
+	private String ETHNICITY = "";
 
 	@CsvBindByName
-	private String GENDER;
+	private String GENDER = "";
 
 	@CsvBindByName
-	private String BIRTHPLACE;
+	private String BIRTHPLACE = "";
 
 	@CsvBindByName
-	private String ADDRESS;
+	private String ADDRESS = "";
 
 	@CsvBindByName
-	private String CITY;
+	private String CITY = "";
 
 	@CsvBindByName
-	private String STATE;
+	private String STATE = "";
 
 	@CsvBindByName
-	private String COUNTY;
+	private String COUNTY = "";
 
 	@CsvBindByName
-	private String ZIP;
+	private String ZIP = "";
 
 	@CsvBindByName
 	private Float LAT;
@@ -84,10 +84,10 @@ public class PatientResource {
 	private Float LON;
 
 	@CsvBindByName
-	private String HEALTHCARE_EXPENSES;
+	private int HEALTHCARE_EXPENSES;
 
 	@CsvBindByName
-	private String HEALTHCARE_COVERAGE;
+	private int HEALTHCARE_COVERAGE;
 
 	public String getId() {
 		return Id;
@@ -273,19 +273,19 @@ public class PatientResource {
 		LON = lON;
 	}
 
-	public String getHEALTHCARE_EXPENSES() {
+	public int getHEALTHCARE_EXPENSES() {
 		return HEALTHCARE_EXPENSES;
 	}
 
-	public void setHEALTHCARE_EXPENSES(String hEALTHCARE_EXPENSES) {
+	public void setHEALTHCARE_EXPENSES(int hEALTHCARE_EXPENSES) {
 		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
 	}
 
-	public String getHEALTHCARE_COVERAGE() {
+	public int getHEALTHCARE_COVERAGE() {
 		return HEALTHCARE_COVERAGE;
 	}
 
-	public void setHEALTHCARE_COVERAGE(String hEALTHCARE_COVERAGE) {
+	public void setHEALTHCARE_COVERAGE(int hEALTHCARE_COVERAGE) {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
@@ -358,7 +358,7 @@ public class PatientResource {
 		// Definition of the two extensions and connected subextensions for the race and
 		// the ethnicity (fields: race, ethnicity)
 		OMBRaceCategories race = OMBRaceCategories.fromCSV(RACE);
-		OMBEtnicityCategories eth = OMBEtnicityCategories.fromCSV(ETHNICITY);
+		OMBEthnicityCategories eth = OMBEthnicityCategories.fromCSV(ETHNICITY);
 		Extension ra = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
 		p.addExtension(ra);
 		Extension subRa = new Extension("http://hl7.org/fhir/us/core/ValueSet/omb-race-category",
