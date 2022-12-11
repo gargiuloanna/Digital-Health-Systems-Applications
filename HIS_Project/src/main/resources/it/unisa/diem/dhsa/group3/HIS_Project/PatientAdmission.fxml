@@ -427,12 +427,12 @@
                                           </Label>
                                           <MenuButton fx:id="MaritalMenuButton" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Select one...">
                                             <items>
-                                              <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared null and not have existed" />
+                                              <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared null and to not have existed" />
                                                 <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared dissolved and inactive" />
                                                 <MenuItem onAction="#maritalSelected" text="Subject to an Interlocutory Decree." />
                                                 <MenuItem onAction="#maritalSelected" text="Legally Separated" />
                                                 <MenuItem onAction="#maritalSelected" text="A current marriage contract is active" />
-                                                <MenuItem onAction="#maritalSelected" text="More than 1 current spouseMore than 1 current spouse" />
+                                                <MenuItem onAction="#maritalSelected" text="More than 1 current spouse" />
                                                 <MenuItem onAction="#maritalSelected" text="No marriage contract has ever been entered" />
                                                 <MenuItem onAction="#maritalSelected" text="Person declares that a domestic partner relationship exists." />
                                                 <MenuItem onAction="#maritalSelected" text="Currently not in a marriage contract." />
@@ -539,7 +539,7 @@
                                                 <Insets />
                                              </HBox.margin>
                                           </Label>
-                                          <TextField fx:id="CountryField" prefHeight="39.0" prefWidth="240.0">
+                                          <TextField fx:id="CountyField" prefHeight="39.0" prefWidth="240.0">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>

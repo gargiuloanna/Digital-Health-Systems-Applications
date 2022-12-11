@@ -14,9 +14,10 @@ import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
-
+import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.r4.model.Extension;
 
@@ -58,7 +59,7 @@ public class PatientAdmissionController implements Initializable {
 	private DatePicker DeathDatePicker;
 
 	@FXML
-	private TextField CountryField;
+	private TextField CountyField;
 
 	@FXML
 	private TextField StateField;
@@ -199,9 +200,9 @@ public class PatientAdmissionController implements Initializable {
 			try {
 				patientLogic.setPath(filename.getCanonicalPath());
 				Map<String, Resource> patients = patientLogic.readCSV();
-				fillFields((Patient) patients
-						// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
-						.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
+				fillFields((Patient) patients.get("6fc3e360-ae68-c411-e091-4734df51eb18"));
+				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
+				// .get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
 				// TODO remove selecting patient
 
 			} catch (IOException e) { // TODO Dovrebbe generare l'eccezione sugetCanonicalPath quando non viene
@@ -216,6 +217,35 @@ public class PatientAdmissionController implements Initializable {
 	void maritalSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		MaritalMenuButton.setText(e.getText());
+		String maritalCode = maritalCode(e.getText());
+		System.out.println(maritalCode); // TODO remove
+	}
+
+	private String maritalCode(String maritalText) {
+		switch (maritalText) {
+		case "Marriage contract has been declared null and to not have existed":
+			return "A";
+		case "Marriage contract has been declared dissolved and inactive":
+			return "D";
+		case "Subject to an Interlocutory Decree.":
+			return "I";
+		case "Legally Separated":
+			return "L";
+		case "A current marriage contract is active":
+			return "M";
+		case "More than 1 current spouse":
+			return "P";
+		case "No marriage contract has ever been entered":
+			return "S";
+		case "Person declares that a domestic partner relationship exists.":
+			return "T";
+		case "Currently not in a marriage contract.":
+			return "U";
+		case "The spouse has died":
+			return "W";
+		default:
+			return "?";
+		}
 	}
 
 	@FXML
@@ -256,19 +286,31 @@ public class PatientAdmissionController implements Initializable {
 
 	private void fillFields(Patient patient) {
 
+		// add id
+		IDField.setText(patient.getId()); // TODO now it is empty because it is not on the server
+
 		int index = 0;
 		// it insert the first name in the field of the name
-		HumanName humanName = patient.getNameFirstRep();
-		index = humanName.getGiven().size() - 1;
-		FirstNameField.setText(humanName.getGiven().get(index).toString());
-		// it insert the last name in the field of the names
-		LastNameField.setText(humanName.getFamily());
-		// it insert the prefix in the corresponding field
-		index = humanName.getPrefix().size() - 1;
-		PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
-		// it insert the first name in the corresponding field
-		index = humanName.getSuffix().size() - 1;
-		SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
+		for (HumanName humanName : patient.getName()) {
+			if (humanName.getUse().equals(HumanName.NameUse.OFFICIAL)) {
+				index = humanName.getGiven().size() - 1;
+				FirstNameField.setText(humanName.getGiven().get(index).toString());
+				// it insert the last name in the field of the names
+				LastNameField.setText(humanName.getFamily());
+				// it insert the prefix in the corresponding field
+				index = humanName.getPrefix().size() - 1;
+				PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
+				// it insert the first name in the corresponding field
+				index = humanName.getSuffix().size() - 1;
+				SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
+			}
+			if (humanName.getUse().equals(HumanName.NameUse.MAIDEN)) {
+				// it insert the last name in the field of the names
+				MaidenField.setText(humanName.getFamily());
+				MaidenField.setDisable(true); // only one maiden name for person
+			}
+		}
+
 		// it insert the first name in the corresponding field
 		Date date = patient.getBirthDate();
 		// selecting birth and death date
@@ -316,9 +358,9 @@ public class PatientAdmissionController implements Initializable {
 			EthnicityField.setText(code.getCodingFirstRep().getDisplay());
 			EthnicityField.setDisable(true);
 		}
-		
-		//identifiers
-		for (Identifier identifier: patient.getIdentifier()){
+
+		// identifiers
+		for (Identifier identifier : patient.getIdentifier()) {
 			if (!identifier.getType().getCoding().isEmpty()) // it happens - the first is empty
 				if (identifier.getType().getCoding().get(0).getCode().equals(PIdentifier.SS.toCode())) {
 					SSNField.setText(identifier.getValue());
@@ -328,7 +370,27 @@ public class PatientAdmissionController implements Initializable {
 					PassportField.setText(identifier.getValue());
 				}
 		}
-		
+
+		// marital
+		MaritalMenuButton.setText(
+				V3MaritalStatus.fromCode(patient.getMaritalStatus().getCodingFirstRep().getCode()).getDefinition());
+
+		// address
+		index = patient.getAddress().size() - 1;
+		CityField.setText(patient.getAddress().get(index).getCity());
+		CountyField.setText(patient.getAddress().get(index).getDistrict());
+		ZIPField.setText(patient.getAddress().get(index).getPostalCode());
+		StateField.setText(patient.getAddress().get(index).getState());
+		AddressField.setText(patient.getAddress().get(index).getLine().get(0).toString());
+
+		// get lat and lon
+		url = "http://hl7.org/fhir/StructureDefinition/geolocation";
+		if (patient.getExtensionByUrl(url) != null) {
+			DecimalType dec = (DecimalType) patient.getExtensionByUrl(url).getExtensionByUrl("latitude").getValue();
+			LATField.setText(dec.asStringValue());
+			dec = (DecimalType) patient.getExtensionByUrl(url).getExtensionByUrl("longitude").getValue();
+			LONField.setText(dec.asStringValue());
+		}
 
 	}
 
