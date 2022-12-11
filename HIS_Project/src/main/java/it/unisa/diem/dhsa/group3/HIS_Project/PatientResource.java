@@ -11,81 +11,81 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
 public class PatientResource {
-	
+
 	@CsvBindByName
 	private String Id;
 
 	@CsvBindByName
 	@CsvDate("yyyy-MM-dd")
 	private Date BIRTHDATE;
-	
+
 	@CsvBindByName
 	@CsvDate("yyyy-MM-dd")
 	private Date DEATHDATE;
-	
+
 	@CsvBindByName
 	private String SSN = "";
-	
+
 	@CsvBindByName
 	private String DRIVERS = "";
-	
+
 	@CsvBindByName
 	private String PASSPORT = "";
-	
+
 	@CsvBindByName
 	private String PREFIX = "";
-	
+
 	@CsvBindByName
 	private String FIRST = "";
-	
+
 	@CsvBindByName
 	private String LAST = "";
-	
+
 	@CsvBindByName
 	private String SUFFIX = "";
-	
+
 	@CsvBindByName
 	private String MAIDEN = "";
-	
+
 	@CsvBindByName
 	private String MARITAL = "";
-	
+
 	@CsvBindByName
 	private String RACE;
-	
+
 	@CsvBindByName
 	private String ETHNICITY;
-	
+
 	@CsvBindByName
 	private String GENDER;
-	
+
 	@CsvBindByName
 	private String BIRTHPLACE;
-	
+
 	@CsvBindByName
 	private String ADDRESS;
-	
+
 	@CsvBindByName
 	private String CITY;
-	
+
 	@CsvBindByName
 	private String STATE;
-	
+
 	@CsvBindByName
 	private String COUNTY;
-	
+
 	@CsvBindByName
 	private String ZIP;
-	
+
 	@CsvBindByName
 	private Float LAT;
-	
+
 	@CsvBindByName
 	private Float LON;
-	
+
 	@CsvBindByName
 	private String HEALTHCARE_EXPENSES;
-	
+
 	@CsvBindByName
 	private String HEALTHCARE_COVERAGE;
 
@@ -288,7 +288,7 @@ public class PatientResource {
 	public void setHEALTHCARE_COVERAGE(String hEALTHCARE_COVERAGE) {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "PatientResource [Id=" + Id + ", BIRTHDATE=" + BIRTHDATE + ", DEATHDATE=" + DEATHDATE + ", SSN=" + SSN
@@ -299,21 +299,20 @@ public class PatientResource {
 				+ LAT + ", LON=" + LON + ", HEALTHCARE_EXPENSES=" + HEALTHCARE_EXPENSES + ", HEALTHCARE_COVERAGE="
 				+ HEALTHCARE_COVERAGE + "]";
 	}
-	
-	
+
 	public Resource createResource() {
 
 		Patient p = new Patient();
 		// Definition of the considered profile
 		p.setMeta(new Meta().addProfile("https://hl7.org/fhir/us/core/StructureDefinition-us-core-patient"));
 
-		//p.setId(args[head.get("id")]);
+		// p.setId(args[head.get("id")]);
 
 		// Definition of the birthdate and deathdate(fields: birthdate, deathdate)
 		// with the addition of the extension birthplace
-	
+
 		p.setBirthDate(BIRTHDATE);
-		if(DEATHDATE!=null)
+		if (DEATHDATE != null)
 			p.setDeceased(new DateTimeType(DEATHDATE));
 
 		Extension birthplace = new Extension("http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
@@ -333,19 +332,15 @@ public class PatientResource {
 				.setValue(PASSPORT));
 
 		// Definition of the official name (fields: first, last, prefix, suffix)
-		p.addName().setUse(HumanName.NameUse.OFFICIAL).setFamily(LAST)
-				.addGiven(FIRST).addPrefix(PREFIX)
+		p.addName().setUse(HumanName.NameUse.OFFICIAL).setFamily(LAST).addGiven(FIRST).addPrefix(PREFIX)
 				.addSuffix(SUFFIX);
 		// Definition of the maiden name (fields: first, maiden, prefix, suffix)
-		p.addName().setUse(HumanName.NameUse.MAIDEN).setFamily(MAIDEN)
-				.addGiven(FIRST).addPrefix(PREFIX)
+		p.addName().setUse(HumanName.NameUse.MAIDEN).setFamily(MAIDEN).addGiven(FIRST).addPrefix(PREFIX)
 				.addSuffix(SUFFIX);
 
 		// Definition of the address (fields: address, city, state,county, zip) with the
 		// extensions for the latitude and longitude
-		p.addAddress().setCity(CITY).addLine(ADDRESS)
-				.setDistrict(COUNTY).setPostalCode(ZIP)
-				.setState(STATE);
+		p.addAddress().setCity(CITY).addLine(ADDRESS).setDistrict(COUNTY).setPostalCode(ZIP).setState(STATE);
 		Extension loc = new Extension("http://hl7.org/fhir/StructureDefinition/geolocation");
 		p.addExtension(loc);
 		Extension lat = new Extension("latitude", new DecimalType(LAT));
@@ -356,7 +351,7 @@ public class PatientResource {
 		// Definition of the marital status (field: marital)
 
 		V3MaritalStatus status = V3MaritalStatus.fromCode(MARITAL);
-		if(status == null)
+		if (status == null)
 			status = V3MaritalStatus.NULL;
 		p.setMaritalStatus(new CodeableConcept(new Coding(status.getSystem(), status.toCode(), status.getDisplay())));
 
@@ -381,13 +376,5 @@ public class PatientResource {
 
 		return p;
 	}
-
-	
-	
-	
-	
-	
-	
-	
 
 }

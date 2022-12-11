@@ -32,6 +32,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+    	Context.getContext(); //TODO dice che non scegliamo la versione esplicitamente, ma perchè?
         launch();
     }
 

@@ -11,20 +11,15 @@ import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import ca.uhn.fhir.rest.client.api.IGenericClient;
-import it.unisa.diem.dhsa.group3.HIS_Project.Context;
 
+public class PatientLogic extends ApplicationLogic{
 
-public class prova {
-
-	public static void main(String[] args) {
-		
-		String path = "../csv/patients.csv";
-		Context ctx = Context.getContext();
-		String serverBase = "https://hapi.fhir.org/baseR4";
-
-		IGenericClient client = ctx.newRestfulGenericClient(serverBase);
-
+	public PatientLogic() {
+		super();
+		this.path = "../csv/patients.csv"; //TODO remove after setting up the final application
+	}
+	
+	public  Map<String, Resource> readCSV() {
 
 		Iterator<PatientResource> iter;
 		Map<String, Resource> patients = new HashMap<String, Resource>();
@@ -34,14 +29,15 @@ public class prova {
 					.withType(PatientResource.class).build().iterator();
 			while(iter.hasNext()) {
 				bean = iter.next();
-				System.out.println(bean.toString());
+				//System.out.println(bean.toString());
 				patients.put(bean.getId(), bean.createResource());
 			}
 		} catch (IllegalStateException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-
+		return patients;
+		
 		//String encoded =
 		//ctx.newXmlParser().setPrettyPrint(true).encodeResourceToString(patients.get(0));
 		//System.out.println(encoded);

@@ -1,18 +1,23 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Resource;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -115,10 +120,16 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	private MenuButton MaritalMenuButton;
+	
+	private PatientLogic patientLogic;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		
+		//initialize variables
+		patientLogic = new PatientLogic();
+		
+		//setting up the switching of the buttons
 		MgenderButton.selectedProperty().addListener((p, o, n) -> {
 			if (n == true) {
 				FgenderButton.setSelected(false);
@@ -139,12 +150,15 @@ public class PatientAdmissionController implements Initializable {
 				MgenderButton.setSelected(false);
 			}
 		});
+		
+		NOgenderButton.setSelected(true); //select one 
 
-		NOgenderButton.setSelected(true);
-
-		disableFields();
+		disableFields(); //disable fields that must not be accessible at the opening
+		
+		//binding of the button with the fields that should enable it
 		SubmitButton.disableProperty().bind(Bindings.isEmpty(searchPatientField.textProperty())
 				.and(Bindings.isEmpty(FirstNameField.textProperty())));
+		
 
 	}
 
@@ -167,7 +181,21 @@ public class PatientAdmissionController implements Initializable {
 	 
 	@FXML
 	 void LoadPatientPressed(ActionEvent event) {
-
+		FileChooser chooser = new FileChooser();
+        File filename = chooser.showOpenDialog(null);
+        if (filename != null) {
+            System.out.println(filename);
+            try {
+				patientLogic.setPath(filename.getCanonicalPath());
+				Map<String, Resource> patients = patientLogic.readCSV();
+				fillFields((Patient)patients.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846")); //TODO remove this
+				
+			} catch (IOException e) {
+				// TODO Dovrebbe generare l'eccezione su getCanonicalPath quando non viene scelto nulla - ma sarebbe null e facciamo già l'if
+				e.printStackTrace();
+			}
+           
+        }
 	 }
 
 	@FXML
@@ -190,4 +218,11 @@ public class PatientAdmissionController implements Initializable {
 		IDField.setDisable(true);
 		patientID.setDisable(true);
 	}
+	
+	private void fillFields(Patient patient) {
+		FirstNameField.setText(patient.getName().get(0).getGiven().get(0).toString());
+		LastNameField.setText(patient.getName().get(0).getFamily());
+		
+	}
+	
 }
