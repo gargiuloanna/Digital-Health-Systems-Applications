@@ -190,24 +190,25 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	void LoadPatientPressed(ActionEvent event) {
-		
-		FileChooser chooser = new FileChooser(); File filename =
-		chooser.showOpenDialog(null); if (filename != null) {
-		//System.out.println(filename); 
-			try {
-		patientLogic.setPath(filename.getCanonicalPath());
-		Map<String, Resource> patients = patientLogic.readCSV();
-		fillFields((Patient) patients
-				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
-				.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
-		// TODO remove selecting patient
 
-		} catch (IOException e) { // TODO Dovrebbe generare l'eccezione sugetCanonicalPath quando non viene
-			// scelto nulla - ma sarebbe null efacciamo già l'if //e.printStackTrace(); }
+		FileChooser chooser = new FileChooser();
+		File filename = chooser.showOpenDialog(null);
+		if (filename != null) {
+			// System.out.println(filename);
+			try {
+				patientLogic.setPath(filename.getCanonicalPath());
+				Map<String, Resource> patients = patientLogic.readCSV();
+				fillFields((Patient) patients
+						// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
+						.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
+				// TODO remove selecting patient
+
+			} catch (IOException e) { // TODO Dovrebbe generare l'eccezione sugetCanonicalPath quando non viene
+				// scelto nulla - ma sarebbe null efacciamo già l'if //e.printStackTrace(); }
+			}
+
 		}
-		  
-		}
-		
+
 	}
 
 	@FXML
@@ -215,26 +216,27 @@ public class PatientAdmissionController implements Initializable {
 		MenuItem e = (MenuItem) event.getSource();
 		MaritalMenuButton.setText(e.getText());
 	}
-	
+
 	@FXML
 	void raceSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		RacePicker.setText(e.getText());
 		String raceCode = e.getText().split(" ")[0].toLowerCase();
-		//System.out.println(raceCode); //TODO remove
+		// System.out.println(raceCode); //TODO remove
 	}
-	
+
 	@FXML
 	void ethnicitySelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		EthnicityField.setText(e.getText());
-		
+
 		String ethnicityCode;
 		if (e.getText().equals("Hispanic or Latino"))
 			ethnicityCode = "hispanic";
-		else ethnicityCode = "nonhispanic";
-		//System.out.println(ethnicityCode); //TODO remove
-	}	
+		else
+			ethnicityCode = "nonhispanic";
+		// System.out.println(ethnicityCode); //TODO remove
+	}
 
 	private void enableFields() {
 		TabPane.setDisable(false);
@@ -286,37 +288,32 @@ public class PatientAdmissionController implements Initializable {
 			MgenderButton.setSelected(true);
 		else
 			NOgenderButton.setSelected(true); // this is when it is null, other or unknown
-		
+
 		String url = "http://hl7.org/fhir/StructureDefinition/patient-birthPlace";
 		// set birth place
 		if (patient.getExtensionByUrl(url) != null) {
-			Address ad = (Address) patient
-					.getExtensionByUrl(url).getValue();
+			Address ad = (Address) patient.getExtensionByUrl(url).getValue();
 			BirthPlaceField.setText(ad.getText());
 			BirthPlaceField.setDisable(true);
 		}
 
 		// set race
 		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race";
-		
+
 		if (patient.getExtensionByUrl(url) != null) {
-			CodeableConcept code = (CodeableConcept) patient
-					.getExtensionByUrl(url)
-					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-race-category")
-					.getValue();
+			CodeableConcept code = (CodeableConcept) patient.getExtensionByUrl(url)
+					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-race-category").getValue();
 			RacePicker.setText(code.getCodingFirstRep().getDisplay());
 		}
-		
+
 		// set ethnicity
 		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity";
 		if (patient.getExtensionByUrl(url) != null) {
-			CodeableConcept code = (CodeableConcept) patient
-					.getExtensionByUrl(url)
-					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category")
-					.getValue();
+			CodeableConcept code = (CodeableConcept) patient.getExtensionByUrl(url)
+					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category").getValue();
 			EthnicityField.setText(code.getCodingFirstRep().getDisplay());
 		}
-		
+
 		// RacePicker.setText(patient.getExtensionByUrl(
 		// "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race").getValue().toString());
 
