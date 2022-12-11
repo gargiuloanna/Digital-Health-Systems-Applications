@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 
@@ -297,25 +298,37 @@ public class PatientAdmissionController implements Initializable {
 			BirthPlaceField.setDisable(true);
 		}
 
-		// set race
+		// get race
 		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race";
 
 		if (patient.getExtensionByUrl(url) != null) {
 			CodeableConcept code = (CodeableConcept) patient.getExtensionByUrl(url)
 					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-race-category").getValue();
 			RacePicker.setText(code.getCodingFirstRep().getDisplay());
+			RacePicker.setDisable(true);
 		}
 
-		// set ethnicity
+		// get ethnicity
 		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity";
 		if (patient.getExtensionByUrl(url) != null) {
 			CodeableConcept code = (CodeableConcept) patient.getExtensionByUrl(url)
 					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category").getValue();
 			EthnicityField.setText(code.getCodingFirstRep().getDisplay());
+			EthnicityField.setDisable(true);
 		}
-
-		// RacePicker.setText(patient.getExtensionByUrl(
-		// "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race").getValue().toString());
+		
+		//identifiers
+		for (Identifier identifier: patient.getIdentifier()){
+			if (!identifier.getType().getCoding().isEmpty()) // it happens - the first is empty
+				if (identifier.getType().getCoding().get(0).getCode().equals(PIdentifier.SS.toCode())) {
+					SSNField.setText(identifier.getValue());
+				} else if (identifier.getType().getCoding().get(0).getCode().equals(PIdentifier.DL.toCode())) {
+					DriversField.setText(identifier.getValue());
+				} else if (identifier.getType().getCoding().get(0).getCode().equals(PIdentifier.PPN.toCode())) {
+					PassportField.setText(identifier.getValue());
+				}
+		}
+		
 
 	}
 
