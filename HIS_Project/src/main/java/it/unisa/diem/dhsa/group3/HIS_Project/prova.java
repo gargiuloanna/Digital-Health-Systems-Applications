@@ -11,15 +11,16 @@ import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import it.unisa.diem.dhsa.group3.HIS_Project.Context;
+
 
 public class prova {
 
 	public static void main(String[] args) {
 		
 		String path = "../csv/patients.csv";
-		FhirContext ctx = FhirContext.forR4();
+		Context ctx = Context.getContext();
 		String serverBase = "https://hapi.fhir.org/baseR4";
 
 		IGenericClient client = ctx.newRestfulGenericClient(serverBase);

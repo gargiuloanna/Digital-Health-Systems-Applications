@@ -8,6 +8,8 @@ module it.unisa.diem.dhsa.group3.HIS_Project {
 	requires org.hl7.fhir.utilities;
 	requires com.opencsv;
 	requires transitive java.sql;
+	requires javafx.graphics;
+	
 
     opens it.unisa.diem.dhsa.group3.HIS_Project to javafx.fxml;
     exports it.unisa.diem.dhsa.group3.HIS_Project;
