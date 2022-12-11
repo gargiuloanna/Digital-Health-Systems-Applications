@@ -3,9 +3,14 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 
@@ -66,9 +71,9 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	private Button SubmitButton;
-	
+
 	@FXML
-    private Button LoadPatient;
+	private Button LoadPatient;
 
 	@FXML
 	private TextField SSNField;
@@ -120,16 +125,16 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	private MenuButton MaritalMenuButton;
-	
+
 	private PatientLogic patientLogic;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		
-		//initialize variables
+
+		// initialize variables
 		patientLogic = new PatientLogic();
-		
-		//setting up the switching of the buttons
+
+		// setting up the switching of the buttons
 		MgenderButton.selectedProperty().addListener((p, o, n) -> {
 			if (n == true) {
 				FgenderButton.setSelected(false);
@@ -150,15 +155,14 @@ public class PatientAdmissionController implements Initializable {
 				MgenderButton.setSelected(false);
 			}
 		});
-		
-		NOgenderButton.setSelected(true); //select one 
 
-		disableFields(); //disable fields that must not be accessible at the opening
-		
-		//binding of the button with the fields that should enable it
+		NOgenderButton.setSelected(true); // select one
+
+		disableFields(); // disable fields that must not be accessible at the opening
+
+		// binding of the button with the fields that should enable it
 		SubmitButton.disableProperty().bind(Bindings.isEmpty(searchPatientField.textProperty())
 				.and(Bindings.isEmpty(FirstNameField.textProperty())));
-		
 
 	}
 
@@ -178,25 +182,29 @@ public class PatientAdmissionController implements Initializable {
 			searchCode(event);
 
 	}
-	 
+
 	@FXML
-	 void LoadPatientPressed(ActionEvent event) {
-		FileChooser chooser = new FileChooser();
-        File filename = chooser.showOpenDialog(null);
-        if (filename != null) {
-            System.out.println(filename);
-            try {
-				patientLogic.setPath(filename.getCanonicalPath());
+	void LoadPatientPressed(ActionEvent event) {
+		/*FileChooser chooser = new FileChooser();
+		File filename = chooser.showOpenDialog(null);
+		if (filename != null) {
+			//System.out.println(filename);
+			try {*/
+				//patientLogic.setPath(filename.getCanonicalPath());
 				Map<String, Resource> patients = patientLogic.readCSV();
-				fillFields((Patient)patients.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846")); //TODO remove this
-				
-			} catch (IOException e) {
-				// TODO Dovrebbe generare l'eccezione su getCanonicalPath quando non viene scelto nulla - ma sarebbe null e facciamo già l'if
-				e.printStackTrace();
+				fillFields((Patient) patients
+						//.get("ce9bd436-6b59-0452-86a4-61f3642736bc")); 
+						.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846")); 
+				// TODO remove selecting patient
+
+			/*} catch (IOException e) {
+				// TODO Dovrebbe generare l'eccezione su getCanonicalPath quando non viene
+				// scelto nulla - ma sarebbe null e facciamo già l'if
+				//e.printStackTrace();
 			}
-           
-        }
-	 }
+
+		}*/
+	}
 
 	@FXML
 	void maritalSelected(ActionEvent event) {
@@ -218,11 +226,33 @@ public class PatientAdmissionController implements Initializable {
 		IDField.setDisable(true);
 		patientID.setDisable(true);
 	}
-	
+
 	private void fillFields(Patient patient) {
-		FirstNameField.setText(patient.getName().get(0).getGiven().get(0).toString());
-		LastNameField.setText(patient.getName().get(0).getFamily());
 		
+		int index = 0;
+		//it insert the first name in the field of the name
+		HumanName humanName = patient.getNameFirstRep();
+		index = humanName.getGiven().size() - 1;
+		FirstNameField.setText(humanName.getGiven().get(index).toString());
+		//it insert the last name in the field of the names
+		LastNameField.setText(humanName.getFamily());
+		//it insert the prefix in the corresponding field 
+		index = humanName.getPrefix().size() - 1;
+		PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
+		//it insert the first name in the corresponding field 
+		index = humanName.getSuffix().size() - 1;
+		SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
+		//it insert the first name in the corresponding field 
+		Date date = patient.getBirthDate();
+		//selecting birth and death date
+		if (date!=null)
+			BirthDatePicker.setValue(LocalDate.parse(date.toString())); //other methods are deprecated or don't work
+		if(patient.hasDeceasedDateTimeType()) {
+			date = patient.getDeceasedDateTimeType().getValue();
+			DeathDatePicker.setValue(LocalDate.parse(date.toString())); //other methods are deprecated or don't work
+		}// else System.out.println("he is not dead");
+
+
 	}
-	
+
 }

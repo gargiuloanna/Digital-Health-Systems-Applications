@@ -8,7 +8,7 @@ import ca.uhn.fhir.rest.client.api.IGenericClient;
 
 public abstract class ApplicationLogic {
 	Context ctx = null;
-	String path = "";
+	String path;
 	String serverBase = "https://hapi.fhir.org/baseR4";
 	IGenericClient client;
 
