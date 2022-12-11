@@ -16,8 +16,8 @@ public class PatientLogic extends ApplicationLogic{
 
 	public PatientLogic() {
 		super();
-		this.path = "../csv/patients3.csv";
-				//"../csv/patients.csv"; //TODO remove after setting up the final application
+		this.path = "../csv/patients.csv";
+				//"../csv/patients3.csv"; //TODO remove after setting up the final application
 	}
 	
 	public  Map<String, Resource> readCSV() {

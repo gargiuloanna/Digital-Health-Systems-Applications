@@ -42,7 +42,7 @@ public class PatientAdmissionController implements Initializable {
 	private TextField LastNameField;
 
 	@FXML
-	private TextField RacePicker;
+	private MenuButton RacePicker;
 
 	@FXML
 	private DatePicker BirthDatePicker;
@@ -117,7 +117,7 @@ public class PatientAdmissionController implements Initializable {
 	private TextField SuffixField;
 
 	@FXML
-	private TextField EthnicityField;
+	private MenuButton EthnicityField;
 
 	@FXML
 	private TextField PassportField;
@@ -190,25 +190,24 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	void LoadPatientPressed(ActionEvent event) {
-		/*
-		 * FileChooser chooser = new FileChooser(); File filename =
-		 * chooser.showOpenDialog(null); if (filename != null) {
-		 * //System.out.println(filename); try {
-		 */
-		// patientLogic.setPath(filename.getCanonicalPath());
+		
+		FileChooser chooser = new FileChooser(); File filename =
+		chooser.showOpenDialog(null); if (filename != null) {
+		//System.out.println(filename); 
+			try {
+		patientLogic.setPath(filename.getCanonicalPath());
 		Map<String, Resource> patients = patientLogic.readCSV();
 		fillFields((Patient) patients
 				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
 				.get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
 		// TODO remove selecting patient
 
-		/*
-		 * } catch (IOException e) { // TODO Dovrebbe generare l'eccezione su
-		 * getCanonicalPath quando non viene // scelto nulla - ma sarebbe null e
-		 * facciamo già l'if //e.printStackTrace(); }
-		 * 
-		 * }
-		 */
+		} catch (IOException e) { // TODO Dovrebbe generare l'eccezione sugetCanonicalPath quando non viene
+			// scelto nulla - ma sarebbe null efacciamo già l'if //e.printStackTrace(); }
+		}
+		  
+		}
+		
 	}
 
 	@FXML
@@ -216,6 +215,26 @@ public class PatientAdmissionController implements Initializable {
 		MenuItem e = (MenuItem) event.getSource();
 		MaritalMenuButton.setText(e.getText());
 	}
+	
+	@FXML
+	void raceSelected(ActionEvent event) {
+		MenuItem e = (MenuItem) event.getSource();
+		RacePicker.setText(e.getText());
+		String raceCode = e.getText().split(" ")[0].toLowerCase();
+		//System.out.println(raceCode); //TODO remove
+	}
+	
+	@FXML
+	void ethnicitySelected(ActionEvent event) {
+		MenuItem e = (MenuItem) event.getSource();
+		EthnicityField.setText(e.getText());
+		
+		String ethnicityCode;
+		if (e.getText().equals("Hispanic or Latino"))
+			ethnicityCode = "hispanic";
+		else ethnicityCode = "nonhispanic";
+		//System.out.println(ethnicityCode); //TODO remove
+	}	
 
 	private void enableFields() {
 		TabPane.setDisable(false);
@@ -288,6 +307,7 @@ public class PatientAdmissionController implements Initializable {
 			RacePicker.setText(code.getCodingFirstRep().getDisplay());
 		}
 		
+		// set ethnicity
 		url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity";
 		if (patient.getExtensionByUrl(url) != null) {
 			CodeableConcept code = (CodeableConcept) patient
