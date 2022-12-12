@@ -1,5 +1,7 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import org.hl7.fhir.exceptions.FHIRException;
+
 public enum PracticeSettingCode {
 	
 	_394814009,/*GENERAL PRACTICE*/
@@ -77,6 +79,61 @@ public enum PracticeSettingCode {
 	_1251551007, /*CARDIAC ELECTROPHYSIOLOGY*/
 	_408471009, /*ADVANCED HEART FAILURE AND TRANSPLANT CARDIOLOGY*/
 	_309445003, /*nurse - ANESTHESIOLOGY ASSISTANT*/
+	NULL;
+	
+	public static PracticeSettingCode fromCode(String codeString) throws FHIRException {
+		if (codeString == null || "".equals(codeString))
+			return NULL;
+		if ("_394814009".equals(codeString))
+			return _394814009;
+		if ("_419192003".equals(codeString))
+			return _419192003;
+		if ("_419772000").
+		throw new FHIRException("Unknown OMBEtnicityCategories code '" + codeString + "'");
+		
+
+	}
+	
+	public static OMBEthnicityCategories fromCSV(String description) {
+		if (description == null || "".equals(description))
+			return NULL;
+		if("hispanic".equals(description))
+			return _21352;
+		if("nonhispanic".equals(description))
+			return _21865;
+
+		return null;
+			
+	}
+
+	public String toCode() {
+		switch (this) {
+		case _21352:
+			return "2135-2";
+		case _21865:
+			return "2186-5";
+		case NULL:
+			return null;
+
+		}
+		return null;
+	}
+
+	public String getSystem() {
+		return "urn:oid:2.16.840.1.113883.6.238";
+	}
+
+	public String getDefinition() {
+		switch (this) {
+		case _21352:
+			return "Hispanic or Latino";
+		case _21865:
+			return "Not Hispanic or Latino";
+		case NULL:
+			return null;
+		}
+		return null;
+	}
 	
 	
 	
