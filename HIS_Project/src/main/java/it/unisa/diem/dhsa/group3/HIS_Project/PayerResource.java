@@ -8,7 +8,7 @@ import org.hl7.fhir.r4.model.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-public class PayerResource {
+public class PayerResource extends BaseResource{
 	
 	//Id,NAME,ADDRESS,CITY,STATE_HEADQUARTERED,ZIP,PHONE,AMOUNT_COVERED,AMOUNT_UNCOVERED,REVENUE,COVERED_ENCOUNTERS,
 	//UNCOVERED_ENCOUNTERS,COVERED_MEDICATIONS,UNCOVERED_MEDICATIONS,COVERED_PROCEDURES,UNCOVERED_PROCEDURES,COVERED_IMMUNIZATIONS,

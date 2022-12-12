@@ -7,7 +7,7 @@ import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 import com.opencsv.bean.CsvBindByName;
 
 
-public class OrganizationResource {
+public class OrganizationResource extends BaseResource{
 	
 	//Id	NAME	ADDRESS	CITY	STATE	ZIP LAT	LON	PHONE	
 	//REVENUE	UTILIZATION
