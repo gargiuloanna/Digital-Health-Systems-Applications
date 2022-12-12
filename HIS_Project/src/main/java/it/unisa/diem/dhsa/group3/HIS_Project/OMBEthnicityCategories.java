@@ -35,7 +35,7 @@ public enum OMBEthnicityCategories {
 		case _21865:
 			return "2186-5";
 		case NULL:
-			return null;
+			return "";
 
 		}
 		return null;
@@ -52,8 +52,9 @@ public enum OMBEthnicityCategories {
 		case _21865:
 			return "Not Hispanic or Latino";
 		case NULL:
-			return null;
+			return "";
 		}
 		return null;
 	}
+	
 }
