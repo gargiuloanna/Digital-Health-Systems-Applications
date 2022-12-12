@@ -25,7 +25,6 @@ public class ReadCSV {
 					.withType(specificClass).build().iterator();
 			while(iter.hasNext()) {
 				bean = iter.next();
-				//System.out.println(bean.toString());
 				resources.put(bean.getId(), bean.createResource());
 			}
 		} catch (IllegalStateException | FileNotFoundException e) {

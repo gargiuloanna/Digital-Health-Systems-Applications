@@ -13,10 +13,13 @@ import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Meta;
+import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
+import org.hl7.fhir.r4.model.Practitioner.PractitionerQualificationComponent;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 
@@ -180,8 +183,13 @@ public class ProviderResource {
 		d.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
 		
 		//Definition of the Organization that employees the practitioner
+		Map<String, Resource> organizations = Memory.getMemory().get(OrganizationResource.class);
+		Organization o = (Organization) organizations.get(ORGANIZATION);
 		
-	
+		PractitionerQualificationComponent practitioner = new PractitionerQualificationComponent();
+		practitioner.setIssuerTarget(o);
+		d.addQualification(practitioner);
+		
 		// Definition of the official name  (fields: name)
 		d.addName(new HumanName().setText(NAME));
 
@@ -190,10 +198,11 @@ public class ProviderResource {
 		d.setGender(Enumerations.AdministrativeGender.valueOf(sex.getDefinition().toUpperCase()));
 		
 		//Definition of the speciality of the practitioner 
-		
+		PracticeSettingCode code = PracticeSettingCode.fromCSV(SPECIALITY);
+		r.addSpecialty().addCoding().setSystem(code.getSystem()).setCode(code.toCode()).setDisplayElement(new StringType(code.getDefinition()));
 		
 		// Definition of the address (fields: address, city, state, zip) with the
-		// extensions for the latitude and longitude
+		// extensions for the latitude and longitude		
 		d.addAddress().setCity(CITY).addLine(ADDRESS).setPostalCode(ZIP)
 				.setState(STATE);
 		Extension loc = new Extension("http://hl7.org/fhir/StructureDefinition/geolocation");
@@ -202,7 +211,8 @@ public class ProviderResource {
 		Extension lon = new Extension("longitude", new DecimalType(LON));
 		loc.addExtension(lat);
 		loc.addExtension(lon);
-
+		
+		//missing utilization
 
 
 

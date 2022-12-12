@@ -4,14 +4,12 @@ import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class BaseResource {
+public abstract class BaseResource {
 	
 	@CsvBindByName
 	private String Id;
 	
-	public Resource createResource() {
-		return null;
-	}
+	public abstract Resource createResource();
 	
 	public String getId() {
 		return Id;
