@@ -2,10 +2,10 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
-public enum OMBEtnicityCategories {
+public enum OMBEthnicityCategories {
 	_21352, _21865, NULL;
 
-	public static OMBEtnicityCategories fromCode(String codeString) throws FHIRException {
+	public static OMBEthnicityCategories fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
 		if ("2135-2".equals(codeString))
@@ -16,7 +16,7 @@ public enum OMBEtnicityCategories {
 
 	}
 	
-	public static OMBEtnicityCategories fromCSV(String description) {
+	public static OMBEthnicityCategories fromCSV(String description) {
 		if (description == null || "".equals(description))
 			return NULL;
 		if("hispanic".equals(description))

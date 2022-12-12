@@ -50,14 +50,13 @@ public class OrderRegistrationController implements Initializable{
     
     @FXML
     private VBox VboxContainer;
-
     
     @Override
 	public void initialize(URL url, ResourceBundle rb) {
 
     	VboxContainer.setDisable(true);
     	SendOrderButton.disableProperty().bind(Bindings.isEmpty(searchPatientField.textProperty())
-				.and(Bindings.isEmpty(IDField.textProperty())));
+    			.and(Bindings.isEmpty(IDField.textProperty())));
 
 	}
     

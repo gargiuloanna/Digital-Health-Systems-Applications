@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -276,11 +276,19 @@
                                                             <Insets left="90.0" top="30.0" />
                                                          </HBox.margin>
                                                       </Label>
-                                                      <TextField fx:id="RacePicker" prefHeight="39.0" prefWidth="240.0">
+                                                      <MenuButton fx:id="RacePicker" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Other race">
+                                                         <items>
+                                                            <MenuItem onAction="#raceSelected" text="American Indian or Alaska Native" />
+                                                            <MenuItem onAction="#raceSelected" text="Asian" />
+                                                            <MenuItem onAction="#raceSelected" text="Black or African American" />
+                                                            <MenuItem onAction="#raceSelected" text="Native Hawaiian or Other Pacific Islander" />
+                                                            <MenuItem onAction="#raceSelected" text="White" />
+                                                            <MenuItem onAction="#raceSelected" text="Other race" />
+                                                         </items>
                                                          <HBox.margin>
                                                             <Insets left="20.0" top="20.0" />
                                                          </HBox.margin>
-                                                      </TextField>
+                                                      </MenuButton>
                                                    </children>
                                                 </HBox>
                                                 <HBox prefHeight="85.0" prefWidth="500.0">
@@ -293,11 +301,15 @@
                                                             <Insets left="60.0" top="30.0" />
                                                          </HBox.margin>
                                                       </Label>
-                                                      <TextField fx:id="EthnicityField" prefHeight="39.0" prefWidth="240.0">
+                                                      <MenuButton fx:id="EthnicityField" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Not Hispanic or Latino">
+                                                         <items>
+                                                            <MenuItem onAction="#ethnicitySelected" text="Hispanic or Latino" />
+                                                            <MenuItem onAction="#ethnicitySelected" text="Not Hispanic or Latino" />
+                                                         </items>
                                                          <HBox.margin>
                                                             <Insets left="20.0" top="20.0" />
                                                          </HBox.margin>
-                                                      </TextField>
+                                                      </MenuButton>
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets />
@@ -415,12 +427,12 @@
                                           </Label>
                                           <MenuButton fx:id="MaritalMenuButton" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Select one...">
                                             <items>
-                                              <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared null and not have existed" />
+                                              <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared null and to not have existed" />
                                                 <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared dissolved and inactive" />
                                                 <MenuItem onAction="#maritalSelected" text="Subject to an Interlocutory Decree." />
                                                 <MenuItem onAction="#maritalSelected" text="Legally Separated" />
                                                 <MenuItem onAction="#maritalSelected" text="A current marriage contract is active" />
-                                                <MenuItem onAction="#maritalSelected" text="More than 1 current spouseMore than 1 current spouse" />
+                                                <MenuItem onAction="#maritalSelected" text="More than 1 current spouse" />
                                                 <MenuItem onAction="#maritalSelected" text="No marriage contract has ever been entered" />
                                                 <MenuItem onAction="#maritalSelected" text="Person declares that a domestic partner relationship exists." />
                                                 <MenuItem onAction="#maritalSelected" text="Currently not in a marriage contract." />
@@ -527,7 +539,7 @@
                                                 <Insets />
                                              </HBox.margin>
                                           </Label>
-                                          <TextField fx:id="CountryField" prefHeight="39.0" prefWidth="240.0">
+                                          <TextField fx:id="CountyField" prefHeight="39.0" prefWidth="240.0">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
