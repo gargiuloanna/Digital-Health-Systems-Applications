@@ -31,6 +31,7 @@ public class ReadCSV {
 		} catch (IllegalStateException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		Memory.getMemory().put(specificClass, resources);
 		
 		return resources;
 	}
