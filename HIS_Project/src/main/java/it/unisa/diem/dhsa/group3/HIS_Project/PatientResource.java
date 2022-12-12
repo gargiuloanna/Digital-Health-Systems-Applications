@@ -10,10 +10,7 @@ import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-public class PatientResource implements BaseResource{
-
-	@CsvBindByName
-	private String Id;
+public class PatientResource extends BaseResource{
 
 	@CsvBindByName
 	@CsvDate("yyyy-MM-dd")
@@ -89,13 +86,6 @@ public class PatientResource implements BaseResource{
 	@CsvBindByName
 	private Float HEALTHCARE_COVERAGE;
 
-	public String getId() {
-		return Id;
-	}
-
-	public void setId(String id) {
-		Id = id;
-	}
 
 	public Date getBIRTHDATE() {
 		return BIRTHDATE;
@@ -291,7 +281,7 @@ public class PatientResource implements BaseResource{
 
 	@Override
 	public String toString() {
-		return "PatientResource [Id=" + Id + ", BIRTHDATE=" + BIRTHDATE + ", DEATHDATE=" + DEATHDATE + ", SSN=" + SSN
+		return "PatientResource [Id=" + super.getId() + ", BIRTHDATE=" + BIRTHDATE + ", DEATHDATE=" + DEATHDATE + ", SSN=" + SSN
 				+ ", DRIVERS=" + DRIVERS + ", PASSPORT=" + PASSPORT + ", PREFIX=" + PREFIX + ", FIRST=" + FIRST
 				+ ", LAST=" + LAST + ", SUFFIX=" + SUFFIX + ", MAIDEN=" + MAIDEN + ", MARITAL=" + MARITAL + ", RACE="
 				+ RACE + ", ETHNICITY=" + ETHNICITY + ", GENDER=" + GENDER + ", BIRTHPLACE=" + BIRTHPLACE + ", ADDRESS="
@@ -300,6 +290,7 @@ public class PatientResource implements BaseResource{
 				+ HEALTHCARE_COVERAGE + "]";
 	}
 
+	@Override
 	public Resource createResource() {
 
 		Patient p = new Patient();
@@ -320,7 +311,7 @@ public class PatientResource implements BaseResource{
 		p.addExtension(birthplace);
 
 		// Definition of the identifiers (fields: id, drivers, passport, ssn)
-		p.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
+		p.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		p.addIdentifier(new Identifier().setType(new CodeableConcept(
 				new Coding(PIdentifier.SS.getSystem(), PIdentifier.SS.toCode(), PIdentifier.SS.getDefinition())))
 				.setValue(SSN));

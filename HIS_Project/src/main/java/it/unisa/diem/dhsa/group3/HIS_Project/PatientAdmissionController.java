@@ -133,13 +133,8 @@ public class PatientAdmissionController implements Initializable {
 	@FXML
 	private MenuButton MaritalMenuButton;
 
-	private PatientLogic patientLogic;
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
-		// initialize variables
-		patientLogic = new PatientLogic();
 
 		// setting up the switching of the buttons
 		MgenderButton.selectedProperty().addListener((p, o, n) -> {
@@ -198,8 +193,7 @@ public class PatientAdmissionController implements Initializable {
 		if (filename != null) {
 			// System.out.println(filename);
 			try {
-				patientLogic.setPath(filename.getCanonicalPath());
-				Map<String, Resource> patients = patientLogic.readCSV();
+				Map<String, Resource> patients = ReadCSV.readCSV(PatientResource.class, filename.getCanonicalPath());
 				fillFields((Patient) patients.get("6fc3e360-ae68-c411-e091-4734df51eb18"));
 				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
 				// .get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));

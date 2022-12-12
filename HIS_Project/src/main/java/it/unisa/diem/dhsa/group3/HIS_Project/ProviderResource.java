@@ -1,5 +1,8 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -58,6 +61,12 @@ public class ProviderResource {
 	
 	@CsvBindByName
 	private int UTILIZATION;
+	
+	private static Map<String,Resource> organizations = new HashMap<>();
+
+	public static void setOrganizations(Map<String, Resource> organizations) {
+		ProviderResource.organizations = organizations;
+	}
 
 	public String getId() {
 		return Id;

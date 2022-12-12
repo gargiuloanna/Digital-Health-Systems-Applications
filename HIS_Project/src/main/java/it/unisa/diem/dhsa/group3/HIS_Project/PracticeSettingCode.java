@@ -88,13 +88,12 @@ public enum PracticeSettingCode {
 			return _394814009;
 		if ("_419192003".equals(codeString))
 			return _419192003;
-		if ("_419772000").
 		throw new FHIRException("Unknown OMBEtnicityCategories code '" + codeString + "'");
 		
 
 	}
 	
-	public static OMBEthnicityCategories fromCSV(String description) {
+	/*public static OMBEthnicityCategories fromCSV(String description) {
 		if (description == null || "".equals(description))
 			return NULL;
 		if("hispanic".equals(description))
@@ -133,7 +132,7 @@ public enum PracticeSettingCode {
 			return null;
 		}
 		return null;
-	}
+	}*/
 	
 	
 	
