@@ -10,7 +10,7 @@ import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-public class PatientResource {
+public class PatientResource implements BaseResource{
 
 	@CsvBindByName
 	private String Id;
