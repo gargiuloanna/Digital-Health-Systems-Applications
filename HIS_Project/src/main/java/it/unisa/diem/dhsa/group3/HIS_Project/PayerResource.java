@@ -2,8 +2,11 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 //import java.util.Date;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -28,25 +31,55 @@ public class PayerResource {
 	private String CITY = "";
 	
 	@CsvBindByName
-	private String STATE = "";
+	private String STATE_HEADQUARTERED = "";
 	
 	@CsvBindByName
 	private String ZIP;
 	
 	@CsvBindByName
-	private Float LAT;
-	
-	@CsvBindByName
-	private Float LON;
-	
-	@CsvBindByName
 	private String PHONE;
 	
 	@CsvBindByName
-	private Float REVENUE;
+	private long AMOUNT_COVERED;
 	
 	@CsvBindByName
-	private int UTILIZATION;
+	private long AMOUNT_UNCOVERED;
+	
+	@CsvBindByName
+	private long REVENUE;
+	
+	@CsvBindByName
+	private int COVERED_ENCOUNTERS;
+	
+	@CsvBindByName
+	private int UNCOVERED_ENCOUNTERS;
+	
+	@CsvBindByName
+	private int COVERED_MEDICATIONS;
+	
+	@CsvBindByName
+	private int UNCOVERED_MEDICATIONS;
+	
+	@CsvBindByName
+	private int COVERED_PROCEDURES;
+	
+	@CsvBindByName
+	private int UNCOVERED_PROCEDURES;
+	
+	@CsvBindByName
+	private int COVERED_IMMUNIZATIONS;
+	
+	@CsvBindByName
+	private int UNCOVERED_IMMUNIZATIONS;
+	
+	@CsvBindByName
+	private int UNIQUE_CUSTOMERS;
+	
+	@CsvBindByName
+	private Float QOLS_AVG;
+	
+	@CsvBindByName
+	private int MEMBER_MONTHS;
 	
 
 	public String getId() {
@@ -96,15 +129,15 @@ public class PayerResource {
 	}
 
 
-
-	public String getSTATE() {
-		return STATE;
+	
+	public String getSTATE_HEADQUARTERED() {
+		return STATE_HEADQUARTERED;
 	}
 
 
 
-	public void setSTATE(String sTATE) {
-		STATE = sTATE;
+	public void setSTATE_HEADQUARTERED(String sTATE_HEADQUARTERED) {
+		STATE_HEADQUARTERED = sTATE_HEADQUARTERED;
 	}
 
 
@@ -121,30 +154,6 @@ public class PayerResource {
 
 
 
-	public Float getLAT() {
-		return LAT;
-	}
-
-
-
-	public void setLAT(Float lAT) {
-		LAT = lAT;
-	}
-
-
-
-	public Float getLON() {
-		return LON;
-	}
-
-
-
-	public void setLON(Float lON) {
-		LON = lON;
-	}
-
-
-
 	public String getPHONE() {
 		return PHONE;
 	}
@@ -157,34 +166,184 @@ public class PayerResource {
 
 
 
-	public Float getREVENUE() {
+	public long getAMOUNT_COVERED() {
+		return AMOUNT_COVERED;
+	}
+
+
+
+	public void setAMOUNT_COVERED(long aMOUNT_COVERED) {
+		AMOUNT_COVERED = aMOUNT_COVERED;
+	}
+
+
+
+	public long getAMOUNT_UNCOVERED() {
+		return AMOUNT_UNCOVERED;
+	}
+
+
+
+	public void setAMOUNT_UNCOVERED(long aMOUNT_UNCOVERED) {
+		AMOUNT_UNCOVERED = aMOUNT_UNCOVERED;
+	}
+
+
+
+	public long getREVENUE() {
 		return REVENUE;
 	}
 
 
 
-	public void setREVENUE(Float rEVENUE) {
+	public void setREVENUE(long rEVENUE) {
 		REVENUE = rEVENUE;
 	}
 
 
 
-	public int getUTILIZATION() {
-		return UTILIZATION;
+	public int getCOVERED_ENCOUNTERS() {
+		return COVERED_ENCOUNTERS;
 	}
 
 
 
-	public void setUTILIZATION(int uTILIZATION) {
-		UTILIZATION = uTILIZATION;
+	public void setCOVERED_ENCOUNTERS(int cOVERED_ENCOUNTERS) {
+		COVERED_ENCOUNTERS = cOVERED_ENCOUNTERS;
 	}
-	
+
+
+
+	public int getUNCOVERED_ENCOUNTERS() {
+		return UNCOVERED_ENCOUNTERS;
+	}
+
+
+
+	public void setUNCOVERED_ENCOUNTERS(int uNCOVERED_ENCOUNTERS) {
+		UNCOVERED_ENCOUNTERS = uNCOVERED_ENCOUNTERS;
+	}
+
+
+
+	public int getCOVERED_PROCEDURES() {
+		return COVERED_PROCEDURES;
+	}
+
+
+
+	public void setCOVERED_PROCEDURES(int cOVERED_PROCEDURES) {
+		COVERED_PROCEDURES = cOVERED_PROCEDURES;
+	}
+
+
+
+	public int getUNCOVERED_PROCEDURES() {
+		return UNCOVERED_PROCEDURES;
+	}
+
+
+
+	public void setUNCOVERED_PROCEDURES(int uNCOVERED_PROCEDURES) {
+		UNCOVERED_PROCEDURES = uNCOVERED_PROCEDURES;
+	}
+
+
+
+	public int getCOVERED_MEDICATIONS() {
+		return COVERED_MEDICATIONS;
+	}
+
+
+
+	public void setCOVERED_MEDICATIONS(int cOVERED_MEDICATIONS) {
+		COVERED_MEDICATIONS = cOVERED_MEDICATIONS;
+	}
+
+
+
+	public int getUNCOVERED_MEDICATIONS() {
+		return UNCOVERED_MEDICATIONS;
+	}
+
+
+
+	public void setUNCOVERED_MEDICATIONS(int uNCOVERED_MEDICATIONS) {
+		UNCOVERED_MEDICATIONS = uNCOVERED_MEDICATIONS;
+	}
+
+
+
+	public int getCOVERED_IMMUNIZATIONS() {
+		return COVERED_IMMUNIZATIONS;
+	}
+
+
+
+	public void setCOVERED_IMMUNIZATIONS(int cOVERED_IMMUNIZATIONS) {
+		COVERED_IMMUNIZATIONS = cOVERED_IMMUNIZATIONS;
+	}
+
+
+
+	public int getUNCOVERED_IMMUNIZATIONS() {
+		return UNCOVERED_IMMUNIZATIONS;
+	}
+
+
+
+	public void setUNCOVERED_IMMUNIZATIONS(int uNCOVERED_IMMUNIZATIONS) {
+		UNCOVERED_IMMUNIZATIONS = uNCOVERED_IMMUNIZATIONS;
+	}
+
+
+
+	public int getUNIQUE_CUSTOMERS() {
+		return UNIQUE_CUSTOMERS;
+	}
+
+
+
+	public void setUNIQUE_CUSTOMERS(int uNIQUE_CUSTOMERS) {
+		UNIQUE_CUSTOMERS = uNIQUE_CUSTOMERS;
+	}
+
+
+
+	public Float getQOLS_AVG() {
+		return QOLS_AVG;
+	}
+
+
+
+	public void setQOLS_AVG(Float qOLS_AVG) {
+		QOLS_AVG = qOLS_AVG;
+	}
+
+
+
+	public int getMEMBER_MONTHS() {
+		return MEMBER_MONTHS;
+	}
+
+
+
+	public void setMEMBER_MONTHS(int mEMBER_MONTHS) {
+		MEMBER_MONTHS = mEMBER_MONTHS;
+	}
+
 
 	@Override
 	public String toString() {
-		return "EncounterResource [Id=" + Id + ", NAME=" + NAME + ", ADDRESS=" + ADDRESS + ", CITY=" + CITY + ", STATE="
-				+ STATE + ", ZIP=" + ZIP + ", LAT=" + LAT + ", LON=" + LON + ", PHONE=" + PHONE + ", REVENUE=" + REVENUE
-				+ ", UTILIZATION=" + UTILIZATION + "]";
+		return "PayerResource [Id=" + Id + ", NAME=" + NAME + ", ADDRESS=" + ADDRESS + ", CITY=" + CITY
+				+ ", STATE_HEADQUARTERED=" + STATE_HEADQUARTERED + ", ZIP=" + ZIP + ", PHONE=" + PHONE
+				+ ", AMOUNT_COVERED=" + AMOUNT_COVERED + ", AMOUNT_UNCOVERED=" + AMOUNT_UNCOVERED + ", REVENUE="
+				+ REVENUE + ", COVERED_ENCOUNTERS=" + COVERED_ENCOUNTERS + ", UNCOVERED_ENCOUNTERS="
+				+ UNCOVERED_ENCOUNTERS + ", COVERED_MEDICATIONS=" + COVERED_MEDICATIONS + ", UNCOVERED_MEDICATIONS="
+				+ UNCOVERED_MEDICATIONS + ", COVERED_PROCEDURES=" + COVERED_PROCEDURES + ", UNCOVERED_PROCEDURES="
+				+ UNCOVERED_PROCEDURES + ", COVERED_IMMUNIZATIONS=" + COVERED_IMMUNIZATIONS
+				+ ", UNCOVERED_IMMUNIZATIONS=" + UNCOVERED_IMMUNIZATIONS + ", UNIQUE_CUSTOMERS=" + UNIQUE_CUSTOMERS
+				+ ", QOLS_AVG=" + QOLS_AVG + ", MEMBER_MONTHS=" + MEMBER_MONTHS + "]";
 	}
 
 
@@ -192,8 +351,35 @@ public class PayerResource {
 	public Resource createResource() {
 
 		return null;
+		//http://terminology.hl7.org/CodeSystem/organization-type
 		
+		//o.setId(Id);
+		Organization o = new Organization(); //no profile
+		//add identifier
+		o.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
+		// add the name of the organization
+		o.setName(NAME);
+		// Definition of the address (fields: address, city, state, zip) with the
+		// extensions for the latitude and longitude
+		o.addAddress().setCity(CITY).addLine(ADDRESS).setPostalCode(ZIP).setState(STATE_HEADQUARTERED);
 		
+		String system = "http://terminology.hl7.org/CodeSystem/organization-type";
+		String code = "pay";
+		String display = "Payer";
+		List<CodeableConcept> type = new ArrayList<>();
+		type.add(new CodeableConcept(new Coding(system, code, display)));
+		o.setType(type);
+		Extension loc = new Extension("http://hl7.org/fhir/StructureDefinition/geolocation");
+		o.addExtension(loc);
+		Extension lat = new Extension("latitude", new DecimalType(LAT));
+		Extension lon = new Extension("longitude", new DecimalType(LON));
+		loc.addExtension(lat);
+		loc.addExtension(lon);
+		
+		//contact point -> phone
+		o.addTelecom().setSystem(ContactPointSystem.PHONE).setValue(PHONE);
+		
+		return o;
 		/*Patient p = new Patient();
 		// Definition of the considered profile
 		p.setMeta(new Meta().addProfile("https://hl7.org/fhir/us/core/StructureDefinition-us-core-patient"));
