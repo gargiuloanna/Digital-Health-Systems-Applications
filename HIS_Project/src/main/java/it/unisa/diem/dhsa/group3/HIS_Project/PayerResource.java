@@ -4,7 +4,6 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hl7.fhir.r4.model.*;
 import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 
@@ -350,7 +349,6 @@ public class PayerResource {
 
 	public Resource createResource() {
 
-		return null;
 		//http://terminology.hl7.org/CodeSystem/organization-type
 		
 		//o.setId(Id);
@@ -369,12 +367,6 @@ public class PayerResource {
 		List<CodeableConcept> type = new ArrayList<>();
 		type.add(new CodeableConcept(new Coding(system, code, display)));
 		o.setType(type);
-		Extension loc = new Extension("http://hl7.org/fhir/StructureDefinition/geolocation");
-		o.addExtension(loc);
-		Extension lat = new Extension("latitude", new DecimalType(LAT));
-		Extension lon = new Extension("longitude", new DecimalType(LON));
-		loc.addExtension(lat);
-		loc.addExtension(lon);
 		
 		//contact point -> phone
 		o.addTelecom().setSystem(ContactPointSystem.PHONE).setValue(PHONE);
@@ -458,13 +450,5 @@ public class PayerResource {
 
 		return p;*/
 	}
-
-	
-	
-	
-	
-	
-	
-	
 
 }
