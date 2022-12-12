@@ -58,7 +58,7 @@ public enum OMBRaceCategories {
 		case _21311:
 			return "2131-1";
 		case NULL:
-			return null;
+			return "";
 		}
 		return null;
 	}
@@ -82,7 +82,7 @@ public enum OMBRaceCategories {
 		case _21311:
 			return "Other race";
 		case NULL:
-			return null; 
+			return ""; 
 		}
 		return null;
 	}
