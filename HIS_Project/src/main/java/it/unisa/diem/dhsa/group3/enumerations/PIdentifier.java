@@ -27,6 +27,8 @@ public enum PIdentifier {
 			return "DL";
 		case PPN:
 			return "PPN";
+		case NULL:
+			return "null";
 		}
 		return null;
 	}
@@ -43,6 +45,8 @@ public enum PIdentifier {
 			return "Driver's license number";
 		case PPN:
 			return "Passport number";
+		case NULL:
+			return null;
 		}
 		return null;
 	}

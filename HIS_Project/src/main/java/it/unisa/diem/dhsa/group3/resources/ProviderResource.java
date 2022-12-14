@@ -1,30 +1,18 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import org.hl7.fhir.r4.model.Address;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.HumanName;
-import org.hl7.fhir.r4.model.Identifier;
-import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Organization;
-import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.Practitioner.PractitionerQualificationComponent;
 import org.hl7.fhir.r4.model.PractitionerRole;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;
-import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
-
 import com.opencsv.bean.CsvBindByName;
-
 import it.unisa.diem.dhsa.group3.enumerations.PracticeSettingCode;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
@@ -68,11 +56,6 @@ public class ProviderResource {
 	@CsvBindByName
 	private int UTILIZATION;
 	
-	private static Map<String,Resource> organizations = new HashMap<>();
-
-	public static void setOrganizations(Map<String, Resource> organizations) {
-		ProviderResource.organizations = organizations;
-	}
 
 	public String getId() {
 		return Id;

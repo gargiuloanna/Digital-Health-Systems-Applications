@@ -1,12 +1,7 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-//import java.util.Date;
-
-
 import org.hl7.fhir.r4.model.*;
-
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvDate;
 
 public class PayerResource extends BaseResource{
 	
