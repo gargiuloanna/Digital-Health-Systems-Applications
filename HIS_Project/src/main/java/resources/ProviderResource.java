@@ -1,4 +1,4 @@
-package it.unisa.diem.dhsa.group3.HIS_Project;
+package resources;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,9 @@ import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 
 import com.opencsv.bean.CsvBindByName;
+
+import enumerations.PracticeSettingCode;
+import state.Memory;
 
 public class ProviderResource {
 	

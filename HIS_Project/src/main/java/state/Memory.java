@@ -1,11 +1,13 @@
-package it.unisa.diem.dhsa.group3.HIS_Project;
+package state;
 
 import java.util.Collection;
+import resources.BaseResource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.hl7.fhir.r4.model.Resource;
+
 
 //Class necessary to keep the memory of the operations performed in the application
 public class Memory implements Map<Class<? extends BaseResource>, Map<String, Resource>>{

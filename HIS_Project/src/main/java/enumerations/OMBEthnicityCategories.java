@@ -1,4 +1,4 @@
-package it.unisa.diem.dhsa.group3.HIS_Project;
+package enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 

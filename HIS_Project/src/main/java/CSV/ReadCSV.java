@@ -1,4 +1,4 @@
-package it.unisa.diem.dhsa.group3.HIS_Project;
+package CSV;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,6 +12,8 @@ import org.hl7.fhir.r4.model.Resource;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import resources.BaseResource;
+import state.Memory;
 
 public class ReadCSV {
 
