@@ -13,4 +13,5 @@ module it.unisa.diem.dhsa.group3.HIS_Project {
 
     opens it.unisa.diem.dhsa.group3.HIS_Project to javafx.fxml;
     exports it.unisa.diem.dhsa.group3.HIS_Project;
+    exports it.unisa.diem.dhsa.group3.resources;
 }
