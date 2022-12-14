@@ -6,12 +6,8 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.hl7.fhir.r4.model.Resource;
-
 import com.opencsv.bean.CsvToBeanBuilder;
-
-import ca.uhn.fhir.rest.client.api.IGenericClient;
 import it.unisa.diem.dhsa.group3.resources.BaseResource;
 import it.unisa.diem.dhsa.group3.state.Memory;
 

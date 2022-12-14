@@ -8,6 +8,8 @@ import org.hl7.fhir.r4.model.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
+import it.unisa.diem.dhsa.group3.state.Memory;
+
 public class EncounterResource {
 	
 	//Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,ENCOUNTERCLASS,CODE,DESCRIPTION,BASE_ENCOUNTER_COST,TOTAL_CLAIM_COST,
@@ -231,86 +233,43 @@ public class EncounterResource {
 		//set identifier
 		e.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
 		
+		//set period
+		Period period = new Period();
+		period.setStart(START).setEnd(STOP);
+		e.setPeriod(period);
+		
+		Memory memory = Memory.getMemory();
+		
+		//set patient
+		Patient patient = (Patient) memory.get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
+		Reference subject = new Reference();
+		subject.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
+		e.setSubject(subject);
+		
+		//set organization
+		Organization o = (Organization) memory.get(OrganizationResource.class).get(ORGANIZATION);
+		Reference serviceProvider = new Reference();
+		serviceProvider.setIdentifier(o.getIdentifier().get(0));
+		e.setServiceProvider(serviceProvider);
+		
+		
+		//set provider....forse è participant?
+		PractitionerRole practitioner = (PractitionerRole) memory.get(ProviderResource.class).get(PROVIDER);
+		Encounter.EncounterParticipantComponent prac = new Encounter.EncounterParticipantComponent();
+		
+		Reference ref = new Reference();
+		ref.setIdentifier(practitioner.getPractitionerTarget().getIdentifier().get(0));
+		
+		prac.setIndividual(ref).setIndividualTarget(practitioner.getPractitionerTarget()).setType(practitioner.getSpecialty());
+		e.addParticipant(prac);
+		
+		//set payer
+		//Resource payer = memory.get(PayerResource.class).get(PAYER);
+		
+		
 		return e;
 		
 		
-		/*Patient p = new Patient();
-		// Definition of the considered profile
-		p.setMeta(new Meta().addProfile("https://hl7.org/fhir/us/core/StructureDefinition-us-core-patient"));
-
-		//p.setId(args[head.get("id")]);
-
-		// Definition of the birthdate and deathdate(fields: birthdate, deathdate)
-		// with the addition of the extension birthplace
-	
-		p.setBirthDate(BIRTHDATE);
-		if(DEATHDATE!=null)
-			p.setDeceased(new DateTimeType(DEATHDATE));
-
-		Extension birthplace = new Extension("http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
-				new Address().setText(BIRTHPLACE));
-		p.addExtension(birthplace);
-
-		// Definition of the identifiers (fields: id, drivers, passport, ssn)
-		p.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
-		p.addIdentifier(new Identifier().setType(new CodeableConcept(
-				new Coding(PIdentifier.SS.getSystem(), PIdentifier.SS.toCode(), PIdentifier.SS.getDefinition())))
-				.setValue(SSN));
-		p.addIdentifier(new Identifier().setType(new CodeableConcept(
-				new Coding(PIdentifier.DL.getSystem(), PIdentifier.DL.toCode(), PIdentifier.DL.getDefinition())))
-				.setValue(DRIVERS));
-		p.addIdentifier(new Identifier().setType(new CodeableConcept(
-				new Coding(PIdentifier.PPN.getSystem(), PIdentifier.PPN.toCode(), PIdentifier.PPN.getDefinition())))
-				.setValue(PASSPORT));
-
-		// Definition of the official name (fields: first, last, prefix, suffix)
-		p.addName().setUse(HumanName.NameUse.OFFICIAL).setFamily(LAST)
-				.addGiven(FIRST).addPrefix(PREFIX)
-				.addSuffix(SUFFIX);
-		// Definition of the maiden name (fields: first, maiden, prefix, suffix)
-		p.addName().setUse(HumanName.NameUse.MAIDEN).setFamily(MAIDEN)
-				.addGiven(FIRST).addPrefix(PREFIX)
-				.addSuffix(SUFFIX);
-
-		// Definition of the address (fields: address, city, state,county, zip) with the
-		// extensions for the latitude and longitude
-		p.addAddress().setCity(CITY).addLine(ADDRESS)
-				.setDistrict(COUNTY).setPostalCode(ZIP)
-				.setState(STATE);
-		Extension loc = new Extension("http://hl7.org/fhir/StructureDefinition/geolocation");
-		p.addExtension(loc);
-		Extension lat = new Extension("latitude", new DecimalType(LAT));
-		Extension lon = new Extension("longitude", new DecimalType(LON));
-		loc.addExtension(lat);
-		loc.addExtension(lon);
-
-		// Definition of the marital status (field: marital)
-
-		V3MaritalStatus status = V3MaritalStatus.fromCode(MARITAL);
-		if(status == null)
-			status = V3MaritalStatus.NULL;
-		p.setMaritalStatus(new CodeableConcept(new Coding(status.getSystem(), status.toCode(), status.getDisplay())));
-
-		// Definition of the two extensions and connected subextensions for the race and
-		// the ethnicity (fields: race, ethnicity)
-		OMBRaceCategories race = OMBRaceCategories.fromCSV(RACE);
-		OMBEtnicityCategories eth = OMBEtnicityCategories.fromCSV(ETHNICITY);
-		Extension ra = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-race");
-		p.addExtension(ra);
-		Extension subRa = new Extension("http://hl7.org/fhir/us/core/ValueSet/omb-race-category",
-				new CodeableConcept(new Coding(race.getSystem(), race.toCode(), race.getDefinition())));
-		ra.addExtension(subRa);
-		Extension et = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
-		p.addExtension(et);
-		Extension subEt = new Extension("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category",
-				new CodeableConcept(new Coding(eth.getSystem(), eth.toCode(), eth.getDefinition())));
-		et.addExtension(subEt);
-
-		// Definition of the gender(field: gender)
-		V3AdministrativeGender sex = V3AdministrativeGender.valueOf(GENDER);
-		p.setGender(Enumerations.AdministrativeGender.valueOf(sex.getDefinition().toUpperCase()));
-
-		return p;*/
 	}
 
 	

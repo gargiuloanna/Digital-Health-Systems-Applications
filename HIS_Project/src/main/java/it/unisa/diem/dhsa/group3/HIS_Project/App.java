@@ -11,7 +11,7 @@ import java.io.IOException;
 import it.unisa.diem.dhsa.group3.state.Context;
 
 /**
- * JavaFX App
+ * JavaFX Application
  */
 public class App extends Application {
 
