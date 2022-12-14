@@ -1,4 +1,4 @@
-package resources;
+package it.unisa.diem.dhsa.group3.resources;
 
 
 import org.hl7.fhir.r4.model.*;

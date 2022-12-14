@@ -1,4 +1,4 @@
-package resources;
+package it.unisa.diem.dhsa.group3.resources;
 
 //import java.util.Date;
 import java.sql.Date;
@@ -10,9 +10,9 @@ import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-import enumerations.OMBEthnicityCategories;
-import enumerations.OMBRaceCategories;
-import enumerations.PIdentifier;
+import it.unisa.diem.dhsa.group3.enumerations.OMBEthnicityCategories;
+import it.unisa.diem.dhsa.group3.enumerations.OMBRaceCategories;
+import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 
 public class PatientResource extends BaseResource{
 

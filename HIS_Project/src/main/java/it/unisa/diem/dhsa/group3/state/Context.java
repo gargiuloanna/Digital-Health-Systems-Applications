@@ -1,4 +1,4 @@
-package state;
+package it.unisa.diem.dhsa.group3.state;
 import ca.uhn.fhir.context.FhirContext;
 
 public class Context extends FhirContext{

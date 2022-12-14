@@ -5,9 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import state.Context;
 
 import java.io.IOException;
+
+import it.unisa.diem.dhsa.group3.state.Context;
 
 /**
  * JavaFX App

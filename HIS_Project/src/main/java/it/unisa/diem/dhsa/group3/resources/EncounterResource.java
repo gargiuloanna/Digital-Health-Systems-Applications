@@ -1,4 +1,4 @@
-package resources;
+package it.unisa.diem.dhsa.group3.resources;
 
 //import java.util.Date;
 import java.sql.Date;
