@@ -55,7 +55,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField3" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="patientField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -69,7 +69,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField31" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="organizationField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -83,7 +83,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField32" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="payerField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -97,7 +97,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField33" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="providerField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -111,7 +111,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField34" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="transactionField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -125,7 +125,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField35" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="encounterField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -139,7 +139,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField36" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="proceduresField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -153,7 +153,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField37" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="careplansField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -167,7 +167,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField392" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="imagingStudiesField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -181,7 +181,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField38" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="observationField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -195,7 +195,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField39" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="medicationField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -209,7 +209,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField391" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="immunizationField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -223,7 +223,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField393" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="devicesField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -237,7 +237,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField3931" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="conditionField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -251,7 +251,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField3932" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="allergyField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -265,7 +265,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="patientField3933" prefHeight="25.0" prefWidth="674.0" />
+                                    <TextField fx:id="supplyField" prefHeight="25.0" prefWidth="674.0" />
                                     <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
                                  </children>
                                  <VBox.margin>
@@ -274,7 +274,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#load_csv_btn" style="-fx-background-color: #4c43aa;" text="Send" textFill="WHITE" />
+                                    <Button mnemonicParsing="false" onAction="#send_clicked" style="-fx-background-color: #4c43aa;" text="Send" textFill="WHITE" />
                                  </children>
                                  <padding>
                                     <Insets right="80.0" />
