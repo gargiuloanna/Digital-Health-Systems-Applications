@@ -27,7 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
 // Controller FINITO
-public class ImportPatientController implements Initializable{
+public class ImportCSVsController implements Initializable{
 
 	@FXML
 	private TextField allergyField;
@@ -76,6 +76,9 @@ public class ImportPatientController implements Initializable{
 
 	@FXML
 	private TextField transactionField;
+	
+    @FXML
+    private Button sendBtn;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -145,6 +148,14 @@ public class ImportPatientController implements Initializable{
 		supplyField.disableProperty().bind(
 				(patientField.textProperty().isEmpty())
 				.or(encounterField.textProperty().isEmpty())
+				);
+		
+		sendBtn.disableProperty().bind(
+				Bindings.isEmpty(patientField.textProperty())
+				.and(Bindings.isEmpty(organizationField.textProperty()))
+				.and(Bindings.isEmpty(providerField.textProperty()))
+				.and(Bindings.isEmpty(payerField.textProperty()))
+				.and(Bindings.isEmpty(encounterField.textProperty()))
 				);
 		
 	}
