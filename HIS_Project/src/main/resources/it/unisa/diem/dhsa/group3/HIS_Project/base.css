@@ -1,0 +1,15 @@
+Text { 
+ -fx-font-smoothing-type: lcd;
+ -fx-fill: #4c43aa;
+ -fx-font-size: 15pt;
+}
+
+.button {
+	-fx-background-color: #4c43aa;
+	-fx-text-fill: #ffffff;
+}
+
+.title{
+	-fx-font-family: "Georgia";
+	-fx-font-size: 30px;
+}

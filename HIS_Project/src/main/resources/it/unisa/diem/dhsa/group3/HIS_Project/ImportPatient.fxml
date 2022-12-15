@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.ImportPatientController">
 	<children>
-      <VBox prefHeight="200.0" prefWidth="400.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="200.0" prefWidth="400.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" stylesheets="@base.css">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
@@ -28,7 +28,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Import data from CSV" textAlignment="CENTER" wrappingWidth="366.8816521167755">
+                  <Text fill="#4e42a9" styleClass="title" strokeType="OUTSIDE" strokeWidth="0.0" text="Import data from CSV" textAlignment="CENTER" wrappingWidth="366.8816521167755">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -50,7 +50,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patients" wrappingWidth="110.0">
+                                    <Text  strokeType="OUTSIDE" strokeWidth="0.0" text="Patients" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -64,7 +64,7 @@
                               </HBox>
                               <HBox alignment="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Organizations" wrappingWidth="110.0">
+                                    <Text  strokeType="OUTSIDE" strokeWidth="0.0" text="Organizations" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -78,7 +78,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payer" wrappingWidth="110.0">
+                                    <Text  strokeType="OUTSIDE" strokeWidth="0.0" text="Payer" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -92,7 +92,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Providers" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Providers" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -106,7 +106,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transaction" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transaction" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -120,7 +120,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Encounters" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Encounters" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -134,7 +134,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Procedures" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Procedures" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -148,7 +148,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Careplans" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Careplans" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -162,7 +162,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Imaging Studies" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Imaging Studies" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -176,7 +176,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Observations" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Observations" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -190,7 +190,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medications" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medications" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -204,7 +204,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -218,7 +218,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Devices" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Devices" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -232,7 +232,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Conditions" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Conditions" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -246,7 +246,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -260,7 +260,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supplies" wrappingWidth="110.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supplies" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
