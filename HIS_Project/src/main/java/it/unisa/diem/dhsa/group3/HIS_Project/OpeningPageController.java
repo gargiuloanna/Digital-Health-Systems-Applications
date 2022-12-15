@@ -39,7 +39,7 @@ public class OpeningPageController {
     
     @FXML
     private void load_csv_btn()throws IOException{
-    	App.setRoot("ImportPatient");
+    	App.setRoot("ImportCSVs");
     }
     
     
