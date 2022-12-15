@@ -39,19 +39,7 @@ public class OpeningPageController {
     
     @FXML
     private void load_csv_btn()throws IOException{
-    	FileChooser chooser = new FileChooser();
-    	File filename = chooser.showOpenDialog(null);
-    	if (filename != null) {
-    		// System.out.println(filename);
-    		try {
-    			Map<String, Resource> patients = ReadCSV.readCSV(PatientResource.class, filename.getCanonicalPath());
-    			// TODO remove selecting patient
-
-    		} catch (IOException e) { // TODO Dovrebbe generare l'eccezione sugetCanonicalPath quando non viene
-    			// scelto nulla - ma sarebbe null efacciamo già l'if //e.printStackTrace(); }
-    		}
-
-    	}
+    	App.setRoot("ImportPatient");
     }
     
     
