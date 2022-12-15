@@ -23,7 +23,6 @@ public class ReadCSV {
 			iter = new CsvToBeanBuilder<BaseResource>(new BufferedReader(new FileReader(path)))
 					.withType(specificClass).build().iterator();
 			while(iter.hasNext()) {
-				System.out.println("\n\n\n\n\n\nhello");
 				bean = iter.next();
 				
 				resources.put(bean.getId(), bean.createResource());
