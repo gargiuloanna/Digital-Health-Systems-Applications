@@ -8,9 +8,10 @@ import org.hl7.fhir.r4.model.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
+import it.unisa.diem.dhsa.group3.enumerations.EncountersSettingCode;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
-public class EncounterResource {
+public class EncounterResource extends BaseResource{
 	
 	//Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,ENCOUNTERCLASS,CODE,DESCRIPTION,BASE_ENCOUNTER_COST,TOTAL_CLAIM_COST,
 	//PAYER_COVERAGE,REASONCODE,REASONDESCRIPTION
@@ -43,7 +44,7 @@ public class EncounterResource {
 	private String ENCOUNTERCLASS = "";
 	
 	@CsvBindByName
-	private Float CODE;
+	private String CODE;
 	
 	@CsvBindByName
 	private String DESCRIPTION = "";
@@ -144,12 +145,12 @@ public class EncounterResource {
 	}
 
 
-	public Float getCODE() {
+	public String getCODE() {
 		return CODE;
 	}
 
 
-	public void setCODE(Float cODE) {
+	public void setCODE(String cODE) {
 		CODE = cODE;
 	}
 
@@ -265,6 +266,18 @@ public class EncounterResource {
 		
 		//set payer
 		//Resource payer = memory.get(PayerResource.class).get(PAYER);
+		
+		
+		//class fare con SNOMED regimeTherapy  o con snomed o con us core 
+		
+		//code & description
+		EncountersSettingCode code = EncountersSettingCode.fromCSV(DESCRIPTION);
+		e.addType(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), code.getDefinition())));
+		
+		//base encounter cost e total claim cost
+		
+		//add reason code
+		e.addReasonCode(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), REASONDESCRIPTION)));
 		
 		
 		return e;
