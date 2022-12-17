@@ -16,9 +16,6 @@ public class EncounterResource extends BaseResource{
 	//Id,START,STOP,PATIENT,ORGANIZATION,PROVIDER,PAYER,ENCOUNTERCLASS,CODE,DESCRIPTION,BASE_ENCOUNTER_COST,TOTAL_CLAIM_COST,
 	//PAYER_COVERAGE,REASONCODE,REASONDESCRIPTION
 	
-	
-	@CsvBindByName
-	private String Id;
 
 	@CsvBindByName
 	@CsvDate("yyyy-MM-dd")
@@ -62,18 +59,8 @@ public class EncounterResource extends BaseResource{
 	private String REASONCODE; //o è un numero o è null
 	
 	@CsvBindByName
-	private String REASONDESCRIPTION;
+	private String REASONDESCRIPTION = "";
 	
-	
-	public String getId() {
-		return Id;
-	}
-
-
-	public void setId(String id) {
-		Id = id;
-	}
-
 
 	public Date getSTART() {
 		return START;
@@ -217,7 +204,7 @@ public class EncounterResource extends BaseResource{
 	
 	@Override
 	public String toString() {
-		return "EncounterResource [Id=" + Id + ", START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT
+		return "EncounterResource [Id=" + super.getId() + ", START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT
 				+ ", ORGANIZATION=" + ORGANIZATION + ", PROVIDER=" + PROVIDER + ", PAYER=" + PAYER + ", ENCOUNTERCLASS="
 				+ ENCOUNTERCLASS + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + ", BASE_ENCOUNTER_COST="
 				+ BASE_ENCOUNTER_COST + ", TOTAL_CLAIM_COST=" + TOTAL_CLAIM_COST + ", PAYER_COVERAGE=" + PAYER_COVERAGE
@@ -232,7 +219,7 @@ public class EncounterResource extends BaseResource{
 		e.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter"));
 		
 		//set identifier
-		e.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
+		e.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		
 		//set period
 		Period period = new Period();
