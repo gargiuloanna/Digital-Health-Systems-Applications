@@ -2,6 +2,8 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
 
+import org.hl7.fhir.r4.model.CarePlan;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
@@ -144,7 +146,23 @@ public class CareplanResource extends BaseResource{
 
 	@Override
 	public Resource createResource() {
-		// TODO Auto-generated method stub
+		CarePlan c = new CarePlan();
+		
+		//add identifier
+		c.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		
+		//add period
+		Period p = new Period();
+		p.setEnd(STOP).setStart(START);
+		c.setPeriod(p);
+		
+		//set patient - non è finito
+		c.setSubject(null);
+		
+		//set encounter
+		
+		
+		
 		return null;
 	}
 	
