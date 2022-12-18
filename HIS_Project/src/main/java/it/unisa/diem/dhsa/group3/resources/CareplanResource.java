@@ -162,7 +162,7 @@ public class CareplanResource extends BaseResource{
 		p.setEnd(STOP).setStart(START);
 		c.setPeriod(p);
 		
-		//set patient - non è finito
+		//set patient
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
 		Reference reference = new Reference();
 		reference.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
