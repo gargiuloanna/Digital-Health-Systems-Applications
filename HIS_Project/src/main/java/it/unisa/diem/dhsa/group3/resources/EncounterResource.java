@@ -8,6 +8,7 @@ import org.hl7.fhir.r4.model.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
+import it.unisa.diem.dhsa.group3.enumerations.EncounterClass;
 import it.unisa.diem.dhsa.group3.enumerations.EncountersSettingCode;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
@@ -56,7 +57,7 @@ public class EncounterResource extends BaseResource{
 	private Float PAYER_COVERAGE;
 	
 	@CsvBindByName
-	private String REASONCODE; //o è un numero o è null
+	private String REASONCODE; 
 	
 	@CsvBindByName
 	private String REASONDESCRIPTION = "";
@@ -247,20 +248,23 @@ public class EncounterResource extends BaseResource{
 		prac.setIndividual(reference).setIndividualTarget(practitioner.getPractitionerTarget()).setType(practitioner.getSpecialty());
 		e.addParticipant(prac);
 		
-		//set payer
-		//Resource payer = memory.get(PayerResource.class).get(PAYER);
+		//set payer --TODO: REMEMBER TO ADD PAYER
+		//PayerResource payer = (PayerResource) Memory.getMemory().get(PayerResource.class).get(PAYER);
+		// account should be 
 		
 		
-		//class fare con SNOMED regimeTherapy  o con snomed o con us core 
+		//class --TODO: controllare la classe, prof disse: fare con SNOMED regimeTherapy  o con snomed o con us core 
+		EncounterClass eclass = EncounterClass.fromCSV(ENCOUNTERCLASS);
+		e.setClass_(new Coding(eclass.getSystem(), eclass.toCode(), eclass.getDefinition()));
 		
 		//code & description
 		EncountersSettingCode code = EncountersSettingCode.fromCSV(DESCRIPTION);
 		e.addType(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), code.getDefinition())));
 		
-		//base encounter cost e total claim cost
+		//TODO:base encounter cost e total claim cost
 		
-		//add reason code
-		e.addReasonCode(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), REASONDESCRIPTION)));
+		//add reason code -- TODO: check SNOMED codes!!!
+		e.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 		
 		
 		return e;
