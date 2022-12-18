@@ -1,13 +1,19 @@
 package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
+import java.util.Map;
 
 import org.hl7.fhir.r4.model.CarePlan;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Period;
+import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
+
+import it.unisa.diem.dhsa.group3.state.Memory;
 
 public class CareplanResource extends BaseResource{
 
@@ -157,11 +163,20 @@ public class CareplanResource extends BaseResource{
 		c.setPeriod(p);
 		
 		//set patient - non è finito
-		c.setSubject(null);
+		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
+		Reference reference = new Reference();
+		reference.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
+		c.setSubject(reference);
 		
 		//set encounter
+		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
+		reference.setIdentifier(encounter.getIdentifier().get(0));
+		c.setEncounter(reference);
 		
+
+		//code --description, ma dovrebbe esser GOAL
 		
+		//reason code -- forse category
 		
 		return null;
 	}

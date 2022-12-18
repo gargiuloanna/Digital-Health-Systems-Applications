@@ -226,29 +226,25 @@ public class EncounterResource extends BaseResource{
 		period.setStart(START).setEnd(STOP);
 		e.setPeriod(period);
 		
-		Memory memory = Memory.getMemory();
-		
+		Reference reference = new Reference(); //the identifier should change every time it is set - it is unique
 		//set patient
-		Patient patient = (Patient) memory.get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
-		Reference subject = new Reference();
-		subject.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
-		e.setSubject(subject);
+		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
+		reference.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
+		e.setSubject(reference);
 		
 		//set organization
-		Organization o = (Organization) memory.get(OrganizationResource.class).get(ORGANIZATION);
-		Reference serviceProvider = new Reference();
-		serviceProvider.setIdentifier(o.getIdentifier().get(0));
-		e.setServiceProvider(serviceProvider);
+		Organization o = (Organization) Memory.getMemory().get(OrganizationResource.class).get(ORGANIZATION);
+		reference.setIdentifier(o.getIdentifier().get(0));
+		e.setServiceProvider(reference);
 		
 		
 		//set provider....forse è participant?
-		PractitionerRole practitioner = (PractitionerRole) memory.get(ProviderResource.class).get(PROVIDER);
+		PractitionerRole practitioner = (PractitionerRole) Memory.getMemory().get(ProviderResource.class).get(PROVIDER);
 		Encounter.EncounterParticipantComponent prac = new Encounter.EncounterParticipantComponent();
+
+		reference.setIdentifier(practitioner.getPractitionerTarget().getIdentifier().get(0));
 		
-		Reference ref = new Reference();
-		ref.setIdentifier(practitioner.getPractitionerTarget().getIdentifier().get(0));
-		
-		prac.setIndividual(ref).setIndividualTarget(practitioner.getPractitionerTarget()).setType(practitioner.getSpecialty());
+		prac.setIndividual(reference).setIndividualTarget(practitioner.getPractitionerTarget()).setType(practitioner.getSpecialty());
 		e.addParticipant(prac);
 		
 		//set payer
