@@ -178,7 +178,7 @@ public class CareplanResource extends BaseResource{
 		
 		//reason code -- forse category
 		
-		return null;
+		return c;
 	}
 	
 }
