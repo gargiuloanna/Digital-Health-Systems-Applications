@@ -2,6 +2,8 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
 
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Condition;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Meta;
@@ -56,7 +58,8 @@ public class ConditionResource extends BaseResource {
 		Encounter e = (Encounter) Memory.getMemory().get(OrganizationResource.class).get(ENCOUNTER);
 		c.setEncounterTarget(e);
 		
-		//TODO add the snomed code with the description
+		//add the snomed code with the description
+		c.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 		
 		return c;
 	}

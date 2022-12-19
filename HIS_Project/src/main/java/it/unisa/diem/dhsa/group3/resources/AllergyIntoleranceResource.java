@@ -107,18 +107,15 @@ public class AllergyIntoleranceResource extends BaseResource {
 		if(STOP != null)
 			allergy.setLastOccurrence(STOP);
 		
-		Reference r = new Reference();
-		
 		//add patient
 		Patient p = (Patient) Memory.getMemory().get(OrganizationResource.class).get(PATIENT);
-		r.setIdentifier(p.getIdentifier().get(0));
-		allergy.setPatient(r);
+		allergy.setPatientTarget(p);
+		
 		//add encounter
 		Encounter e = (Encounter) Memory.getMemory().get(OrganizationResource.class).get(ENCOUNTER);
-		r.setIdentifier(e.getIdentifier().get(0));
-		allergy.setEncounter(r);
+		allergy.setEncounterTarget(e);
 		
-		//add SNOMED code and description -- TODO: REMEMBER TO ADD THE CHECK FROM THE SNOMED DATABASE
+		//add SNOMED code and description 
 		allergy.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 		
 		
