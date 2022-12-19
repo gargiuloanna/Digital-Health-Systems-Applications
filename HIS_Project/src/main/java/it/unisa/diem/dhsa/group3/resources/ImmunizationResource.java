@@ -62,7 +62,7 @@ public class ImmunizationResource extends BaseResource {
 		a.setProperty("BASE_COST", new Quantity().setValue(BASE_COST));
 		i.addNote(a);
 		
-		return null;
+		return i;
 	}
 
 }

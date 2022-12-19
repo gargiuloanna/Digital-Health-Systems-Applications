@@ -360,7 +360,8 @@ public class PayerResource extends BaseResource{
 		Coverage coverage = new Coverage();
 		//amount uncovered is what the patient has to play on their own since it is not covered by insurance
 		coverage.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(AMOUNT_UNCOVERED));
-		return null;
+		
+		return payer;
 		
 	}
 

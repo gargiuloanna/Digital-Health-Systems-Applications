@@ -168,7 +168,7 @@ public class ObservationResource extends BaseResource{
 		coding.setCode(UNITS).setSystem("http://unitsofmeasure.org");
 		concept.addCoding(new Coding().setCode(UNITS).setSystem("http://unitsofmeasure.org")).setText(VALUE);
 		observation.setValue(concept);
-		return null;
+		return observation;
 	}
 
 }
