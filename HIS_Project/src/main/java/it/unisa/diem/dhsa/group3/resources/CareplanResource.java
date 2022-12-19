@@ -1,13 +1,14 @@
 package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
-import java.util.Map;
 
 import org.hl7.fhir.r4.model.CarePlan;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Goal;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Period;
-import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
@@ -170,10 +171,12 @@ public class CareplanResource extends BaseResource{
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		c.setEncounterTarget(encounter);
 		
-
-		//code --description, ma dovrebbe esser GOAL
+		//code --description, 
+		Goal g = new Goal();
+		c.addGoalTarget().setDescription(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 		
-		//reason code -- forse category
+		//reason code  and description
+		c.addCategory(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 		
 		return c;
 	}
