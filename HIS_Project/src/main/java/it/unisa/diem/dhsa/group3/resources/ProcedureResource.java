@@ -2,10 +2,17 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
 
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Procedure;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
+
+import it.unisa.diem.dhsa.group3.state.Memory;
 
 public class ProcedureResource extends BaseResource{
 	
@@ -144,7 +151,25 @@ public class ProcedureResource extends BaseResource{
 
 	@Override
 	public Resource createResource() {
-		// TODO Auto-generated method stub
+
+		Procedure p = new Procedure();
+		
+		//add date
+		
+		
+		//set patient
+		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
+		p.setSubjectTarget(patient);
+		
+		//set code and description (SNOMED code) 
+		p.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
+		
+		//set code and description (SNOMED code) for the resource
+		p.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
+		
+		Encounter e = (Encounter) Memory.getMemory().get(OrganizationResource.class).get(ENCOUNTER);
+		
+		
 		return null;
 	}
 
