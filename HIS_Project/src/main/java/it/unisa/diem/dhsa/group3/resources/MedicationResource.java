@@ -2,20 +2,32 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
 
+import org.hl7.fhir.r4.model.Annotation;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Medication;
+import org.hl7.fhir.r4.model.MedicationKnowledge;
+import org.hl7.fhir.r4.model.MedicationStatement;
+import org.hl7.fhir.r4.model.Money;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
+import it.unisa.diem.dhsa.group3.state.Memory;
+
 public class MedicationResource extends BaseResource{
 	
 
 	@CsvBindByName
-	@CsvDate("yyyy-MM-dd'T'HH:mm:ss")
+	@CsvDate("yyyy-MM-dd'T'HH:mm'Z'")
 	private Date START;
 	
 	@CsvBindByName
-	@CsvDate("yyyy-MM-dd'T'HH:mm:ss")
+	@CsvDate("yyyy-MM-dd'T'HH:mm'Z'")
 	private Date STOP;
 	
 	@CsvBindByName
@@ -219,10 +231,45 @@ public class MedicationResource extends BaseResource{
 
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Resource createResource() {
-		// TODO Auto-generated method stub
-		return null;
+		MedicationStatement med = new MedicationStatement();
+		
+		//add effective period: the period in which the medication was/is taken
+		if(STOP != null)
+			med.setEffective(new Period().setEnd(STOP).setStart(START));
+		else
+			med.setEffective(new Period().setStart(START));
+		
+		//add patient
+		Patient p = (Patient) Memory.getMemory().get(OrganizationResource.class).get(PATIENT);
+		med.setSubjectTarget(p);
+		
+		//add payer TODO: payer
+		//Resource payer = Memory.getMemory().get(PayerResource.class).get(PAYER);
+		
+		
+		//add encounter
+		Encounter e = (Encounter) Memory.getMemory().get(OrganizationResource.class).get(ENCOUNTER);
+		med.setContextTarget(e);
+		
+		//add base cost for the medicine
+		MedicationKnowledge cost = new MedicationKnowledge();
+		cost.addCost(new MedicationKnowledge.MedicationKnowledgeCostComponent().setCost(new Money().setCurrency("USD").setValue(BASE_COST)));
+		cost.getAssociatedMedicationTarget().add(new Medication().setCode(new CodeableConcept(new Coding("www.nlm.nih.gov/research/umls/rxnorm", CODE, DESCRIPTION))));
+		
+		//set medication --SYSTEM: RxNORM
+		med.setMedication(new CodeableConcept(new Coding("www.nlm.nih.gov/research/umls/rxnorm", CODE, DESCRIPTION)));
+		
+		//add reason
+		med.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
+		
+		//add expenses
+		Annotation a = new Annotation();
+		a.setText("DISPENSES= " + DISPENSES + "TOTALCOST= "+TOTALCOST+"PAYER_COVERAGE= "+PAYER_COVERAGE);
+		med.addNote(a);
+		return med;
 	}
 
 }

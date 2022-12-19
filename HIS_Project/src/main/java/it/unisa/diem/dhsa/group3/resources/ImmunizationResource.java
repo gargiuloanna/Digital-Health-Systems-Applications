@@ -5,7 +5,6 @@ import java.sql.Date;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Immunization;
 import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.Annotation;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -53,13 +52,12 @@ public class ImmunizationResource extends BaseResource {
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		i.setEncounterTarget(encounter);
 		
-		//set vaccine
+		//set vaccine: TODO: check system
 		i.setVaccineCode(new CodeableConcept(new Coding("https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=cvx", CODE, DESCRIPTION)));
 		
 		//add note for BASE COST
 		Annotation a = new Annotation();
-		a.makeProperty(0, "BASE_COST");
-		a.setProperty("BASE_COST", new Quantity().setValue(BASE_COST));
+		a.setText("BASE_COST= " +BASE_COST);
 		i.addNote(a);
 		
 		return i;
