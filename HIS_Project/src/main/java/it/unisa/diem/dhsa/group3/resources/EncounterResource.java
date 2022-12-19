@@ -227,26 +227,18 @@ public class EncounterResource extends BaseResource{
 		period.setStart(START).setEnd(STOP);
 		e.setPeriod(period);
 		
-		Reference reference = new Reference(); //the identifier should change every time it is set - it is unique
 		//set patient
-		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
-		reference.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
-		e.setSubject(reference);
+		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT 
+		e.setSubjectTarget(patient);
 		
 		//set organization
 		Organization o = (Organization) Memory.getMemory().get(OrganizationResource.class).get(ORGANIZATION);
-		reference.setIdentifier(o.getIdentifier().get(0));
-		e.setServiceProvider(reference);
+		e.setServiceProviderTarget(o);
 		
 		
-		//set provider....forse è participant?
+		//set provider
 		PractitionerRole practitioner = (PractitionerRole) Memory.getMemory().get(ProviderResource.class).get(PROVIDER);
-		Encounter.EncounterParticipantComponent prac = new Encounter.EncounterParticipantComponent();
-
-		reference.setIdentifier(practitioner.getPractitionerTarget().getIdentifier().get(0));
-		
-		prac.setIndividual(reference).setIndividualTarget(practitioner.getPractitionerTarget()).setType(practitioner.getSpecialty());
-		e.addParticipant(prac);
+		e.addParticipant().setIndividualTarget(practitioner);
 		
 		//set payer --TODO: REMEMBER TO ADD PAYER
 		//PayerResource payer = (PayerResource) Memory.getMemory().get(PayerResource.class).get(PAYER);

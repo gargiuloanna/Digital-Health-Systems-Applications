@@ -164,14 +164,11 @@ public class CareplanResource extends BaseResource{
 		
 		//set patient
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
-		Reference reference = new Reference();
-		reference.setIdentifier(patient.getIdentifier().get(0)); //associate reference to patient 
-		c.setSubject(reference);
+		c.setSubjectTarget(patient);
 		
 		//set encounter
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
-		reference.setIdentifier(encounter.getIdentifier().get(0));
-		c.setEncounter(reference);
+		c.setEncounterTarget(encounter);
 		
 
 		//code --description, ma dovrebbe esser GOAL
