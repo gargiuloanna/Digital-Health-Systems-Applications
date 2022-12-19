@@ -6,7 +6,6 @@ import org.hl7.fhir.r4.model.CarePlan;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Encounter;
-import org.hl7.fhir.r4.model.Goal;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Resource;
@@ -151,6 +150,7 @@ public class CareplanResource extends BaseResource{
 
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Resource createResource() {
 		CarePlan c = new CarePlan();
@@ -171,8 +171,7 @@ public class CareplanResource extends BaseResource{
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		c.setEncounterTarget(encounter);
 		
-		//code --description, 
-		Goal g = new Goal();
+		//code
 		c.addGoalTarget().setDescription(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 		
 		//reason code  and description

@@ -44,6 +44,7 @@ public class DeviceResource extends BaseResource {
 	@CsvBindByName
 	private String UDI;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Resource createResource() {
 
