@@ -13,6 +13,7 @@ import org.hl7.fhir.r4.model.Resource;
 import it.unisa.diem.dhsa.group3.CSV.LoadCSV;
 import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
 import it.unisa.diem.dhsa.group3.resources.PatientResource;
+import it.unisa.diem.dhsa.group3.state.Memory;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,10 +25,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 // Controller FINITO
-public class ImportCSVsController implements Initializable{
+public class ImportCSVsController implements Initializable {
 
 	@FXML
 	private TextField allergyField;
@@ -76,140 +78,83 @@ public class ImportCSVsController implements Initializable{
 
 	@FXML
 	private TextField transactionField;
-	
-    @FXML
-    private Button sendBtn;
-	
+
+	@FXML
+	private Button sendBtn;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		encounterField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(organizationField.textProperty().isEmpty())
-				.or(providerField.textProperty().isEmpty())
-				.or(payerField.textProperty().isEmpty())
-				);
-		
-		providerField.disableProperty().bind(
-				organizationField.textProperty().isEmpty());
-		
-		transactionField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(payerField.textProperty().isEmpty())
-				);
-		proceduresField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		conditionField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		conditionField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		allergyField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		careplansField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		conditionField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		careplansField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		observationField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		medicationField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		immunizationField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		imagingStudiesField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		devicesField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		supplyField.disableProperty().bind(
-				(patientField.textProperty().isEmpty())
-				.or(encounterField.textProperty().isEmpty())
-				);
-		
-		sendBtn.disableProperty().bind(
-				Bindings.isEmpty(patientField.textProperty())
+		encounterField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(organizationField.textProperty().isEmpty())
+						.or(providerField.textProperty().isEmpty()).or(payerField.textProperty().isEmpty()));
+
+		providerField.disableProperty().bind(organizationField.textProperty().isEmpty());
+
+		transactionField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(payerField.textProperty().isEmpty()));
+		proceduresField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		conditionField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		conditionField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		allergyField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		careplansField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		conditionField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		careplansField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		observationField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		medicationField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		immunizationField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		imagingStudiesField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		devicesField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+		supplyField.disableProperty()
+				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
+
+		sendBtn.disableProperty().bind(Bindings.isEmpty(patientField.textProperty())
 				.and(Bindings.isEmpty(organizationField.textProperty()))
-				.and(Bindings.isEmpty(providerField.textProperty()))
-				.and(Bindings.isEmpty(payerField.textProperty()))
-				.and(Bindings.isEmpty(encounterField.textProperty()))
-				);
-		
+				.and(Bindings.isEmpty(providerField.textProperty())).and(Bindings.isEmpty(payerField.textProperty()))
+				.and(Bindings.isEmpty(encounterField.textProperty())));
+
 	}
 
 	@FXML
 	void send_clicked(ActionEvent event) {
-		boolean patientOK = check(patientField, "patient");
-		boolean organizationOK = check(organizationField, "organization");
-		boolean providerOK = check(providerField, "provider");
+
+		boolean patientOK = check(patientField, "patient", true);
+		boolean organizationOK = check(organizationField, "organization", true);
+		boolean providerOK = check(providerField, "provider", true);
 		boolean payerOK = false;
 		boolean encounterOK = false;
-		
-		//check that dependecies are ok before importing all
-		if (!patientOK || !payerOK || !organizationOK) {
+
+		// check that dependecies are ok before importing all
+		if (!patientOK && !payerOK && !organizationOK) {
 			clearAll();
 			return;
 		}
-		encounterOK = check(encounterField, "encounter");
-		providerOK = check(providerField, "provider");
+		encounterOK = check(encounterField, "encounter", organizationOK && patientOK && providerOK && payerOK);
+		providerOK = check(providerField, "provider", organizationOK);
 		
-		if(patientOK)
-			LoadCSV.importing_resource(patientField.getText());
-		if (payerOK)
-			LoadCSV.importing_resource(payerField.getText());
-		if (organizationOK)
-			LoadCSV.importing_resource(organizationField.getText());
-		if (providerOK && 
-				organizationOK)
-			LoadCSV.importing_resource(providerField.getText());
-		if (encounterOK && 
-				organizationOK && patientOK && providerOK && payerOK)
-			LoadCSV.importing_resource(encounterField.getText());
-		if (check(transactionField, "payer transition") && patientOK && payerOK)
-			LoadCSV.importing_resource(transactionField.getText());
-		if (check(proceduresField, "procedures ") && patientOK && encounterOK)
-			LoadCSV.importing_resource(proceduresField.getText());
-		if (check(conditionField, "condition") && patientOK && encounterOK)
-			LoadCSV.importing_resource(conditionField.getText());
-		if (check(allergyField, "allergies") && patientOK && encounterOK)
-			LoadCSV.importing_resource(allergyField.getText());
-		if (check(careplansField, "care plans") && patientOK && encounterOK)
-			LoadCSV.importing_resource(careplansField.getText());
-		if (check(observationField, "observations") && patientOK && encounterOK)
-			LoadCSV.importing_resource(observationField.getText());
-		if (check(medicationField, "medications") && patientOK && encounterOK)
-			LoadCSV.importing_resource(medicationField.getText());
-		if (check(immunizationField, "immunizations") && patientOK && encounterOK)
-			LoadCSV.importing_resource(immunizationField.getText());
-		if (check(imagingStudiesField, "imaging studies") && patientOK && encounterOK)
-			LoadCSV.importing_resource(imagingStudiesField.getText());
-		if (check(devicesField, "devices") && patientOK && encounterOK)
-			LoadCSV.importing_resource(devicesField.getText());
-		if (check(supplyField, "supplies") && patientOK && encounterOK)
-			LoadCSV.importing_resource(devicesField.getText());
+		check(transactionField, "payer transition", patientOK && payerOK);
+		check(proceduresField, "procedures ", patientOK && encounterOK);
+		check(conditionField, "condition", patientOK && encounterOK);
+		check(allergyField, "allergies", patientOK && encounterOK);
+		check(careplansField, "care plans", patientOK && encounterOK);
+		check(observationField, "observations", patientOK && encounterOK);
+		check(medicationField, "medications", patientOK && encounterOK);
+		check(immunizationField, "immunizations", patientOK && encounterOK);
+		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
+		check(devicesField, "devices", patientOK && encounterOK);
+		check(supplyField, "supplies", patientOK && encounterOK);
 
 		clearAll();
 
@@ -252,14 +197,20 @@ public class ImportCSVsController implements Initializable{
 		alert.showAndWait();
 	}
 
-	private boolean check(TextField field, String message) {
-		if (field.getText().isEmpty() | !(new File(field.getText()).exists())) {
-			error("Choose a valid "+ message + " CSV");
+	private boolean check(TextField field, String message, boolean condition) {
+
+		if (field.getText().isEmpty() |!condition)
+			return false;
+		
+		if (!(new File(field.getText()).exists())
+				| Memory.getMemory().containsKey(LoadCSV.get_class(message))) {
+			error("Choose a valid " + message + " CSV");
+			return false;
 		} else {
-			LoadCSV.importing_resource(field.getText());
+			LoadCSV.importing_resource(field.getText(), get_source_text(field));
 			return true;
 		}
-		return false;
+			
 	}
 
 	private void clearAll() {
@@ -281,4 +232,9 @@ public class ImportCSVsController implements Initializable{
 		transactionField.clear();
 	}
 
+	private String get_source_text(TextField field) {
+		HBox hbox = (HBox) field.getParent();
+		Text text = (Text) hbox.getChildren().get(0);
+		return text.getText();
+	}
 }

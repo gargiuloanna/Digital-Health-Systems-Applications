@@ -16,7 +16,7 @@ import com.opencsv.bean.CsvBindByName;
 import it.unisa.diem.dhsa.group3.enumerations.PracticeSettingCode;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
-public class ProviderResource {
+public class ProviderResource extends BaseResource{
 	
 	//Id,,ORGANIZATION,NAME, GENDER, SPECIALITY, ADDRESS, CITY, STATE, ZIP, LAT, LON, UTILIZATION
 	

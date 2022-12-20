@@ -78,7 +78,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payer" wrappingWidth="130.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payers" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -106,7 +106,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transaction" wrappingWidth="130.0">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions" wrappingWidth="130.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
