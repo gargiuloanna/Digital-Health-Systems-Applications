@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Patient;
@@ -159,7 +160,7 @@ public class ProcedureResource extends BaseResource{
 		p.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"));
 				
 		//add date
-		
+		p.setPerformed(new DateTimeType(DATE));
 		
 		//set patient
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
@@ -171,10 +172,26 @@ public class ProcedureResource extends BaseResource{
 		//set code and description (SNOMED code) for the resource
 		p.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 		
+		// Set Encounter related to the Procedure
 		Encounter e = (Encounter) Memory.getMemory().get(OrganizationResource.class).get(ENCOUNTER);
+		p.setEncounterTarget(e);
 		
+		// Set Status of the Procedure
+		p.setStatus(getStatus());
 		
 		return null;
+	}
+	
+	private Procedure.ProcedureStatus getStatus() {
+		if(DATE == null)
+			return Procedure.ProcedureStatus.NULL;
+		else if(DATE.after(DateTimeType.now().getValue()))
+			return Procedure.ProcedureStatus.NOTDONE;
+		else if (DATE.before(DateTimeType.now().getValue()))
+			return Procedure.ProcedureStatus.COMPLETED;
+		else
+			return Procedure.ProcedureStatus.UNKNOWN;
+	
 	}
 
 }
