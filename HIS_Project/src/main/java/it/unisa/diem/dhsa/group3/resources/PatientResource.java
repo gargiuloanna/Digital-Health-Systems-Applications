@@ -93,8 +93,7 @@ public class PatientResource extends BaseResource{
 	@CsvBindByName
 	private Float HEALTHCARE_COVERAGE;
 	
-	
-
+	public PatientResource() {}
 	public PatientResource(Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
 			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
 			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
@@ -125,8 +124,8 @@ public class PatientResource extends BaseResource{
 		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
-	
-	
+
+
 
 	public PatientResource(LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
 			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,

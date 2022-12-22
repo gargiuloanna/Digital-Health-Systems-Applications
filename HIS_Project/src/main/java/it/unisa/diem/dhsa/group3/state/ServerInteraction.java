@@ -22,18 +22,16 @@ import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
 public class ServerInteraction {
 
-	public static List<String> sendToServer() {
+	public static List<String> sendToServer(boolean update) {
 		List<String> ids = new ArrayList<>();
 		Memory mem = Memory.getMemory();
-		FhirContext ctx = Context.getContext().get();
-		IGenericClient client = ctx.newRestfulGenericClient(Context.server);
-		MethodOutcome methodOutcome;
+		String id;
 		for (Map<String, Resource> map : mem.values())
 			for (Resource resource : map.values()) {
 				try {
-					methodOutcome = uploadResource(resource, false);
-					System.out.println((methodOutcome.getOperationOutcome()));
-					// ids.add(methodOutcome.getOperationOutcome().getIdElement().getIdPart());
+					id = uploadResource(resource, update);
+					System.out.println(id);
+					ids.add(id);
 				} catch (FhirClientConnectionException e) {
 					System.out.println("Error in the connection");
 				}
@@ -43,37 +41,48 @@ public class ServerInteraction {
 	}
 
 	public static Resource getResource(String identifier) throws FhirClientConnectionException {
-		final String id;
+		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+		String id;
 		if (identifier == "") {
 			id = "0";
 		} else
 			id = identifier;
 
-		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+		System.out.println(id);
+		try {
+			Thread.sleep(50000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 		Bundle bundle;
-		bundle = client.search().forResource(Patient.class).where(new TokenClientParam("identifier").exactly()
-				// .systemAndCode("https://github.com/synthetichealth/synthea", id)
-				.code(id)).prettyPrint().returnBundle(Bundle.class).execute();
+		bundle = client.search().forResource(Patient.class).where(new TokenClientParam("identifier").exactly().code(id))
+				.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
+		// .systemAndCode("https://github.com/synthetichealth/synthea", id)
 		if (bundle.isEmpty())
 			return null;
 		return bundle.getEntryFirstRep().getResource();
 
 	}
 
-	public static MethodOutcome uploadResource(Resource new_resource, boolean update)
-			throws FhirClientConnectionException {
+	public static String uploadResource(Resource new_resource, boolean update) throws FhirClientConnectionException {
 
 		FhirContext ctx = Context.getContext();
 		IGenericClient client = ctx.newRestfulGenericClient(Context.server);
-		Resource old_resource = getResource(new_resource.getId());
-		if (old_resource == null || !update) {
-			return null;
+		Resource old_resource = getResource(new_resource.getId()); // ID is an identifier
+		MethodOutcome methodOutcome = null;
+		if (old_resource != null) {
+			System.out.println("COSA");
+			if (!update)
+				return old_resource.getIdElement().getIdPart();
+			if (update)
+				new_resource.setId(old_resource.getIdElement().getVersionIdPart());
 		}
-		if (update)
-			new_resource.setId(old_resource.getIdElement().getVersionIdPart());
-
-		return client.create().resource(new_resource).prettyPrint().encodedJson().execute();
+		System.out.println("COSA DUE");
+		methodOutcome = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
+		return methodOutcome.getOperationOutcome().getIdElement().getIdPart();
 
 	}
 

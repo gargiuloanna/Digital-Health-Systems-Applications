@@ -93,7 +93,7 @@ public class PatientAdmissionController implements Initializable {
 	private Button SubmitButton;
 
 	@FXML
-	private Button LoadPatient;
+	private Button SearchButton;
 
 	@FXML
 	private TextField SSNField;
@@ -190,26 +190,31 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	void searchCode(ActionEvent event) {
-		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank())
+		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank()) {
+			System.out.println("cosa");
 			return;
+		}
+		
 		progressBar.setVisible(true);
 		progressBar.setOpacity(1.0);
-		enableFields();
+		
 		String id = searchPatientField.getText();
 		try {
 		Resource r = ServerInteraction.getResource(id);
 		if (r != null) {
 			fillFields((Patient) r);
+			enableFields();
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
 			alert.showAndWait();
 		}
-		enableFields();
+		
 		progressBar.setVisible(false);
 		} catch(FhirClientConnectionException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.", ButtonType.OK);
 			alert.showAndWait();
 		}
+		
 
 	}
 
@@ -220,7 +225,7 @@ public class PatientAdmissionController implements Initializable {
 
 	}
 
-	@FXML
+	/*@FXML
 	void LoadPatientPressed(ActionEvent event) {
 
 		FileChooser chooser = new FileChooser();
@@ -240,7 +245,7 @@ public class PatientAdmissionController implements Initializable {
 
 		}
 
-	}
+	}*/
 
 	@FXML
 	void maritalSelected(ActionEvent event) {
