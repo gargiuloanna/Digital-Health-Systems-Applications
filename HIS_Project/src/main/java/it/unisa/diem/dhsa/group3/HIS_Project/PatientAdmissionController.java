@@ -304,8 +304,8 @@ public class PatientAdmissionController implements Initializable {
 	private void fillFields(Patient patient) {
 
 		// add id
-		IDField.setText(patient.getId()); // TODO now it is empty because it is not on the server
-
+		IDField.setText(patient.getIdElement().getVersionIdPart()); // TODO now it is empty because it is not on the server
+		IDField.setDisable(true);
 		int index = 0;
 		// it insert the first name in the field of the name
 		for (HumanName humanName : patient.getName()) {
