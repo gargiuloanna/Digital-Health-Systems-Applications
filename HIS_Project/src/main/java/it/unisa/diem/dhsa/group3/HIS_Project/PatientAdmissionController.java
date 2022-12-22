@@ -3,6 +3,7 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -16,6 +17,7 @@ import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 import it.unisa.diem.dhsa.group3.resources.PatientResource;
@@ -24,7 +26,6 @@ import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
@@ -33,15 +34,19 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 
 public class PatientAdmissionController implements Initializable {
 
@@ -140,6 +145,9 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	private MenuButton MaritalMenuButton;
+	
+	@FXML
+	private ProgressIndicator progressBar;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -171,8 +179,7 @@ public class PatientAdmissionController implements Initializable {
 		disableFields(); // disable fields that must not be accessible at the opening
 
 		// binding of the button with the fields that should enable it
-		SubmitButton.disableProperty().bind(Bindings.isEmpty(searchPatientField.textProperty())
-				.and(Bindings.isEmpty(FirstNameField.textProperty())));
+		SubmitButton.disableProperty().bind(Bindings.isEmpty(FirstNameField.textProperty()));
 
 	}
 
@@ -183,17 +190,34 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	void searchCode(ActionEvent event) {
-		enableFields();
+		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank())
+			return;
+		progressBar.setVisible(true);
+		progressBar.setProgress(0.1);
 		String id = searchPatientField.getText();
-		Resource resource = ServerInteraction.getResource(id);
-		if (resource != null)
-			fillFields((Patient) resource);
+		try {
+		Resource r = ServerInteraction.getResource(id);
+		if (r != null) {
+			System.out.println(r);
+			fillFields((Patient) r);
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
+			alert.showAndWait();
+		}
+		enableFields();
+		progressBar.setVisible(false);
+		} catch(FhirClientConnectionException e) {
+			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.", ButtonType.OK);
+			alert.showAndWait();
+		}
+		
+		
 	}
 
 	@FXML
-	void submitPressed(ActionEvent event) throws IOException {
-		if (TabPane.isDisabled())
-			searchCode(event);
+	void submitPressed(ActionEvent event) throws IOException, NumberFormatException, ParseException {
+		PatientResource p = createPatient();
+		p.createResource();
 
 	}
 
@@ -222,9 +246,9 @@ public class PatientAdmissionController implements Initializable {
 	@FXML
 	void maritalSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
-		MaritalMenuButton.setText(e.getText());
-		String maritalCode = maritalCode(e.getText());
-		System.out.println(maritalCode); // TODO remove
+		MaritalMenuButton.setText(maritalCode(e.getText()));
+		//String maritalCode = maritalCode(e.getText());
+		//return maritalCode; 
 	}
 
 	private String maritalCode(String maritalText) {
@@ -258,21 +282,12 @@ public class PatientAdmissionController implements Initializable {
 	void raceSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		RacePicker.setText(e.getText());
-		String raceCode = e.getText().split(" ")[0].toLowerCase();
-		// System.out.println(raceCode); //TODO remove
 	}
 
 	@FXML
 	void ethnicitySelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		EthnicityField.setText(e.getText());
-
-		String ethnicityCode;
-		if (e.getText().equals("Hispanic or Latino"))
-			ethnicityCode = "hispanic";
-		else
-			ethnicityCode = "nonhispanic";
-		// System.out.println(ethnicityCode); //TODO remove
 	}
 
 	private void enableFields() {
@@ -288,6 +303,7 @@ public class PatientAdmissionController implements Initializable {
 		TabPane.setDisable(true);
 		IDField.setDisable(true);
 		patientID.setDisable(true);
+		progressBar.setVisible(false);
 	}
 
 	private void fillFields(Patient patient) {
@@ -407,6 +423,43 @@ public class PatientAdmissionController implements Initializable {
 			LONField.setText(dec.asStringValue());
 		}
 
+	}
+	
+	private String gender() {
+		if(MgenderButton.isSelected())
+			return "M";
+		if(FgenderButton.isSelected())
+			return "F";
+		return null;
+	}
+	
+	private PatientResource createPatient() throws NumberFormatException, ParseException{
+		return new PatientResource(
+				BirthDatePicker.getValue(),
+				DeathDatePicker.getValue(),
+				SSNField.getText(),
+				DriversField.getText(),
+				PassportField.getText(),
+				PrefixField.getText(),
+				FirstNameField.getText(),
+				LastNameField.getText(),
+				SuffixField.getText(),
+				MaidenField.getText(),
+				MaritalMenuButton.getText(),
+				RacePicker.getText(),
+				EthnicityField.getText(),
+				gender(),
+				BirthPlaceField.getText(),
+				AddressField.getText(),
+				CityField.getText(),
+				StateField.getText(),
+				CountyField.getText(),
+				ZIPField.getText(),
+				Float.parseFloat(LATField.getText()),
+				Float.parseFloat(LONField.getText()),
+				Float.parseFloat(ExpensesField.getText()),
+				Float.parseFloat(CoverageField.getText())
+				);
 	}
 
 }

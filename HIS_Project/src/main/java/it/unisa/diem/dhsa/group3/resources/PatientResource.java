@@ -1,5 +1,8 @@
 package it.unisa.diem.dhsa.group3.resources;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
 //import java.util.Date;
 import java.util.Date;
 
@@ -89,6 +92,73 @@ public class PatientResource extends BaseResource{
 
 	@CsvBindByName
 	private Float HEALTHCARE_COVERAGE;
+	
+	
+
+	public PatientResource(Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
+			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
+			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
+			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) {
+		super();
+		BIRTHDATE = bIRTHDATE;
+		DEATHDATE = dEATHDATE;
+		SSN = sSN;
+		DRIVERS = dRIVERS;
+		PASSPORT = pASSPORT;
+		PREFIX = pREFIX;
+		FIRST = fIRST;
+		LAST = lAST;
+		SUFFIX = sUFFIX;
+		MAIDEN = mAIDEN;
+		MARITAL = mARITAL;
+		RACE = rACE;
+		ETHNICITY = eTHNICITY;
+		GENDER = gENDER;
+		BIRTHPLACE = bIRTHPLACE;
+		ADDRESS = aDDRESS;
+		CITY = cITY;
+		STATE = sTATE;
+		COUNTY = cOUNTY;
+		ZIP = zIP;
+		LAT = lAT;
+		LON = lON;
+		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
+		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
+	}
+	
+	
+
+	public PatientResource(LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
+			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
+			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
+			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) throws ParseException {
+		super();
+		BIRTHDATE = DateFormat.getInstance().parse(bIRTHDATE.toString());
+		DEATHDATE = DateFormat.getInstance().parse(dEATHDATE.toString());;
+		SSN = sSN;
+		DRIVERS = dRIVERS;
+		PASSPORT = pASSPORT;
+		PREFIX = pREFIX;
+		FIRST = fIRST;
+		LAST = lAST;
+		SUFFIX = sUFFIX;
+		MAIDEN = mAIDEN;
+		MARITAL = mARITAL;
+		RACE = rACE;
+		ETHNICITY = eTHNICITY;
+		GENDER = gENDER;
+		BIRTHPLACE = bIRTHPLACE;
+		ADDRESS = aDDRESS;
+		CITY = cITY;
+		STATE = sTATE;
+		COUNTY = cOUNTY;
+		ZIP = zIP;
+		LAT = lAT;
+		LON = lON;
+		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
+		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
+	}
+
 
 
 	public Date getBIRTHDATE() {
@@ -293,7 +363,7 @@ public class PatientResource extends BaseResource{
 				+ LAT + ", LON=" + LON + ", HEALTHCARE_EXPENSES=" + HEALTHCARE_EXPENSES + ", HEALTHCARE_COVERAGE="
 				+ HEALTHCARE_COVERAGE + "]";
 	}
-
+	
 	@Override
 	public Resource createResource() {
 
@@ -371,5 +441,7 @@ public class PatientResource extends BaseResource{
 
 		return p;
 	}
+	
+	
 
 }
