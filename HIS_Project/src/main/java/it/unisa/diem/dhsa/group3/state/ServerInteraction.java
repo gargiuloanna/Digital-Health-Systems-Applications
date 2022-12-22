@@ -27,9 +27,9 @@ public class ServerInteraction {
 		Memory mem = Memory.getMemory();
 		String id;
 		for (Map<String, Resource> map : mem.values())
-			for (Resource resource : map.values()) {
+			for (String key : map.keySet()) {
 				try {
-					id = uploadResource(resource, update);
+					id = uploadResource(key, map.get(key), update);
 					System.out.println(id);
 					ids.add(id);
 				} catch (FhirClientConnectionException e) {
@@ -48,16 +48,6 @@ public class ServerInteraction {
 		} else
 			id = identifier;
 
-		System.out.println("id "+ id);
-		System.out.println("identifier "+ identifier);
-		try {
-			Thread.sleep(50000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
 		Bundle bundle;
 		bundle = client.search().forResource(Patient.class).where(new TokenClientParam("identifier").exactly().code(id))
 				.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
@@ -68,12 +58,12 @@ public class ServerInteraction {
 
 	}
 
-	public static String uploadResource(Resource new_resource, boolean update) throws FhirClientConnectionException {
+	public static String uploadResource(String id, Resource new_resource, boolean update)
+			throws FhirClientConnectionException {
 
-		Patient r = (Patient) new_resource;
 		FhirContext ctx = Context.getContext();
 		IGenericClient client = ctx.newRestfulGenericClient(Context.server);
-		Resource old_resource = getResource(r.getIdentifierFirstRep().getValue()); // ID is an identifier
+		Resource old_resource = getResource(id);
 		MethodOutcome methodOutcome = null;
 		if (old_resource != null) {
 			if (!update)
@@ -82,7 +72,6 @@ public class ServerInteraction {
 				new_resource.setId(old_resource.getIdElement().getVersionIdPart());
 		}
 		methodOutcome = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
-		System.out.println("ho caricato");
 		return methodOutcome.getId().getValue();
 
 	}
