@@ -236,19 +236,19 @@ public enum PracticeSettingCode {
 		
 		if (description == null || "".equalsIgnoreCase(description))
 			return NULL;
-		if ("general practise".equalsIgnoreCase(description))
+		if ("general practice".equalsIgnoreCase(description))
 			return _394814009;
 		if ("internal medicine".equalsIgnoreCase(description))
 			return _419192003;
-		if ("family practise".equalsIgnoreCase(description))
+		if ("family practice".equalsIgnoreCase(description))
 			return _419772000;
-		if ("physicial theraphy".equalsIgnoreCase(description))
+		if ("physical theraphy".equalsIgnoreCase(description))
 			return _722138006;
 		if ("chiropractic".equalsIgnoreCase(description))
 			return _722170006;
 		if ("nurse practitioner".equalsIgnoreCase(description))
 			return _224571005;
-		if ("clinical phychologist".equalsIgnoreCase(description))
+		if ("clinical psychologist".equalsIgnoreCase(description))
 			return _310191001;
 		if ("clinical social worker".equalsIgnoreCase(description))
 			return _158950001;
@@ -256,7 +256,7 @@ public enum PracticeSettingCode {
 			return _224570006;
 		if ("ophthalmology".equalsIgnoreCase(description))
 			return _394594003;
-		if ("phychiatry".equalsIgnoreCase(description))
+		if ("psychiatry".equalsIgnoreCase(description))
 			return _394587001;
 		if ("physician assistant".equalsIgnoreCase(description))
 			return _449161006;
@@ -272,7 +272,7 @@ public enum PracticeSettingCode {
 			return _394591006;
 		if ("hospitalist".equalsIgnoreCase(description))
 			return _768837005;
-		if ("medical pediatric".equalsIgnoreCase(description))
+		if ("pediatric medicine".equalsIgnoreCase(description))
 			return _394537008;
 		if ("rheumatology".equalsIgnoreCase(description))
 			return _394810000;
@@ -292,9 +292,9 @@ public enum PracticeSettingCode {
 			return _394585009;
 		if ("dermatology".equalsIgnoreCase(description))
 			return _394582007;
-		if ("orthopedic surgery:".equalsIgnoreCase(description))
+		if ("orthopedic surgery".equalsIgnoreCase(description))
 			return _394801008;
-		if ("physicial medicine and rehabilitation".equalsIgnoreCase(description))
+		if ("physical medicine and rehabilitation".equalsIgnoreCase(description))
 			return _722424008;
 		if ("registered dietitian or nutrition professional".equalsIgnoreCase(description))
 			return _159033005;
@@ -302,7 +302,7 @@ public enum PracticeSettingCode {
 			return _446701002;
 		if ("thoracic surgery".equalsIgnoreCase(description))
 			return _408456005;
-		if ("speech language pathology".equalsIgnoreCase(description))
+		if ("speech language pathologist".equalsIgnoreCase(description))
 			return _159026005;
 		if ("pulmonary disease".equalsIgnoreCase(description))
 			return _418112009;
@@ -370,15 +370,15 @@ public enum PracticeSettingCode {
 			return _419321007;
 		if ("preventative medicine".equalsIgnoreCase(description))
 			return _409968004;
-		if ("neurophysichiatry".equalsIgnoreCase(description))
+		if ("neuropsychiatry".equalsIgnoreCase(description))
 			return _21450003;
-		if ("hematologist".equalsIgnoreCase(description))
+		if ("hematology".equalsIgnoreCase(description))
 			return _40204001;
 		if ("emergency medicine".equalsIgnoreCase(description))
 			return _773568002;
 		if ("general surgery".equalsIgnoreCase(description))
 			return _394609007;
-		if ("geriatric physichiatry".equalsIgnoreCase(description))
+		if ("geriatric pysichiatry".equalsIgnoreCase(description))
 			return _309364005;
 		if ("cardiac electrophysiology".equalsIgnoreCase(description))
 			return _1251551007;
@@ -386,8 +386,11 @@ public enum PracticeSettingCode {
 			return _408471009;
 		if ("anesthesiology assistant".equalsIgnoreCase(description))
 			return _309445003;
-
+		if("cardiac surgery".equalsIgnoreCase(description))
+			return _408466002;
 		return null;
+
+
 
 	}
 
@@ -536,7 +539,7 @@ public enum PracticeSettingCode {
 		case _394609007:
 			return "394609007";/* GENERAL SURGERY */
 		case _309364005:
-			return "309364005";/* GERIATRIC PHYSICHIATRY */
+			return "309364005";/* GERIATRIC PSYCHIATRY */
 		case _1251551007:
 			return "1251551007";/* CARDIAC ELECTROPHYSIOLOGY */
 		case _408471009:
