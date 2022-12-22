@@ -186,8 +186,9 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	void searchCode(ActionEvent event) {
-		progressBar.setVisible(true);
+		progressBar.setOpacity(1.0);
 		enableFields();
+		/*
 		String id = searchPatientField.getText();
 		IGenericClient client = Context.getContext().get().newRestfulGenericClient(Context.server);
 		Bundle bundle = client.search().forResource(Patient.class).where(Patient.IDENTIFIER.exactly().identifier(id))
@@ -199,11 +200,10 @@ public class PatientAdmissionController implements Initializable {
 			String patient = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
 			System.out.println(patient);
 		}* 
-		 */
+		 
 		if (!bundle.isEmpty()) {
 			fillFields((Patient) bundle.getEntryFirstRep().getResource());
-			progressBar.setVisible(false);
-		}
+		}*/
 		
 	}
 
@@ -296,7 +296,7 @@ public class PatientAdmissionController implements Initializable {
 		TabPane.setDisable(true);
 		IDField.setDisable(true);
 		patientID.setDisable(true);
-		progressBar.setVisible(false);
+		progressBar.setOpacity(0);
 	}
 
 	private void fillFields(Patient patient) {

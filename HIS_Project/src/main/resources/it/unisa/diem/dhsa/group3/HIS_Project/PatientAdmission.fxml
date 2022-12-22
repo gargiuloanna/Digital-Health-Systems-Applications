@@ -80,7 +80,7 @@
                   </Button>
                   <ProgressIndicator fx:id="progressBar" prefHeight="3.0" prefWidth="30.0">
                      <HBox.margin>
-                        <Insets left="12.0" top="12.0" />
+                        <Insets left="12.0" top="10.0" />
                      </HBox.margin>
                   </ProgressIndicator>
                </children>
