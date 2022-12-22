@@ -20,6 +20,7 @@ import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 import it.unisa.diem.dhsa.group3.resources.PatientResource;
 import it.unisa.diem.dhsa.group3.state.Context;
+import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 
 import org.hl7.fhir.r4.model.Address;
 import org.hl7.fhir.r4.model.Bundle;
@@ -184,21 +185,9 @@ public class PatientAdmissionController implements Initializable {
 	void searchCode(ActionEvent event) {
 		enableFields();
 		String id = searchPatientField.getText();
-		IGenericClient client = Context.getContext().get().newRestfulGenericClient(Context.server);
-		Bundle bundle = client.search().forResource(Patient.class).where(Patient.IDENTIFIER.exactly().identifier(id))
-		.returnBundle(Bundle.class).execute();
-		System.out.println((Patient) bundle.getEntryFirstRep().getResource());
-		/*for (BundleEntryComponent c: bundle.getEntry()) {
-		 
-			Patient p =  (Patient) c.getResource();
-			String patient = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
-			System.out.println(patient);
-		}* 
-		 */
-		if (!bundle.isEmpty()) {
-			fillFields((Patient) bundle.getEntryFirstRep().getResource());
-		}
-		
+		Resource resource = ServerInteraction.getResource(id);
+		if (resource != null)
+			fillFields((Patient) resource);
 	}
 
 	@FXML

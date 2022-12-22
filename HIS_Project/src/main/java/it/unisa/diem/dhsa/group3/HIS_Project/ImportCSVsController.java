@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import it.unisa.diem.dhsa.group3.CSV.LoadCSV;
 import it.unisa.diem.dhsa.group3.state.Memory;
+import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -146,7 +147,7 @@ public class ImportCSVsController implements Initializable {
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
 		check(supplyField, "supplies", patientOK && encounterOK);
-		Memory.getMemory().send_to_server();
+		ServerInteraction.sendToServer();
 		clearAll();
 
 	}

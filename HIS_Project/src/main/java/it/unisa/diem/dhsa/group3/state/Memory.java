@@ -28,21 +28,6 @@ public class Memory implements Map<Class<? extends BaseResource>, Map<String, Re
 		return mem;
 	}
 
-	public void send_to_server() {
-		if (mem == null)
-			return;
-		FhirContext ctx = Context.getContext().get();
-		IGenericClient client = ctx.newRestfulGenericClient("http://192.168.71.103:8080/fhir");
-		MethodOutcome methodOutcome;
-		for (Map<String, Resource> map : resources.values())
-			for (Resource resource : map.values()) {
-				methodOutcome = client.create().resource(resource).prettyPrint().encodedJson().execute();
-				System.out.println(methodOutcome.getId().getValue());
-			}
-		System.out.println("finito");
-
-	}
-
 	@Override
 	public int size() {
 		return resources.size();
