@@ -1,8 +1,5 @@
 package it.unisa.diem.dhsa.group3.CSV;
 
-import java.util.Map;
-
-import org.hl7.fhir.r4.model.Resource;
 
 import it.unisa.diem.dhsa.group3.resources.*;
 import it.unisa.diem.dhsa.group3.state.Memory;

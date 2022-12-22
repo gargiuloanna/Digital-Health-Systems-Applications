@@ -107,11 +107,11 @@ public class AllergyIntoleranceResource extends BaseResource {
 			allergy.setLastOccurrence(STOP);
 		
 		//add patient
-		Patient p = (Patient) Memory.getMemory().get(OrganizationResource.class).get(PATIENT);
+		Patient p = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		allergy.setPatientTarget(p);
 		
 		//add encounter
-		Encounter e = (Encounter) Memory.getMemory().get(OrganizationResource.class).get(ENCOUNTER);
+		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		allergy.setEncounterTarget(e);
 		
 		//add SNOMED code and description 

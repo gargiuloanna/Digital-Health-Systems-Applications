@@ -3,16 +3,8 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
-
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Resource;
-
 import it.unisa.diem.dhsa.group3.CSV.LoadCSV;
-import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
-import it.unisa.diem.dhsa.group3.resources.PatientResource;
 import it.unisa.diem.dhsa.group3.state.Memory;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -23,7 +15,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
