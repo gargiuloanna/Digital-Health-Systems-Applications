@@ -244,11 +244,11 @@ public class EncounterResource extends BaseResource{
 		PractitionerRole practitioner = (PractitionerRole) Memory.getMemory().get(ProviderResource.class).get(PROVIDER);
 		e.addParticipant().setIndividualTarget(practitioner);
 		
-		//set payer --TODO: REMEMBER TO ADD PAYER
-		//PayerResource payer = (PayerResource) Memory.getMemory().get(PayerResource.class).get(PAYER);
-		// account should be 
-		
-		
+		//set payer
+		Organization payer = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
+		Account a = new Account();
+		a.addCoverage().setCoverage(new Reference().setIdentifier(payer.getIdentifier().get(0)));
+
 		//class --TODO: controllare la classe, prof disse: fare con SNOMED regimeTherapy  o con snomed o con us core 
 		EncounterClass eclass = EncounterClass.fromCSV(ENCOUNTERCLASS);
 		e.setClass_(new Coding(eclass.getSystem(), eclass.toCode(), eclass.getDefinition()));
@@ -258,6 +258,9 @@ public class EncounterResource extends BaseResource{
 		e.addType(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), code.getDefinition())));
 		
 		//TODO:base encounter cost e total claim cost
+		//Annotation ann = new Annotation();
+		//ann.setText("TOTAL_CLAIM_COST= " + TOTAL_CLAIM_COST +"PAYER_COVERAGE= "+PAYER_COVERAGE);
+		//e.addNote(ann);
 		
 		//add reason code -- TODO: check SNOMED codes!!!
 		e.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
