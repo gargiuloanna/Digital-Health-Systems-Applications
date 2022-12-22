@@ -236,157 +236,157 @@ public enum PracticeSettingCode {
 		
 		if (description == null || "".equalsIgnoreCase(description))
 			return NULL;
-		if ("general practice".equalsIgnoreCase(description))
+		if ("GENERAL PRACTICE".equalsIgnoreCase(description))
 			return _394814009;
-		if ("internal medicine".equalsIgnoreCase(description))
+		if ("INTERNAL MEDICINE".equalsIgnoreCase(description))
 			return _419192003;
-		if ("family practice".equalsIgnoreCase(description))
+		if ("FAMILY PRACTICE".equalsIgnoreCase(description))
 			return _419772000;
-		if ("physical theraphy".equalsIgnoreCase(description))
+		if ("PHYSICAL THERAPY".equalsIgnoreCase(description))
 			return _722138006;
-		if ("chiropractic".equalsIgnoreCase(description))
+		if ("CHIROPRACTIC".equalsIgnoreCase(description))
 			return _722170006;
-		if ("nurse practitioner".equalsIgnoreCase(description))
+		if ("NURSE PRACTITIONER".equalsIgnoreCase(description))
 			return _224571005;
-		if ("clinical psychologist".equalsIgnoreCase(description))
+		if ("CLINICAL PSYCHOLOGIST".equalsIgnoreCase(description))
 			return _310191001;
-		if ("clinical social worker".equalsIgnoreCase(description))
+		if ("CLINICAL SOCIAL WORKER".equalsIgnoreCase(description))
 			return _158950001;
-		if ("clinical nurse specialist".equalsIgnoreCase(description))
+		if ("CLINICAL NURSE SPECIALIST".equalsIgnoreCase(description))
 			return _224570006;
-		if ("ophthalmology".equalsIgnoreCase(description))
+		if ("OPHTHALMOLOGY".equalsIgnoreCase(description))
 			return _394594003;
-		if ("psychiatry".equalsIgnoreCase(description))
+		if ("PSYCHIATRY".equalsIgnoreCase(description))
 			return _394587001;
-		if ("physician assistant".equalsIgnoreCase(description))
+		if ("PHYSICIAN ASSISTANT".equalsIgnoreCase(description))
 			return _449161006;
-		if ("urology".equalsIgnoreCase(description))
+		if ("UROLOGY".equalsIgnoreCase(description))
 			return _394612005;
-		if ("plastic and recostructive surgery".equalsIgnoreCase(description))
+		if ("PLASTIC AND RECONSTRUCTIVE SURGERY".equalsIgnoreCase(description))
 			return _394611003;
-		if ("optometry".equalsIgnoreCase(description))
+		if ("OPTOMETRY".equalsIgnoreCase(description))
 			return _310105000;
-		if ("gastroenterology".equalsIgnoreCase(description))
+		if ("GASTROENTEROLOGY".equalsIgnoreCase(description))
 			return _394584008;
-		if ("neurology".equalsIgnoreCase(description))
+		if ("NEUROLOGY".equalsIgnoreCase(description))
 			return _394591006;
-		if ("hospitalist".equalsIgnoreCase(description))
+		if ("HOSPITALIST".equalsIgnoreCase(description))
 			return _768837005;
-		if ("pediatric medicine".equalsIgnoreCase(description))
+		if ("PEDIATRIC MEDICINE".equalsIgnoreCase(description))
 			return _394537008;
-		if ("rheumatology".equalsIgnoreCase(description))
+		if ("RHEUMATOLOGY".equalsIgnoreCase(description))
 			return _394810000;
-		if ("podiatry".equalsIgnoreCase(description))
+		if ("PODIATRY".equalsIgnoreCase(description))
 			return _722166003;
-		if ("certified nurse midwife".equalsIgnoreCase(description))
+		if ("CERTIFIED NURSE MIDWIFE".equalsIgnoreCase(description))
 			return _224534008;
-		if ("endocrinology".equalsIgnoreCase(description))
+		if ("ENDOCRINOLOGY".equalsIgnoreCase(description))
 			return _394583002;
-		if ("diagnostic radiology".equalsIgnoreCase(description))
+		if ("DIAGNOSTIC RADIOLOGY".equalsIgnoreCase(description))
 			return _394914008;
-		if ("audiologist".equalsIgnoreCase(description))
+		if ("AUDIOLOGIST".equalsIgnoreCase(description))
 			return _309418004;
-		if ("cardiovascular disease (cardiology)".equalsIgnoreCase(description))
+		if ("CARDIOVASCULAR DISEASE (CARDIOLOGY)".equalsIgnoreCase(description))
 			return _394579002;
-		if ("obstetrics/gynecology".equalsIgnoreCase(description))
+		if ("OBSTETRICS/GYNECOLOGY".equalsIgnoreCase(description))
 			return _394585009;
-		if ("dermatology".equalsIgnoreCase(description))
+		if ("DERMATOLOGY".equalsIgnoreCase(description))
 			return _394582007;
-		if ("orthopedic surgery".equalsIgnoreCase(description))
+		if ("ORTHOPEDIC SURGERY".equalsIgnoreCase(description))
 			return _394801008;
-		if ("physical medicine and rehabilitation".equalsIgnoreCase(description))
+		if ("PHYSICAL MEDICINE AND REHABILITATION".equalsIgnoreCase(description))
 			return _722424008;
-		if ("registered dietitian or nutrition professional".equalsIgnoreCase(description))
+		if ("REGISTERED DIETITIAN OR NUTRITION PROFESSIONAL".equalsIgnoreCase(description))
 			return _159033005;
-		if ("addiction medicine".equalsIgnoreCase(description))
+		if ("ADDICTION MEDICINE".equalsIgnoreCase(description))
 			return _446701002;
-		if ("thoracic surgery".equalsIgnoreCase(description))
+		if ("THORACIC SURGERY".equalsIgnoreCase(description))
 			return _408456005;
-		if ("speech language pathologist".equalsIgnoreCase(description))
+		if ("SPEECH LANGUAGE PATHOLOGIST".equalsIgnoreCase(description))
 			return _159026005;
-		if ("pulmonary disease".equalsIgnoreCase(description))
+		if ("PULMONARY DISEASE".equalsIgnoreCase(description))
 			return _418112009;
-		if ("interventional pain management".equalsIgnoreCase(description))
+		if ("INTERVENTIONAL PAIN MANAGEMENT".equalsIgnoreCase(description))
 			return _394882004;
-		if ("otolaryngology".equalsIgnoreCase(description))
+		if ("OTOLARYNGOLOGY".equalsIgnoreCase(description))
 			return _418960008;
-		if ("hematology/oncology".equalsIgnoreCase(description))
+		if ("HEMATOLOGY/ONCOLOGY".equalsIgnoreCase(description))
 			return _394803006;
-		if ("vascular surgery".equalsIgnoreCase(description))
+		if ("VASCULAR SURGERY".equalsIgnoreCase(description))
 			return _408463005;
-		if ("hand surgery".equalsIgnoreCase(description))
+		if ("HAND SURGERY".equalsIgnoreCase(description))
 			return _310157000;
-		if ("interventional cardiology".equalsIgnoreCase(description))
+		if ("INTERVENTIONAL CARDIOLOGY".equalsIgnoreCase(description))
 			return _408466002;
-		if ("pathology".equalsIgnoreCase(description))
+		if ("PATHOLOGY".equalsIgnoreCase(description))
 			return _394595002;
-		if ("geriatric medicine".equalsIgnoreCase(description))
+		if ("GERIATRIC MEDICINE".equalsIgnoreCase(description))
 			return _394811001;
-		if ("infectious disease".equalsIgnoreCase(description))
+		if ("INFECTIOUS DISEASE".equalsIgnoreCase(description))
 			return _394807007;
-		if ("oral surgery".equalsIgnoreCase(description))
+		if ("ORAL SURGERY".equalsIgnoreCase(description))
 			return _394605001;
-		if ("maxillofacial surgery".equalsIgnoreCase(description))
+		if ("MAXILLOFACIAL SURGERY".equalsIgnoreCase(description))
 			return _408457001;
-		if ("allergy/immunology".equalsIgnoreCase(description))
+		if ("ALLERGY/IMMUNOLOGY".equalsIgnoreCase(description))
 			return _408439002;
-		if ("nephrology".equalsIgnoreCase(description))
+		if ("NEPHROLOGY".equalsIgnoreCase(description))
 			return _394589003;
-		if ("pain management".equalsIgnoreCase(description))
+		if ("PAIN MANAGEMENT".equalsIgnoreCase(description))
 			return _309337009;
-		if ("occupational therapy".equalsIgnoreCase(description))
+		if ("OCCUPATIONAL THERAPY".equalsIgnoreCase(description))
 			return _224587008;
-		if ("gynecological oncology".equalsIgnoreCase(description))
+		if ("GYNECOLOGICAL ONCOLOGY".equalsIgnoreCase(description))
 			return _408446006;
-		if ("critical care (intensivists)".equalsIgnoreCase(description))
+		if ("CRITICAL CARE (INTENSIVISTS)".equalsIgnoreCase(description))
 			return _408478003;
-		if ("sleep medicine".equalsIgnoreCase(description))
+		if ("SLEEP MEDICINE".equalsIgnoreCase(description))
 			return _408450004;
-		if ("radiation oncology".equalsIgnoreCase(description))
+		if ("RADIATION ONCOLOGY".equalsIgnoreCase(description))
 			return _419815003;
-		if ("anesthesiology".equalsIgnoreCase(description))
+		if ("ANESTHESIOLOGY".equalsIgnoreCase(description))
 			return _394577000;
-		if ("certified registered nurse anesthetist".equalsIgnoreCase(description))
+		if ("CERTIFIED REGISTERED NURSE ANESTHETIST".equalsIgnoreCase(description))
 			return _405278004;
-		if ("colorectal surgery (proctology)".equalsIgnoreCase(description))
+		if ("COLORECTAL SURGERY (PROCTOLOGY)".equalsIgnoreCase(description))
 			return _408464004;
-		if ("undefined physician type (specify)".equalsIgnoreCase(description))
+		if ("UNDEFINED PHYSICIAN TYPE (SPECIFY)".equalsIgnoreCase(description))
 			return _59058001;
-		if ("hospice/palliative care".equalsIgnoreCase(description))
+		if ("HOSPICE/PALLIATIVE CARE".equalsIgnoreCase(description))
 			return _394806003;
-		if ("medical oncology".equalsIgnoreCase(description))
+		if ("MEDICAL ONCOLOGY".equalsIgnoreCase(description))
 			return _394593009;
-		if ("peripheral vascular disease".equalsIgnoreCase(description))
+		if ("PERIPHERAL VASCULAR DISEASE".equalsIgnoreCase(description))
 			return _721939001;
-		if ("sports medicine".equalsIgnoreCase(description))
+		if ("SPORTS MEDICINE".equalsIgnoreCase(description))
 			return _1251536003;
-		if ("neurosurgery".equalsIgnoreCase(description))
+		if ("NEUROSURGERY".equalsIgnoreCase(description))
 			return _394610002;
-		if ("nuclear medicine".equalsIgnoreCase(description))
+		if ("NUCLEAR MEDICINE".equalsIgnoreCase(description))
 			return _394649004;
-		if ("interventional radiology".equalsIgnoreCase(description))
+		if ("INTERVENTIONAL RADIOLOGY".equalsIgnoreCase(description))
 			return _408455009;
-		if ("surgical oncology".equalsIgnoreCase(description))
+		if ("SURGICAL ONCOLOGY".equalsIgnoreCase(description))
 			return _419321007;
-		if ("preventative medicine".equalsIgnoreCase(description))
+		if ("PREVENTATIVE MEDICINE".equalsIgnoreCase(description))
 			return _409968004;
-		if ("neuropsychiatry".equalsIgnoreCase(description))
+		if ("NEUROPSYCHIATRY".equalsIgnoreCase(description))
 			return _21450003;
-		if ("hematology".equalsIgnoreCase(description))
+		if ("HEMATOLOGY".equalsIgnoreCase(description))
 			return _40204001;
-		if ("emergency medicine".equalsIgnoreCase(description))
+		if ("EMERGENCY MEDICINE".equalsIgnoreCase(description))
 			return _773568002;
-		if ("general surgery".equalsIgnoreCase(description))
+		if ("GENERAL SURGERY".equalsIgnoreCase(description))
 			return _394609007;
-		if ("geriatric pysichiatry".equalsIgnoreCase(description))
+		if ("GERIATRIC PSYCHIATRY".equalsIgnoreCase(description))
 			return _309364005;
-		if ("cardiac electrophysiology".equalsIgnoreCase(description))
+		if ("CARDIAC ELECTROPHYSIOLOGY".equalsIgnoreCase(description))
 			return _1251551007;
-		if ("advanced heart failure and transplant cardioloy".equalsIgnoreCase(description))
+		if ("ADVANCED HEART FAILURE AND TRANSPLANT CARDIOLOGY".equalsIgnoreCase(description))
 			return _408471009;
-		if ("anesthesiology assistant".equalsIgnoreCase(description))
+		if ("ANESTHESIOLOGY ASSISTANT".equalsIgnoreCase(description))
 			return _309445003;
-		if("cardiac surgery".equalsIgnoreCase(description))
+		if("CARDIAC SURGERY".equalsIgnoreCase(description))
 			return _408466002;
 		return null;
 
