@@ -15,5 +15,10 @@ public class Context extends FhirContext{
 		return cxt;
 
 	}
+	public  FhirContext get() {
+		getContext();
+		return context;
+
+	}
 	
 }

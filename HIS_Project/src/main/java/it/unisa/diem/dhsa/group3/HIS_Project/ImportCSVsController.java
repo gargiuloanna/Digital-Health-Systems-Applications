@@ -146,7 +146,7 @@ public class ImportCSVsController implements Initializable {
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
 		check(supplyField, "supplies", patientOK && encounterOK);
-
+		Memory.getMemory().send_to_server();
 		clearAll();
 
 	}

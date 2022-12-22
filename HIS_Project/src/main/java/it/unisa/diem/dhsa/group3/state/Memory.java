@@ -7,23 +7,40 @@ import java.util.Set;
 
 import org.hl7.fhir.r4.model.Resource;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.rest.api.MethodOutcome;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 import it.unisa.diem.dhsa.group3.resources.BaseResource;
 
-
 //Class necessary to keep the memory of the operations performed in the application
-public class Memory implements Map<Class<? extends BaseResource>, Map<String, Resource>>{
-	
+public class Memory implements Map<Class<? extends BaseResource>, Map<String, Resource>> {
+
 	static private Memory mem = null;
 	private Map<Class<? extends BaseResource>, Map<String, Resource>> resources;
-	
+
 	private Memory() {
 		resources = new HashMap<>();
 	}
-	
+
 	public static Memory getMemory() {
-		if(mem == null)
+		if (mem == null)
 			mem = new Memory();
 		return mem;
+	}
+
+	public void send_to_server() {
+		if (mem == null)
+			return;
+		FhirContext ctx = Context.getContext().get();
+		IGenericClient client = ctx.newRestfulGenericClient("http://192.168.71.103:8080/fhir");
+		MethodOutcome methodOutcome;
+		for (Map<String, Resource> map : resources.values())
+			for (Resource resource : map.values()) {
+				methodOutcome = client.create().resource(resource).prettyPrint().encodedJson().execute();
+				System.out.println(methodOutcome.getId().getValue());
+			}
+		System.out.println("finito");
+
 	}
 
 	@Override
@@ -53,7 +70,7 @@ public class Memory implements Map<Class<? extends BaseResource>, Map<String, Re
 
 	@Override
 	public Map<String, Resource> put(Class<? extends BaseResource> key, Map<String, Resource> value) {
-		return resources.put(key, value);				
+		return resources.put(key, value);
 	}
 
 	@Override
@@ -64,12 +81,12 @@ public class Memory implements Map<Class<? extends BaseResource>, Map<String, Re
 	@Override
 	public void putAll(Map<? extends Class<? extends BaseResource>, ? extends Map<String, Resource>> m) {
 		resources.putAll(m);
-		
+
 	}
 
 	@Override
 	public void clear() {
-		resources.clear();		
+		resources.clear();
 	}
 
 	@Override
@@ -86,6 +103,5 @@ public class Memory implements Map<Class<? extends BaseResource>, Map<String, Re
 	public Set<Entry<Class<? extends BaseResource>, Map<String, Resource>>> entrySet() {
 		return resources.entrySet();
 	}
-	
-	
+
 }
