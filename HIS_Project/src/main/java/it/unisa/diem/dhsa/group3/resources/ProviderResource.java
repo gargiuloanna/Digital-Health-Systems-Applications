@@ -5,6 +5,7 @@ import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.Practitioner.PractitionerQualificationComponent;
@@ -162,31 +163,23 @@ public class ProviderResource extends BaseResource{
 	
 	public Resource createResource() {
 
-		Practitioner d = new Practitioner(); //no profile
-		PractitionerRole r = new PractitionerRole();
+		Practitioner d = new Practitioner();
+		
+		// Add US Profile to the Practitioner
+		d.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner"));
 		
 		// Definition of the identifier (field: id)
 		d.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
 		
-		//Definition of the Organization that employees the practitioner
-		Map<String, Resource> organizations = Memory.getMemory().get(OrganizationResource.class);
-		Organization o = (Organization) organizations.get(ORGANIZATION);
-		
-		PractitionerQualificationComponent practitioner = new PractitionerQualificationComponent();
-		practitioner.setIssuerTarget(o);
-		d.addQualification(practitioner);
-		
 		// Definition of the official name  (fields: name)
-		d.addName(new HumanName().setText(NAME));
+		String[] values = NAME.split(" ");
+		d.addName(new HumanName().setFamily(values[1]).addGiven(values[0]));
+		//d.addName(new HumanName().setText(NAME));
 
 		// Definition of the gender(field: gender)
 		V3AdministrativeGender sex = V3AdministrativeGender.valueOf(GENDER);
 		d.setGender(Enumerations.AdministrativeGender.valueOf(sex.getDefinition().toUpperCase()));
-		
-		//Definition of the speciality of the practitioner 
-		PracticeSettingCode code = PracticeSettingCode.fromCSV(SPECIALITY);
-		r.addSpecialty().addCoding().setSystem(code.getSystem()).setCode(code.toCode()).setDisplayElement(new StringType(code.getDefinition()));
-		
+
 		// Definition of the address (fields: address, city, state, zip) with the
 		// extensions for the latitude and longitude		
 		d.addAddress().setCity(CITY).addLine(ADDRESS).setPostalCode(ZIP)
@@ -197,12 +190,33 @@ public class ProviderResource extends BaseResource{
 		Extension lon = new Extension("longitude", new DecimalType(LON));
 		loc.addExtension(lat);
 		loc.addExtension(lon);
+				
+		// Link the Role to the Practitioner
+		PractitionerRole r = new PractitionerRole();
+		r.setActive(true);
+		r.setPractitionerTarget(d);
+				
+		// Add US Profile to the Practitioner Role
+		r.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"));
 		
-		//missing utilization
-
-
-
-		return r.setPractitionerTarget(d);
+		// Definition of the Organization that employees the practitioner
+		Map<String, Resource> organizations = Memory.getMemory().get(OrganizationResource.class);
+		Organization o = (Organization) organizations.get(ORGANIZATION);
+		r.setOrganizationTarget(o);
+		
+		
+		// Definition of the speciality of the practitioner 
+		PracticeSettingCode code = PracticeSettingCode.fromCSV(SPECIALITY);
+		r.addSpecialty().addCoding().setSystem(code.getSystem()).setCode(code.toCode()).setDisplayElement(new StringType(code.getDefinition()));
+		
+		
+		
+		// Missing utilization
+		
+		
+		//return d;
+		return r;
+		
 	}
 
 	

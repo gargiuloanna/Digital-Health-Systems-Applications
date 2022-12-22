@@ -1,10 +1,11 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Procedure;
 import org.hl7.fhir.r4.model.Resource;
@@ -154,6 +155,9 @@ public class ProcedureResource extends BaseResource{
 
 		Procedure p = new Procedure();
 		
+		// Add US Profile to the Procedure
+		p.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"));
+				
 		//add date
 		
 		
