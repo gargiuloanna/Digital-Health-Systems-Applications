@@ -224,9 +224,13 @@ public class EncounterResource extends BaseResource{
 		
 		//set period
 		Period period = new Period();
-		period.setStart(START).setEnd(STOP);
+		if(STOP != null)		
+			period.setStart(START).setEnd(STOP);
+		else
+			period.setStart(START);
 		e.setPeriod(period);
 		
+		e.setStatus(getStatus());
 		//set patient
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT 
 		e.setSubjectTarget(patient);
@@ -264,7 +268,21 @@ public class EncounterResource extends BaseResource{
 		
 	}
 
+	private Encounter.EncounterStatus getStatus() {
+		if (STOP.after(START) && STOP != null)
+			return Encounter.EncounterStatus.FINISHED;
+		if(START != null && STOP == null)
+			return Encounter.EncounterStatus.INPROGRESS;
+		if(START == null && STOP == null)
+			return Encounter.EncounterStatus.NULL;
+		if(START.after(DateTimeType.now().getValue()))
+			return Encounter.EncounterStatus.PLANNED;
+		if (STOP.before(START))
+			return Encounter.EncounterStatus.CANCELLED;
+		else
+			return Encounter.EncounterStatus.UNKNOWN;
 	
+	}
 	
 	
 	
