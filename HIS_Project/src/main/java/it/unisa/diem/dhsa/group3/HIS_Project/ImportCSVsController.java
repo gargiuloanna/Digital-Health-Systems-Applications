@@ -147,7 +147,7 @@ public class ImportCSVsController implements Initializable {
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
 		check(supplyField, "supplies", patientOK && encounterOK);
-		ServerInteraction.sendToServer();
+		ServerInteraction.sendToServer(false);
 		clearAll();
 
 	}
@@ -166,8 +166,6 @@ public class ImportCSVsController implements Initializable {
 		try {
 			String filename = file_chooser();
 			tf.setText(filename);
-			// Map<String, Resource> patients = ReadCSV.readCSV(PatientResource.class,
-			// filename);
 
 		} catch (IOException | NullPointerException e) {
 			System.out.println(e.getStackTrace());

@@ -36,7 +36,7 @@ public class ServerInteraction {
 					System.out.println("Error in the connection");
 				}
 			}
-		System.out.println(ids);
+		System.out.println("ids" + ids);
 		return ids;
 	}
 
@@ -48,7 +48,8 @@ public class ServerInteraction {
 		} else
 			id = identifier;
 
-		System.out.println(id);
+		System.out.println("id "+ id);
+		System.out.println("identifier "+ identifier);
 		try {
 			Thread.sleep(50000);
 		} catch (InterruptedException e) {
@@ -69,20 +70,20 @@ public class ServerInteraction {
 
 	public static String uploadResource(Resource new_resource, boolean update) throws FhirClientConnectionException {
 
+		Patient r = (Patient) new_resource;
 		FhirContext ctx = Context.getContext();
 		IGenericClient client = ctx.newRestfulGenericClient(Context.server);
-		Resource old_resource = getResource(new_resource.getId()); // ID is an identifier
+		Resource old_resource = getResource(r.getIdentifierFirstRep().getValue()); // ID is an identifier
 		MethodOutcome methodOutcome = null;
 		if (old_resource != null) {
-			System.out.println("COSA");
 			if (!update)
 				return old_resource.getIdElement().getIdPart();
 			if (update)
 				new_resource.setId(old_resource.getIdElement().getVersionIdPart());
 		}
-		System.out.println("COSA DUE");
 		methodOutcome = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
-		return methodOutcome.getOperationOutcome().getIdElement().getIdPart();
+		System.out.println("ho caricato");
+		return methodOutcome.getId().getValue();
 
 	}
 
