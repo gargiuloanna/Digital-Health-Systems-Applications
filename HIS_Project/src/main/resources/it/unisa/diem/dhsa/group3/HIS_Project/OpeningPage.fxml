@@ -10,7 +10,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OpeningPageController">
    <children>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.4" prefWidth="1000.0" style="-fx-background-color: E3E6F4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -66,10 +65,13 @@
                                        </graphic>
                                     </Button>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="50.0" />
+                                 </padding>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="191.3" prefWidth="503.0" spacing="50.0">
                                  <children>
-                                    <Button fx:id="mri_btn" alignment="BASELINE_LEFT" graphicTextGap="60.0" mnemonicParsing="false" onAction="#mri_btn" prefHeight="70.0" prefWidth="215.0" style="-fx-background-color: #4C43AA;" text="MRI" textAlignment="CENTER" textFill="#fffbfb" wrapText="true">
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="60.0" mnemonicParsing="false" onAction="#mri_btn" prefHeight="70.0" prefWidth="215.0" style="-fx-background-color: #4C43AA;" text="MRI" textAlignment="CENTER" textFill="#fffbfb" wrapText="true">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -81,7 +83,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="patient_discharge_btn" graphicTextGap="10.0" mnemonicParsing="false" onAction="#patient_discharge_btn" prefHeight="70.0" prefWidth="215.0" style="-fx-background-color: #4C43AA;" text="Patient Discharge" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                    <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#import_csv_btn" prefHeight="70.0" prefWidth="215.0" style="-fx-background-color: #4C43AA;" text="Import CSV" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -91,12 +93,15 @@
                                        <graphic>
                                           <ImageView>
                                              <image>
-                                                <Image url="@patient-department.png" />
+                                                <Image url="@icons8-import-csv-50.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
                                     </Button>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="100.0" />
+                                 </padding>
                               </HBox>
                            </children>
                         </VBox>
@@ -107,22 +112,6 @@
                         <Image url="@logo.jpg" />
                      </image>
                   </ImageView>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <children>
-                  <Button mnemonicParsing="false" onAction="#load_csv_btn" style="-fx-background-color: #e3e6f4;">
-                     <graphic>
-                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@import_csv.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                </children>
             </HBox>
          </children>

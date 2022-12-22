@@ -1,16 +1,8 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.util.Map;
-
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Resource;
-
-import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
-import it.unisa.diem.dhsa.group3.resources.PatientResource;
 import javafx.fxml.FXML;
-import javafx.stage.FileChooser;
 
 
 // Controller FINITO
@@ -31,14 +23,9 @@ public class OpeningPageController {
     private void mri_btn()throws IOException{
     	App.setRoot("MRI");
     } 
-
-    @FXML
-    private void patient_discharge_btn()throws IOException{
-    	App.setRoot("PatientDischarge");
-    }
     
     @FXML
-    private void load_csv_btn()throws IOException{
+    private void import_csv_btn()throws IOException{
     	App.setRoot("ImportCSVs");
     }
     

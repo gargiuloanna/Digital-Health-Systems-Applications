@@ -193,12 +193,12 @@ public class PatientAdmissionController implements Initializable {
 		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank())
 			return;
 		progressBar.setVisible(true);
-		progressBar.setProgress(0.1);
+		progressBar.setOpacity(1.0);
+		enableFields();
 		String id = searchPatientField.getText();
 		try {
 		Resource r = ServerInteraction.getResource(id);
 		if (r != null) {
-			System.out.println(r);
 			fillFields((Patient) r);
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
@@ -210,8 +210,7 @@ public class PatientAdmissionController implements Initializable {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.", ButtonType.OK);
 			alert.showAndWait();
 		}
-		
-		
+
 	}
 
 	@FXML
@@ -303,7 +302,7 @@ public class PatientAdmissionController implements Initializable {
 		TabPane.setDisable(true);
 		IDField.setDisable(true);
 		patientID.setDisable(true);
-		progressBar.setVisible(false);
+		progressBar.setOpacity(0);
 	}
 
 	private void fillFields(Patient patient) {
@@ -344,7 +343,6 @@ public class PatientAdmissionController implements Initializable {
 		// it insert the first name in the corresponding field
 		Date date = (Date) patient.getBirthDate();
 		// selecting birth and death date
-		System.out.println(date.toString());
 		if (date != null) {
 			BirthDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods are deprecated or don't work
 			BirthDatePicker.setDisable(true);

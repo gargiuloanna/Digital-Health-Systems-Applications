@@ -7,7 +7,9 @@ import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
@@ -94,29 +96,30 @@ public class AllergyIntoleranceResource extends BaseResource {
 
 	@Override
 	public Resource createResource() {
-		//non ha id...non so se un'altra alternativa potrebbe essere estendere (????) il paziente per contenere l'allergia
-		
-		AllergyIntolerance allergy = new AllergyIntolerance();
-		
-		//add date the allergy was diagnosed
-		allergy.setOnset(new DateTimeType(START));
-		
-		//add the date the allergy stopped------mappato su lastOccurrance ma non sono sicura
-		//valori non presenti ovunque
-		if(STOP != null)
-			allergy.setLastOccurrence(STOP);
 		
 		//add patient
 		Patient p = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
-		allergy.setPatientTarget(p);
+		AllergyIntolerance allergy = new AllergyIntolerance(new Reference(p));
 		
-		//add encounter
+		// Definition of the considered profile 
+		allergy.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"));
+
+		//add date the allergy was diagnosed and the clinical status 
+		//clinical status is not present in the csv data but it is a must have value required by the profile.
+		allergy.setOnset(new DateTimeType(START));
+		allergy.setClinicalStatus(new CodeableConcept(new Coding("http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", "active", "Active")));
+		
+		//add the date the allergy stopped(for us it is the last known occurrence of the action event)
+		if(STOP != null)
+			allergy.setLastOccurrence(STOP);
+			allergy.setClinicalStatus(new CodeableConcept(new Coding("http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", "inactive", "Inactive")));
+
+		//add encounter when allergy was diagnosed
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		allergy.setEncounterTarget(e);
 		
 		//add SNOMED code and description 
 		allergy.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
-		
 		
 		return allergy;
 	}

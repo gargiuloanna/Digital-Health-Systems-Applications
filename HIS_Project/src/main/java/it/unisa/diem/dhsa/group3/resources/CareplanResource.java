@@ -1,18 +1,9 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.sql.Date;
-
-import org.hl7.fhir.r4.model.CarePlan;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.Encounter;
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Period;
-import org.hl7.fhir.r4.model.Resource;
-
+import java.util.Date;
+import org.hl7.fhir.r4.model.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
-
 import it.unisa.diem.dhsa.group3.state.Memory;
 
 public class CareplanResource extends BaseResource{
@@ -153,30 +144,44 @@ public class CareplanResource extends BaseResource{
 	@SuppressWarnings("deprecation")
 	@Override
 	public Resource createResource() {
+		
 		CarePlan c = new CarePlan();
 		
+		// Definition of the considered profile
+		c.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan"));
+
 		//add identifier
 		c.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		
-		//add period
+		//add period(Start and Stop) and the value status of the care plan
 		Period p = new Period();
-		p.setEnd(STOP).setStart(START);
+		if(STOP != null) {
+			p.setStart(START).setEnd(STOP);
+			c.setStatus(CarePlan.CarePlanStatus.COMPLETED);
+		}else
+			p.setStart(START);
+			c.setStatus(CarePlan.CarePlanStatus.ACTIVE);
 		c.setPeriod(p);
 		
-		//set patient
+		//add intent (a must have value)
+		//(PLAN: The request represents an intention to ensure something occurs without providing an authorization for others to act)
+		c.setIntent(CarePlan.CarePlanIntent.PLAN);
+		
+		//add patient reference(must have value)
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); //get the patient with id PATIENT
 		c.setSubjectTarget(patient);
 		
-		//set encounter
+		//add encounter reference
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		c.setEncounterTarget(encounter);
 		
-		//code
+		//add code and description of the care plan
 		c.addGoalTarget().setDescription(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 		
-		//reason code  and description
+		//add diagnosis code addressed by the care plan and its description (a must have value)
 		c.addCategory(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 		
+		//to see a narrative summary of the patient assessment and plan of treatment (a must have value)
 		return c;
 	}
 	
