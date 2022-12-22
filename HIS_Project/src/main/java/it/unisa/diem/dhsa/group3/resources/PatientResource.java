@@ -1,7 +1,7 @@
 package it.unisa.diem.dhsa.group3.resources;
 
 //import java.util.Date;
-import java.sql.Date;
+import java.util.Date;
 
 import org.hl7.fhir.r4.model.*;
 import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;

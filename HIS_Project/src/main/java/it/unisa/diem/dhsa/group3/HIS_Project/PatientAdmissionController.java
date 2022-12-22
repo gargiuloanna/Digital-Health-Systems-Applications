@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -14,11 +15,15 @@ import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 import it.unisa.diem.dhsa.group3.resources.PatientResource;
+import it.unisa.diem.dhsa.group3.state.Context;
 
 import org.hl7.fhir.r4.model.Address;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
@@ -178,6 +183,22 @@ public class PatientAdmissionController implements Initializable {
 	@FXML
 	void searchCode(ActionEvent event) {
 		enableFields();
+		String id = searchPatientField.getText();
+		IGenericClient client = Context.getContext().get().newRestfulGenericClient(Context.server);
+		Bundle bundle = client.search().forResource(Patient.class).where(Patient.IDENTIFIER.exactly().identifier(id))
+		.returnBundle(Bundle.class).execute();
+		System.out.println((Patient) bundle.getEntryFirstRep().getResource());
+		/*for (BundleEntryComponent c: bundle.getEntry()) {
+		 
+			Patient p =  (Patient) c.getResource();
+			String patient = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
+			System.out.println(patient);
+		}* 
+		 */
+		if (!bundle.isEmpty()) {
+			fillFields((Patient) bundle.getEntryFirstRep().getResource());
+		}
+		
 	}
 
 	@FXML
@@ -196,7 +217,7 @@ public class PatientAdmissionController implements Initializable {
 			// System.out.println(filename);
 			try {
 				Map<String, Resource> patients = ReadCSV.readCSV(PatientResource.class, filename.getCanonicalPath());
-				fillFields((Patient) patients.get("6fc3e360-ae68-c411-e091-4734df51eb18"));
+				fillFields((Patient) patients.get("b4c809c0-de80-1c62-ab58-7b885e475e76"));
 				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
 				// .get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
 				// TODO remove selecting patient
@@ -289,16 +310,24 @@ public class PatientAdmissionController implements Initializable {
 		// it insert the first name in the field of the name
 		for (HumanName humanName : patient.getName()) {
 			if (humanName.getUse().equals(HumanName.NameUse.OFFICIAL)) {
-				index = humanName.getGiven().size() - 1;
-				FirstNameField.setText(humanName.getGiven().get(index).toString());
-				// it insert the last name in the field of the names
-				LastNameField.setText(humanName.getFamily());
+				if(!humanName.getGiven().isEmpty()) {
+					index = humanName.getGiven().size() - 1;
+					FirstNameField.setText(humanName.getGiven().get(index).toString());
+					// it insert the last name in the field of the names
+					LastNameField.setText(humanName.getFamily());
+				}
+				
 				// it insert the prefix in the corresponding field
-				index = humanName.getPrefix().size() - 1;
-				PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
+				if(!humanName.getPrefix().isEmpty()) {
+					index = humanName.getPrefix().size() - 1;
+					PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
+				}
+				
 				// it insert the first name in the corresponding field
-				index = humanName.getSuffix().size() - 1;
-				SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
+				if(!humanName.getSuffix().isEmpty()) {
+					index = humanName.getSuffix().size() - 1;
+					SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
+				}
 			}
 			if (humanName.getUse().equals(HumanName.NameUse.MAIDEN)) {
 				// it insert the last name in the field of the names
@@ -308,15 +337,16 @@ public class PatientAdmissionController implements Initializable {
 		}
 
 		// it insert the first name in the corresponding field
-		Date date = patient.getBirthDate();
+		Date date = (Date) patient.getBirthDate();
 		// selecting birth and death date
+		System.out.println(date.toString());
 		if (date != null) {
-			BirthDatePicker.setValue(LocalDate.parse(date.toString())); // other methods are deprecated or don't work
+			BirthDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods are deprecated or don't work
 			BirthDatePicker.setDisable(true);
 		}
 		if (patient.hasDeceasedDateTimeType()) {
-			date = patient.getDeceasedDateTimeType().getValue();
-			DeathDatePicker.setValue(LocalDate.parse(date.toString())); // other methods are deprecated or don't work
+			date = (Date) patient.getDeceasedDateTimeType().getValue();
+			DeathDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods are deprecated or don't work
 			DeathDatePicker.setDisable(true);
 		} // else System.out.println("he is not dead");
 
