@@ -132,8 +132,8 @@ public class ImportCSVsController implements Initializable {
 
 		boolean patientOK = check(patientField, "patient", true);
 		boolean organizationOK = check(organizationField, "organization", true);
-		boolean providerOK = check(providerField, "provider", true);
-		boolean payerOK = false;
+		boolean payerOK = check(payerField, "payers", true);
+		boolean providerOK = false;
 		boolean encounterOK = false;
 
 		// check that dependecies are ok before importing all
@@ -146,7 +146,7 @@ public class ImportCSVsController implements Initializable {
 		
 		check(transactionField, "payer transition", patientOK && payerOK);
 		check(proceduresField, "procedures ", patientOK && encounterOK);
-		check(conditionField, "condition", patientOK && encounterOK);
+		check(conditionField, "conditions", patientOK && encounterOK);
 		check(allergyField, "allergies", patientOK && encounterOK);
 		check(careplansField, "care plans", patientOK && encounterOK);
 		check(observationField, "observations", patientOK && encounterOK);
