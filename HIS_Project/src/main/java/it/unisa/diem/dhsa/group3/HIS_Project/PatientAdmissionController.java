@@ -145,7 +145,7 @@ public class PatientAdmissionController implements Initializable {
 
 	@FXML
 	private MenuButton MaritalMenuButton;
-	
+
 	@FXML
 	private ProgressIndicator progressBar;
 
@@ -191,68 +191,66 @@ public class PatientAdmissionController implements Initializable {
 	@FXML
 	void searchCode(ActionEvent event) {
 		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank()) {
-			System.out.println("cosa");
 			return;
 		}
-		
+
 		progressBar.setVisible(true);
 		progressBar.setOpacity(1.0);
-		
+
 		String id = searchPatientField.getText();
 		try {
-		Resource r = ServerInteraction.getResource(id);
-		if (r != null) {
-			fillFields((Patient) r);
+			Resource r = ServerInteraction.getResource(id);
+			if (r != null) {
+				fillFields((Patient) r);
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
+				alert.showAndWait();
+			}
 			enableFields();
-		} else {
-			Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
+			progressBar.setVisible(false);
+		} catch (FhirClientConnectionException e) {
+			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+					ButtonType.OK);
 			alert.showAndWait();
 		}
-		
-		progressBar.setVisible(false);
-		} catch(FhirClientConnectionException e) {
-			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.", ButtonType.OK);
-			alert.showAndWait();
-		}
-		
 
 	}
 
 	@FXML
 	void submitPressed(ActionEvent event) throws IOException, NumberFormatException, ParseException {
 		PatientResource p = createPatient();
-		p.createResource();
+		
+		Patient patient = (Patient) p.createResource();
+		ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
+		
 
 	}
 
-	/*@FXML
-	void LoadPatientPressed(ActionEvent event) {
-
-		FileChooser chooser = new FileChooser();
-		File filename = chooser.showOpenDialog(null);
-		if (filename != null) {
-			// System.out.println(filename);
-			try {
-				Map<String, Resource> patients = ReadCSV.readCSV(PatientResource.class, filename.getCanonicalPath());
-				fillFields((Patient) patients.get("b4c809c0-de80-1c62-ab58-7b885e475e76"));
-				// .get("ce9bd436-6b59-0452-86a4-61f3642736bc"));
-				// .get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846"));
-				// TODO remove selecting patient
-
-			} catch (IOException e) { // TODO Dovrebbe generare l'eccezione sugetCanonicalPath quando non viene
-				// scelto nulla - ma sarebbe null efacciamo già l'if //e.printStackTrace(); }
-			}
-
-		}
-
-	}*/
+	/*
+	 * @FXML void LoadPatientPressed(ActionEvent event) {
+	 * 
+	 * FileChooser chooser = new FileChooser(); File filename =
+	 * chooser.showOpenDialog(null); if (filename != null) { //
+	 * System.out.println(filename); try { Map<String, Resource> patients =
+	 * ReadCSV.readCSV(PatientResource.class, filename.getCanonicalPath());
+	 * fillFields((Patient) patients.get("b4c809c0-de80-1c62-ab58-7b885e475e76"));
+	 * // .get("ce9bd436-6b59-0452-86a4-61f3642736bc")); //
+	 * .get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846")); // TODO remove selecting
+	 * patient
+	 * 
+	 * } catch (IOException e) { // TODO Dovrebbe generare l'eccezione
+	 * sugetCanonicalPath quando non viene // scelto nulla - ma sarebbe null
+	 * efacciamo già l'if //e.printStackTrace(); } }
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	@FXML
 	void maritalSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
-		MaritalMenuButton.setText(maritalCode(e.getText()));
-		//String maritalCode = maritalCode(e.getText());
-		//return maritalCode; 
+		MaritalMenuButton.setText(e.getText());
 	}
 
 	private String maritalCode(String maritalText) {
@@ -278,8 +276,13 @@ public class PatientAdmissionController implements Initializable {
 		case "The spouse has died":
 			return "W";
 		default:
-			return "?";
+			return null;
 		}
+	}
+
+	private String raceCode(String raceText) {
+		String[] splitRace = raceText.split(" ");
+		return splitRace[0].toLowerCase();
 	}
 
 	@FXML
@@ -292,6 +295,16 @@ public class PatientAdmissionController implements Initializable {
 	void ethnicitySelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		EthnicityField.setText(e.getText());
+	}
+
+	private String ethnicityCode(String ethnicityText) {
+		switch (ethnicityText) {
+		case "Not Hispanic nor Latino":
+			return "hispanic";
+		case "Hispanic nor Latino":
+			return "nonhispanic";
+		default: return null;
+		}
 	}
 
 	private void enableFields() {
@@ -313,27 +326,28 @@ public class PatientAdmissionController implements Initializable {
 	private void fillFields(Patient patient) {
 
 		// add id
-		IDField.setText(patient.getIdElement().getVersionIdPart()); // TODO now it is empty because it is not on the server
+		IDField.setText(patient.getIdElement().getVersionIdPart()); // TODO now it is empty because it is not on the
+																	// server
 		IDField.setDisable(true);
 		int index = 0;
 		// it insert the first name in the field of the name
 		for (HumanName humanName : patient.getName()) {
 			if (humanName.getUse().equals(HumanName.NameUse.OFFICIAL)) {
-				if(!humanName.getGiven().isEmpty()) {
+				if (!humanName.getGiven().isEmpty()) {
 					index = humanName.getGiven().size() - 1;
 					FirstNameField.setText(humanName.getGiven().get(index).toString());
 					// it insert the last name in the field of the names
 					LastNameField.setText(humanName.getFamily());
 				}
-				
+
 				// it insert the prefix in the corresponding field
-				if(!humanName.getPrefix().isEmpty()) {
+				if (!humanName.getPrefix().isEmpty()) {
 					index = humanName.getPrefix().size() - 1;
 					PrefixField.setText(humanName.getPrefix().get(index).asStringValue().toString());
 				}
-				
+
 				// it insert the first name in the corresponding field
-				if(!humanName.getSuffix().isEmpty()) {
+				if (!humanName.getSuffix().isEmpty()) {
 					index = humanName.getSuffix().size() - 1;
 					SuffixField.setText(humanName.getSuffix().get(index).asStringValue());
 				}
@@ -349,12 +363,18 @@ public class PatientAdmissionController implements Initializable {
 		Date date = (Date) patient.getBirthDate();
 		// selecting birth and death date
 		if (date != null) {
-			BirthDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods are deprecated or don't work
+			BirthDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods
+																										// are
+																										// deprecated or
+																										// don't work
 			BirthDatePicker.setDisable(true);
 		}
 		if (patient.hasDeceasedDateTimeType()) {
 			date = (Date) patient.getDeceasedDateTimeType().getValue();
-			DeathDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods are deprecated or don't work
+			DeathDatePicker.setValue(LocalDate.ofInstant(date.toInstant(), ZoneId.of("Asia/Kolkata"))); // other methods
+																										// are
+																										// deprecated or
+																										// don't work
 			DeathDatePicker.setDisable(true);
 		} // else System.out.println("he is not dead");
 
@@ -427,42 +447,34 @@ public class PatientAdmissionController implements Initializable {
 		}
 
 	}
-	
+
 	private String gender() {
-		if(MgenderButton.isSelected())
+		if (MgenderButton.isSelected())
 			return "M";
-		if(FgenderButton.isSelected())
+		if (FgenderButton.isSelected())
 			return "F";
+		if (NOgenderButton.isSelected())
+			return "UN";
 		return null;
 	}
-	
-	private PatientResource createPatient() throws NumberFormatException, ParseException{
-		return new PatientResource(
-				BirthDatePicker.getValue(),
-				DeathDatePicker.getValue(),
-				SSNField.getText(),
-				DriversField.getText(),
-				PassportField.getText(),
-				PrefixField.getText(),
-				FirstNameField.getText(),
-				LastNameField.getText(),
-				SuffixField.getText(),
-				MaidenField.getText(),
-				MaritalMenuButton.getText(),
-				RacePicker.getText(),
-				EthnicityField.getText(),
-				gender(),
-				BirthPlaceField.getText(),
-				AddressField.getText(),
-				CityField.getText(),
-				StateField.getText(),
-				CountyField.getText(),
-				ZIPField.getText(),
-				Float.parseFloat(LATField.getText()),
-				Float.parseFloat(LONField.getText()),
-				Float.parseFloat(ExpensesField.getText()),
-				Float.parseFloat(CoverageField.getText())
-				);
+
+	private PatientResource createPatient() throws NumberFormatException, ParseException {
+		float lat = 0, lon = 0, expenses = 0, coverage = 0;
+		if (!LATField.getText().isEmpty())
+			lat = Float.parseFloat(LATField.getText());
+		if (!LONField.getText().isEmpty())
+			lon = Float.parseFloat(LONField.getText());
+		if (!ExpensesField.getText().isEmpty())
+			expenses = Float.parseFloat(ExpensesField.getText());
+		if (!CoverageField.getText().isEmpty())
+			coverage = Float.parseFloat(CoverageField.getText());
+
+		return new PatientResource(BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
+				DriversField.getText(), PassportField.getText(), PrefixField.getText(), FirstNameField.getText(),
+				LastNameField.getText(), SuffixField.getText(), MaidenField.getText(),
+				maritalCode(MaritalMenuButton.getText()), raceCode(RacePicker.getText()), ethnicityCode(EthnicityField.getText()),
+				gender(), BirthPlaceField.getText(), AddressField.getText(), CityField.getText(), StateField.getText(),
+				CountyField.getText(), ZIPField.getText(), lat, lon, expenses, coverage);
 	}
 
 }

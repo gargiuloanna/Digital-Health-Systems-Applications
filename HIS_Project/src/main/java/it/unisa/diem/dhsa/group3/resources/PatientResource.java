@@ -3,6 +3,7 @@ package it.unisa.diem.dhsa.group3.resources;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 //import java.util.Date;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import it.unisa.diem.dhsa.group3.enumerations.OMBEthnicityCategories;
 import it.unisa.diem.dhsa.group3.enumerations.OMBRaceCategories;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 
-public class PatientResource extends BaseResource{
+public class PatientResource extends BaseResource {
 
 	@CsvBindByName
 	@CsvDate("yyyy-MM-dd")
@@ -92,8 +93,10 @@ public class PatientResource extends BaseResource{
 
 	@CsvBindByName
 	private Float HEALTHCARE_COVERAGE;
-	
-	public PatientResource() {}
+
+	public PatientResource() {
+	}
+
 	public PatientResource(Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
 			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
 			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
@@ -125,15 +128,20 @@ public class PatientResource extends BaseResource{
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
-
-
-	public PatientResource(LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
-			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
-			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
-			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) throws ParseException {
+	public PatientResource(LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
+			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
+			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
+			String cOUNTY, String zIP, Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE)
+			throws ParseException {
 		super();
-		BIRTHDATE = DateFormat.getInstance().parse(bIRTHDATE.toString());
-		DEATHDATE = DateFormat.getInstance().parse(dEATHDATE.toString());;
+		if (bIRTHDATE == null)
+			BIRTHDATE = null;
+		else
+			BIRTHDATE = Date.from(bIRTHDATE.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
+		if (dEATHDATE == null)
+			DEATHDATE = null;
+		else
+			DEATHDATE = Date.from(dEATHDATE.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
 		SSN = sSN;
 		DRIVERS = dRIVERS;
 		PASSPORT = pASSPORT;
@@ -157,8 +165,6 @@ public class PatientResource extends BaseResource{
 		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
-
-
 
 	public Date getBIRTHDATE() {
 		return BIRTHDATE;
@@ -354,15 +360,15 @@ public class PatientResource extends BaseResource{
 
 	@Override
 	public String toString() {
-		return "PatientResource [Id=" + super.getId() + ", BIRTHDATE=" + BIRTHDATE + ", DEATHDATE=" + DEATHDATE + ", SSN=" + SSN
-				+ ", DRIVERS=" + DRIVERS + ", PASSPORT=" + PASSPORT + ", PREFIX=" + PREFIX + ", FIRST=" + FIRST
-				+ ", LAST=" + LAST + ", SUFFIX=" + SUFFIX + ", MAIDEN=" + MAIDEN + ", MARITAL=" + MARITAL + ", RACE="
-				+ RACE + ", ETHNICITY=" + ETHNICITY + ", GENDER=" + GENDER + ", BIRTHPLACE=" + BIRTHPLACE + ", ADDRESS="
-				+ ADDRESS + ", CITY=" + CITY + ", STATE=" + STATE + ", COUNTY=" + COUNTY + ", ZIP=" + ZIP + ", LAT="
-				+ LAT + ", LON=" + LON + ", HEALTHCARE_EXPENSES=" + HEALTHCARE_EXPENSES + ", HEALTHCARE_COVERAGE="
-				+ HEALTHCARE_COVERAGE + "]";
+		return "PatientResource [Id=" + super.getId() + ", BIRTHDATE=" + BIRTHDATE + ", DEATHDATE=" + DEATHDATE
+				+ ", SSN=" + SSN + ", DRIVERS=" + DRIVERS + ", PASSPORT=" + PASSPORT + ", PREFIX=" + PREFIX + ", FIRST="
+				+ FIRST + ", LAST=" + LAST + ", SUFFIX=" + SUFFIX + ", MAIDEN=" + MAIDEN + ", MARITAL=" + MARITAL
+				+ ", RACE=" + RACE + ", ETHNICITY=" + ETHNICITY + ", GENDER=" + GENDER + ", BIRTHPLACE=" + BIRTHPLACE
+				+ ", ADDRESS=" + ADDRESS + ", CITY=" + CITY + ", STATE=" + STATE + ", COUNTY=" + COUNTY + ", ZIP=" + ZIP
+				+ ", LAT=" + LAT + ", LON=" + LON + ", HEALTHCARE_EXPENSES=" + HEALTHCARE_EXPENSES
+				+ ", HEALTHCARE_COVERAGE=" + HEALTHCARE_COVERAGE + "]";
 	}
-	
+
 	@Override
 	public Resource createResource() {
 
@@ -436,11 +442,13 @@ public class PatientResource extends BaseResource{
 
 		// Definition of the gender(field: gender)
 		V3AdministrativeGender sex = V3AdministrativeGender.valueOf(GENDER);
-		p.setGender(Enumerations.AdministrativeGender.valueOf(sex.getDefinition().toUpperCase()));
+		try {
+			p.setGender(Enumerations.AdministrativeGender.valueOf(sex.getDefinition().toUpperCase()));
+		} catch (IllegalArgumentException e) {
+			p.setGender(Enumerations.AdministrativeGender.UNKNOWN);
+		}
 
 		return p;
 	}
-	
-	
 
 }

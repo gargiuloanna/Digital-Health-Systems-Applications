@@ -60,7 +60,7 @@ public class ServerInteraction {
 
 	public static String uploadResource(String id, Resource new_resource, boolean update)
 			throws FhirClientConnectionException {
-
+		
 		FhirContext ctx = Context.getContext();
 		IGenericClient client = ctx.newRestfulGenericClient(Context.server);
 		Resource old_resource = getResource(id);
@@ -68,9 +68,12 @@ public class ServerInteraction {
 		if (old_resource != null) {
 			if (!update)
 				return old_resource.getIdElement().getIdPart();
-			if (update)
-				new_resource.setId(old_resource.getIdElement().getVersionIdPart());
+			if (update) {
+				new_resource.setId(new_resource.getClass().getSimpleName()+'/'+old_resource.getIdElement().getIdPart());
+				methodOutcome = client.update().resource(new_resource).prettyPrint().encodedJson().execute();
+				}
 		}
+		
 		methodOutcome = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
 		return methodOutcome.getId().getValue();
 
