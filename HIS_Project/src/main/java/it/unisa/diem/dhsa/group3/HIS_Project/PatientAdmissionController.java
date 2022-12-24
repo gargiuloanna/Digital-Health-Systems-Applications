@@ -48,7 +48,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 
-public class PatientAdmissionController implements Initializable {
+public class PatientAdmissionController extends BasicController {
 
 	@FXML
 	private TextField LONField;
@@ -181,11 +181,6 @@ public class PatientAdmissionController implements Initializable {
 		// binding of the button with the fields that should enable it
 		SubmitButton.disableProperty().bind(Bindings.isEmpty(FirstNameField.textProperty()));
 
-	}
-
-	@FXML
-	void backPressed(ActionEvent event) throws IOException {
-		App.setRoot("OpeningPage");
 	}
 
 	@FXML

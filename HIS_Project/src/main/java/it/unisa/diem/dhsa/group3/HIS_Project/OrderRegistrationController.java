@@ -13,7 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class OrderRegistrationController implements Initializable{
+public class OrderRegistrationController extends BasicController{
 
     @FXML
     private TextField CodeField;
@@ -56,12 +56,6 @@ public class OrderRegistrationController implements Initializable{
     			.and(Bindings.isEmpty(IDField.textProperty())));
 
 	}
-    
-    @FXML
-    void SwitchToOpeningPage() throws IOException {
-    	App.setRoot("OpeningPage");
-    }
-    
 
     @FXML
     void searchCode(ActionEvent event) {

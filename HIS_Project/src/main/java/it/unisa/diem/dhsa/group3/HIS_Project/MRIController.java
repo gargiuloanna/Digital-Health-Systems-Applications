@@ -1,6 +1,8 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +11,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-public class MRIController {
+public class MRIController extends BasicController{
 
     @FXML
     private Button LoadButton;
@@ -38,11 +40,7 @@ public class MRIController {
     @FXML
     private TextField searchField;
 
-    @FXML
-	void backPressed(ActionEvent event) throws IOException {
-		App.setRoot("OpeningPage");
-	}
-
+    
     @FXML
     void loadPressed(ActionEvent event) {
 
@@ -62,5 +60,7 @@ public class MRIController {
     void FilterPressed(ActionEvent event) {
 
     }
+
+	
 
 }

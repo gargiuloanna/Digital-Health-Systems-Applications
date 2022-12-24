@@ -24,13 +24,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#backPressed" style="-fx-background-color: #E3E6F4#E3E6F4;">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#SwitchToOpeningPage" style="-fx-background-color: #E3E6F4#E3E6F4;">
                      <graphic>
                         <ImageView>
                            <image>

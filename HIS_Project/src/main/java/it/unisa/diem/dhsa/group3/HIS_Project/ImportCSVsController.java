@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 // Controller FINITO
-public class ImportCSVsController implements Initializable {
+public class ImportCSVsController extends BasicController {
 
 	@FXML
 	private TextField allergyField;
@@ -150,11 +150,6 @@ public class ImportCSVsController implements Initializable {
 		ServerInteraction.sendToServer(false);
 		clearAll();
 
-	}
-
-	@FXML
-	void SwitchToOpeningPage() throws IOException {
-		App.setRoot("OpeningPage");
 	}
 
 	@FXML
