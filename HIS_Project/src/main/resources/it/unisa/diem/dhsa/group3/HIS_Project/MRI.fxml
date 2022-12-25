@@ -15,17 +15,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.MRIController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.MRIController">
    <children>
-      <VBox prefHeight="650.4" prefWidth="1000.0" style="-fx-background-color: #E3E6F4;" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="650.4" prefWidth="1000.0" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#SwitchToOpeningPage" style="-fx-background-color: #E3E6F4#E3E6F4;">
+                  <Button id="back" alignment="CENTER" mnemonicParsing="false" onAction="#SwitchToOpeningPage">
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@back.png" />
+                              <Image url="@images/back.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -60,9 +60,9 @@
                               <Insets top="40.0" />
                            </padding>
                         </HBox>
-                        <BorderPane prefHeight="511.0" prefWidth="490.0" style="-fx-background-color: #cdcfdb; -fx-background-radius: 10; -fx-border-radius: 10;">
+                        <BorderPane id="mri-border" prefHeight="511.0" prefWidth="490.0">
                            <center>
-                              <ListView fx:id="ViewOrders" prefHeight="451.0" prefWidth="470.0" style="-fx-background-radius: 5;" BorderPane.alignment="CENTER">
+                              <ListView id="mri-box" fx:id="ViewOrders" prefHeight="451.0" prefWidth="470.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets top="10.0" />
                                  </BorderPane.margin>
@@ -79,7 +79,7 @@
                                  <children>
                                     <ImageView disable="true" fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Immagine%202022-12-11%20131959_preview_rev_2.png" />
+                                          <Image url="@images/Immagine%202022-12-11%20131959_preview_rev_2.png" />
                                        </image>
                                        <HBox.margin>
                                           <Insets top="5.0" />
@@ -93,7 +93,7 @@
                                           <Insets left="10.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchPressed" prefHeight="30.0" prefWidth="76.0" style="-fx-background-color: #1F2C71;" text="Search" textFill="WHITE" wrapText="true">
+                                    <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchPressed" prefHeight="30.0" prefWidth="76.0" text="Search" textFill="WHITE" wrapText="true">
                                        <HBox.margin>
                                           <Insets left="10.0" top="5.0" />
                                        </HBox.margin>
@@ -124,7 +124,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="FilterButton" mnemonicParsing="false" onAction="#FilterPressed" prefHeight="30.0" prefWidth="76.0" style="-fx-background-color: #1F2C71;" text="Search" textFill="WHITE" wrapText="true">
+                              <Button fx:id="FilterButton" mnemonicParsing="false" onAction="#FilterPressed" prefHeight="30.0" prefWidth="76.0" text="Search" textFill="WHITE" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -148,12 +148,12 @@
                               <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="ViewSelectedOrder" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 5;">
+                        <ListView id="mri-box" fx:id="ViewSelectedOrder" prefHeight="200.0" prefWidth="200.0">
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" top="10.0" />
                            </VBox.margin>
                         </ListView>
-                        <Button fx:id="ViewReportButton" mnemonicParsing="false" onAction="#viewPressed" style="-fx-background-color: #1F2C71;" text="View Exam Report" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <Button fx:id="ViewReportButton" mnemonicParsing="false" onAction="#viewPressed" text="View Exam Report" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -161,7 +161,7 @@
                               <Insets left="150.0" top="50.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="LoadButton" mnemonicParsing="false" onAction="#loadPressed" style="-fx-background-color: #1F2C71;" text="Load Results" textFill="WHITE" wrapText="true">
+                        <Button fx:id="LoadButton" mnemonicParsing="false" onAction="#loadPressed" text="Load Results" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

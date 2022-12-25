@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -24,22 +23,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
    <children>
-      <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#SwitchToOpeningPage" style="-fx-background-color: #E3E6F4#E3E6F4;">
+                  <Button id="back" alignment="CENTER" mnemonicParsing="false" onAction="#SwitchToOpeningPage">
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@back.png" />
+                              <Image url="@images/back.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Admission" textAlignment="CENTER" wrappingWidth="283.681640625">
+                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Patient Admission" textAlignment="CENTER" wrappingWidth="283.681640625">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -52,14 +51,22 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="1000.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1000.0" spacing="20.0">
                <children>
+                  <ImageView fx:id="progressBar" fitHeight="59.0" fitWidth="92.0" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@images/loading-gif-transparent-background.gif" />
+                     </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
                   <Label text="Search Patient" textFill="#1f2c71">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="270.0" top="30.0" />
+                        <Insets />
                      </HBox.margin>
                   </Label>
                   <TextField fx:id="searchPatientField" onAction="#searchCode" promptText="Insert Code...">
@@ -67,22 +74,22 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" top="25.0" />
+                        <Insets />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="SearchButton" mnemonicParsing="false" onAction="#searchCode" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #1F2C71;" text="Search" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                  <Button fx:id="SearchButton" mnemonicParsing="false" onAction="#searchCode" prefHeight="40.0" prefWidth="90.0" text="Search" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" top="25.0" />
+                        <Insets />
                      </HBox.margin>
                   </Button>
-                  <ProgressIndicator fx:id="progressBar" prefHeight="3.0" prefWidth="30.0">
-                     <HBox.margin>
-                        <Insets left="12.0" top="10.0" />
-                     </HBox.margin>
-                  </ProgressIndicator>
+                  <Button fx:id="AdvancedSearchButton" layoutX="651.0" layoutY="35.0" mnemonicParsing="false" onAction="#AdvancedSearch" prefHeight="40.0" prefWidth="160.0" text="Advanced search" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </HBox>
             <Separator prefHeight="34.0" prefWidth="1000.0">
@@ -96,7 +103,7 @@
                      <content>
                         <ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="384.0" prefViewportHeight="500.0" prefViewportWidth="1000.0" prefWidth="998.0">
                            <content>
-                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="984.0" style="-fx-background-color: e4e6f4;">
+                              <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="984.0">
                                  <children>
                                     <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="364.0" prefWidth="1000.0">
                                        <children>
@@ -341,7 +348,7 @@
                   </Tab>
                 <Tab text="Additional Information">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="274.0" prefWidth="998.0" style="-fx-background-color: e4e6f4;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="274.0" prefWidth="998.0">
                            <children>
                               <HBox prefHeight="76.0" prefWidth="1000.0">
                                  <children>
@@ -469,7 +476,7 @@
                   </Tab>
                   <Tab text="Address">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="1000.0" style="-fx-background-color: e4e6f4;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="1000.0">
                            <children>
                               <GridPane prefHeight="294.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
@@ -631,7 +638,7 @@
                   </Tab>
                   <Tab text="Healthcare">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="998.0" style="-fx-background-color: e3e6f4;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="998.0">
                            <children>
                               <HBox prefHeight="76.0" prefWidth="1000.0">
                                  <children>
@@ -699,7 +706,7 @@
                         <Insets left="30.0" top="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="SubmitButton" mnemonicParsing="false" onAction="#submitPressed" prefHeight="45.0" prefWidth="110.0" style="-fx-background-color: #1F2C71;" text="Submit" textFill="WHITE">
+                  <Button fx:id="SubmitButton" mnemonicParsing="false" onAction="#submitPressed" prefHeight="45.0" prefWidth="110.0" text="Submit" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

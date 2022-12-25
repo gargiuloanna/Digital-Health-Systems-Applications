@@ -1,15 +1,86 @@
+* {
+    -dark-violet: #4c43aa;
+    -background: #E4E6F4;
+    -dark-blue: #1f2c71;
+    -light-selected: #B2B8D4;
+    -color: #cdcfdb;
+}
+
 Text { 
  -fx-font-smoothing-type: lcd;
- -fx-fill: #4c43aa;
- -fx-font-size: 15pt;
+ -fx-fill: -dark-violet;
+ -fx-font-size: 15.0pt;
+}
+
+#back {
+    -fx-background-color: -background;
+
 }
 
 .button {
-	-fx-background-color: #4c43aa;
+	-fx-background-color: -dark-violet;
 	-fx-text-fill: #ffffff;
 }
 
 .title{
 	-fx-font-family: "Georgia";
-	-fx-font-size: 30px;
+	-fx-font-size: 30.0px;
 }
+
+#mri-border{
+	-fx-background-color: #cdcfdb; 
+	-fx-background-radius: 10; 
+	-fx-border-radius: 10;
+}
+
+#mri-box{
+	-fx-background-radius: 5; 
+}
+
+.root,
+#anchorpane,
+.table-view{
+	-fx-background-color:  -background;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler{
+    -fx-background-color: -dark-violet;
+
+}
+
+.table-view .column-header .filler{
+	-fx-background-color: -dark-blue;
+}
+
+.table-view .column-header .label{	
+	-fx-text-fill: white;
+	-fx-font-type: bold;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: -dark-blue;
+
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: -light-selected ;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: -dark-blue;
+}
+

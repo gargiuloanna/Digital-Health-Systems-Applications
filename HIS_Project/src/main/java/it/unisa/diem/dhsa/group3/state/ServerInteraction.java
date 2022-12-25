@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Patient;
@@ -41,16 +42,33 @@ public class ServerInteraction {
 	}
 
 	public static Resource getResource(String identifier) throws FhirClientConnectionException {
-		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+		ExecutorService executor = Executors.newFixedThreadPool(2);
+
 		String id;
 		if (identifier == "") {
 			id = "0";
 		} else
 			id = identifier;
+		Future<Bundle> result = executor.submit(new Callable<Bundle>() {
+			public Bundle call() throws FhirClientConnectionException {
+				IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+				return client.search().forResource(Patient.class)
+						.where(new TokenClientParam("identifier").exactly().code(id)).prettyPrint()
+						.returnBundle(Bundle.class).encodedJson().execute();
+			}
+		});
 
 		Bundle bundle;
-		bundle = client.search().forResource(Patient.class).where(new TokenClientParam("identifier").exactly().code(id))
-				.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
+		try {
+			bundle = result.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new FhirClientConnectionException("error in thread");
+		}finally {
+			executor.shutdownNow();
+		}
+
 		// .systemAndCode("https://github.com/synthetichealth/synthea", id)
 		if (bundle.isEmpty())
 			return null;
@@ -58,24 +76,50 @@ public class ServerInteraction {
 
 	}
 
-	public static String uploadResource(String id, Resource new_resource, boolean update)
+	public static String uploadResource(String id, Resource resource, boolean update)
 			throws FhirClientConnectionException {
-		
-		FhirContext ctx = Context.getContext();
-		IGenericClient client = ctx.newRestfulGenericClient(Context.server);
+		Resource new_resource = resource;
+
+		ExecutorService executor = Executors.newFixedThreadPool(2);
+
 		Resource old_resource = getResource(id);
-		MethodOutcome methodOutcome = null;
+		MethodOutcome methodOutcome;
+		Future<MethodOutcome> future;
+
 		if (old_resource != null) {
-			if (!update)
+			if (!update) {
 				return old_resource.getIdElement().getIdPart();
-			if (update) {
-				new_resource.setId(new_resource.getClass().getSimpleName()+'/'+old_resource.getIdElement().getIdPart());
-				methodOutcome = client.update().resource(new_resource).prettyPrint().encodedJson().execute();
 				}
+			else{
+				future = executor.submit(new Callable<MethodOutcome>() {
+					public MethodOutcome call() throws Exception {
+						IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+						new_resource.setId(new_resource.getClass().getSimpleName()+'/'+old_resource.getIdElement().getIdPart());
+						MethodOutcome mo = client.update().resource(new_resource).prettyPrint().encodedJson().execute();
+						return mo;
+					}
+
+				});
+			}
+		} else
+			future = executor.submit(new Callable<MethodOutcome>() {
+				public MethodOutcome call() throws Exception {
+					IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+					MethodOutcome mo = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
+					return mo;
+				}
+
+			});
+
+		try {
+			methodOutcome = future.get();
+			return methodOutcome.getId().getValue();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+			throw new FhirClientConnectionException("error in thread");
+		}finally {
+			executor.shutdownNow();
 		}
-		
-		methodOutcome = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
-		return methodOutcome.getId().getValue();
 
 	}
 

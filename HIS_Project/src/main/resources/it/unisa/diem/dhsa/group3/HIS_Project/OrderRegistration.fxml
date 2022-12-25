@@ -15,22 +15,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
 	<children>
       <VBox prefHeight="200.0" prefWidth="400.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#SwitchToOpeningPage" style="-fx-background-color: #E3E6F4;">
+                  <Button id="back" mnemonicParsing="false" onAction="#SwitchToOpeningPage">
                      <graphic>
                         <ImageView onDragDetected="#SwitchToOpeningPage">
                            <image>
-                              <Image url="@back.png" />
+                              <Image url="@images/back.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Registration" textAlignment="CENTER" wrappingWidth="298.8816521167755">
+                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Order Registration" textAlignment="CENTER" wrappingWidth="298.8816521167755">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -65,7 +65,7 @@
             </HBox>
             <ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefViewportHeight="500.0" prefViewportWidth="1000.0" prefWidth="998.0">
                <content>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="983.0" style="-fx-background-color: e4e6f4;">
+                  <AnchorPane id="anchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="983.0">
                      <children>
                         <VBox fx:id="VboxContainer" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -244,7 +244,7 @@
                         <Insets left="80.0" top="45.0" />
                      </HBox.margin>
                   </CheckBox>
-                  <Button fx:id="SendOrderButton" mnemonicParsing="false" onAction="#sendOrderPressed" prefHeight="46.0" prefWidth="137.0" style="-fx-background-color: #1F2C71;" text="Send Order" textFill="WHITE" wrapText="true">
+                  <Button fx:id="SendOrderButton" mnemonicParsing="false" onAction="#sendOrderPressed" prefHeight="46.0" prefWidth="137.0" text="Send Order" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

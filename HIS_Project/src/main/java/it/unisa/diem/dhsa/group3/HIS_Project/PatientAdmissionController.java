@@ -40,6 +40,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.scene.control.TabPane;
@@ -94,6 +95,9 @@ public class PatientAdmissionController extends BasicController {
 
 	@FXML
 	private Button SearchButton;
+	
+	@FXML
+	private Button AdvancedSearchButton;
 
 	@FXML
 	private TextField SSNField;
@@ -147,7 +151,7 @@ public class PatientAdmissionController extends BasicController {
 	private MenuButton MaritalMenuButton;
 
 	@FXML
-	private ProgressIndicator progressBar;
+	private ImageView progressBar;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -184,13 +188,17 @@ public class PatientAdmissionController extends BasicController {
 	}
 
 	@FXML
+	void AdvancedSearch(ActionEvent event) throws IOException {
+		App.setRoot("AdvancedSearch");
+	}
+
+	@FXML
 	void searchCode(ActionEvent event) {
 		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank()) {
 			return;
 		}
 
 		progressBar.setVisible(true);
-		progressBar.setOpacity(1.0);
 
 		String id = searchPatientField.getText();
 		try {
@@ -204,9 +212,11 @@ public class PatientAdmissionController extends BasicController {
 			enableFields();
 			progressBar.setVisible(false);
 		} catch (FhirClientConnectionException e) {
-			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
-					ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nRetry?.", ButtonType.YES,
+					ButtonType.NO);
 			alert.showAndWait();
+			if (alert.getResult().equals(ButtonType.YES))
+				System.out.println("yes");// searchCode(event);
 		}
 
 	}
@@ -214,33 +224,15 @@ public class PatientAdmissionController extends BasicController {
 	@FXML
 	void submitPressed(ActionEvent event) throws IOException, NumberFormatException, ParseException {
 		PatientResource p = createPatient();
-		
+
 		Patient patient = (Patient) p.createResource();
-		ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
-		
+		progressBar.setVisible(true);
+		String id = ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
+		IDField.setText(id);
+		disableFields();
+		progressBar.setVisible(true);
 
 	}
-
-	/*
-	 * @FXML void LoadPatientPressed(ActionEvent event) {
-	 * 
-	 * FileChooser chooser = new FileChooser(); File filename =
-	 * chooser.showOpenDialog(null); if (filename != null) { //
-	 * System.out.println(filename); try { Map<String, Resource> patients =
-	 * ReadCSV.readCSV(PatientResource.class, filename.getCanonicalPath());
-	 * fillFields((Patient) patients.get("b4c809c0-de80-1c62-ab58-7b885e475e76"));
-	 * // .get("ce9bd436-6b59-0452-86a4-61f3642736bc")); //
-	 * .get("8b0484cd-3dbd-8b8d-1b72-a32f74a5a846")); // TODO remove selecting
-	 * patient
-	 * 
-	 * } catch (IOException e) { // TODO Dovrebbe generare l'eccezione
-	 * sugetCanonicalPath quando non viene // scelto nulla - ma sarebbe null
-	 * efacciamo già l'if //e.printStackTrace(); } }
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
 
 	@FXML
 	void maritalSelected(ActionEvent event) {
@@ -298,7 +290,8 @@ public class PatientAdmissionController extends BasicController {
 			return "hispanic";
 		case "Hispanic nor Latino":
 			return "nonhispanic";
-		default: return null;
+		default:
+			return null;
 		}
 	}
 
@@ -312,10 +305,11 @@ public class PatientAdmissionController extends BasicController {
 
 	private void disableFields() {
 		searchPatientField.clear();
+		searchPatientField.setDisable(false);
 		TabPane.setDisable(true);
 		IDField.setDisable(true);
 		patientID.setDisable(true);
-		progressBar.setOpacity(0);
+		progressBar.setVisible(false);
 	}
 
 	private void fillFields(Patient patient) {
@@ -467,9 +461,10 @@ public class PatientAdmissionController extends BasicController {
 		return new PatientResource(BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
 				DriversField.getText(), PassportField.getText(), PrefixField.getText(), FirstNameField.getText(),
 				LastNameField.getText(), SuffixField.getText(), MaidenField.getText(),
-				maritalCode(MaritalMenuButton.getText()), raceCode(RacePicker.getText()), ethnicityCode(EthnicityField.getText()),
-				gender(), BirthPlaceField.getText(), AddressField.getText(), CityField.getText(), StateField.getText(),
-				CountyField.getText(), ZIPField.getText(), lat, lon, expenses, coverage);
+				maritalCode(MaritalMenuButton.getText()), raceCode(RacePicker.getText()),
+				ethnicityCode(EthnicityField.getText()), gender(), BirthPlaceField.getText(), AddressField.getText(),
+				CityField.getText(), StateField.getText(), CountyField.getText(), ZIPField.getText(), lat, lon,
+				expenses, coverage);
 	}
 
 }

@@ -13,17 +13,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: E4E6F4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.ImportCSVsController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.ImportCSVsController">
 	<children>
       <VBox prefHeight="200.0" prefWidth="400.8" stylesheets="@base.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#SwitchToOpeningPage" style="-fx-background-color: #E3E6F4;">
+                  <Button id="back" mnemonicParsing="false" onAction="#SwitchToOpeningPage">
                      <graphic>
                         <ImageView onDragDetected="#SwitchToOpeningPage">
                            <image>
-                              <Image url="@back.png" />
+                              <Image url="@images/back.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -42,9 +42,9 @@
                </VBox.margin>
             </HBox>
             <Separator prefWidth="200.0" />
-            <ScrollPane maxHeight="-Infinity" prefHeight="577.0" prefWidth="50.0" style="-fx-background-color: #e4e6f4;">
+            <ScrollPane maxHeight="-Infinity" prefHeight="577.0" prefWidth="50.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="990.0" style="-fx-background-color: #e4e6f4;">
+                <AnchorPane id="anchorpane" minHeight="0.0" minWidth="0.0" prefWidth="990.0">
                      <children>
                         <VBox prefWidth="1000.0" spacing="20.0">
                            <children>
@@ -274,7 +274,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                    <Button fx:id="sendBtn" mnemonicParsing="false" onAction="#send_clicked" style="-fx-background-color: #4c43aa;" text="Send" textFill="WHITE" />
+                                    <Button fx:id="sendBtn" mnemonicParsing="false" onAction="#send_clicked" text="Send" textFill="WHITE" />
                                  </children>
                                  <padding>
                                     <Insets right="80.0" />
