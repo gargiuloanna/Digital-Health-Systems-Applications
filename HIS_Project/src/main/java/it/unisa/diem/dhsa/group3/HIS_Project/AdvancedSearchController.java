@@ -28,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 
@@ -57,11 +58,14 @@ public class AdvancedSearchController extends BasicController {
 	private TableColumn<PatientListElem, String> ssnColumn;
 	@FXML
 	private Button searchButton;
-	
+	@FXML
+	private ImageView progressBar;
+
 	private ObservableList<PatientListElem> list;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		progressBar.setVisible(false);
 		list = FXCollections.observableArrayList();
 
 		firstColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -141,7 +145,7 @@ public class AdvancedSearchController extends BasicController {
 	private void getPatients(Service<List<Resource>> service) {
 
 		list.clear();
-		
+		progressBar.setVisible(true);
 
 		service.start();
 		service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
@@ -156,7 +160,7 @@ public class AdvancedSearchController extends BasicController {
 					for (Resource p : r)
 						if (r != null)
 							list.add(new PatientListElem((Patient) p));
-
+				progressBar.setVisible(false);
 				// progressBar.setVisible(false);
 
 			}
@@ -170,6 +174,7 @@ public class AdvancedSearchController extends BasicController {
 							ButtonType.OK);
 					alert.showAndWait();
 				}
+				progressBar.setVisible(false);
 
 			}
 		});

@@ -34,7 +34,6 @@ public class ServerInteraction {
 			for (String key : map.keySet()) {
 				try {
 					id = uploadResource(key, map.get(key), update);
-					System.out.println(id);
 					ids.add(id);
 				} catch (FhirClientConnectionException e) {
 					System.out.println("Error in the connection");

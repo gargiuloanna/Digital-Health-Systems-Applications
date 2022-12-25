@@ -126,42 +126,37 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <HBox layoutX="-1.0" layoutY="236.0" prefHeight="76.0" prefWidth="1000.0">
+                  <HBox alignment="CENTER" layoutX="-1.0" layoutY="236.0" prefHeight="76.0" prefWidth="1000.0" spacing="146.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0" spacing="50.0">
-                           <children>
-                              <Button graphicTextGap="15.0" mnemonicParsing="false" onAction="#viewAll" prefHeight="46.0" prefWidth="138.0" text="View All">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                                 <graphic>
-                                    <ImageView fitHeight="38.0" fitWidth="33.0" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/search-in-list-100.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="35.0" />
-                           </HBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0" spacing="50.0">
-                           <children>
-                              <Button fx:id="searchButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="44.0" prefWidth="130.0" text="Search">
-                                 <graphic>
-                                    <ImageView fitHeight="38.0" fitWidth="33.0" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/search-white.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font></Button>
-                           </children>
-                        </HBox>
+                        <Button graphicTextGap="15.0" mnemonicParsing="false" onAction="#viewAll" prefHeight="46.0" prefWidth="138.0" text="View All">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="38.0" fitWidth="33.0" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/search-in-list-100.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <ImageView fx:id="progressBar" fitHeight="59.0" fitWidth="92.0" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@images/loading-gif-transparent-background.gif" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="searchButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="44.0" prefWidth="130.0" text="Search">
+                           <graphic>
+                              <ImageView fitHeight="38.0" fitWidth="33.0" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/search-white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                   <Separator prefWidth="200.0" />
