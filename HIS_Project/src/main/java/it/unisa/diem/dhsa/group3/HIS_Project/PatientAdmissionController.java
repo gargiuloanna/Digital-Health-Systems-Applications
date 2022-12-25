@@ -272,13 +272,55 @@ public class PatientAdmissionController extends BasicController {
 	@FXML
 	void submitPressed(ActionEvent event) throws IOException, NumberFormatException, ParseException {
 		PatientResource p = createPatient();
-
-		Patient patient = (Patient) p.createResource();
 		progressBar.setVisible(true);
-		String id = ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
-		IDField.setText(id); // TODO add generation of ID
-		disableFields();
-		progressBar.setVisible(false);
+		Patient patient = (Patient) p.createResource(); // TODO add generation of ID
+		
+		
+		Service<String> upload = new Service<String>() {
+
+			@Override
+			protected Task<String> createTask() throws FhirClientConnectionException {
+				// TODO Auto-generated method stub
+				return new Task<String>() {
+
+					@Override
+					protected String call() throws FhirClientConnectionException {
+						return ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
+
+					};
+				};
+			}
+		};
+
+		upload.start();
+		upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				String id = upload.getValue();
+				disableFields();
+				progressBar.setVisible(false);
+				Alert alert = new Alert(AlertType.NONE, "Resource with id:" +id +" updated correctly.",
+						ButtonType.OK);
+				alert.showAndWait();
+				clearAll();
+			}
+		});
+		
+		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (upload.getException() != null
+						&& upload.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+							ButtonType.OK);
+					alert.showAndWait();
+				}
+				progressBar.setVisible(false);
+
+			}
+		});
 
 	}
 
@@ -363,6 +405,33 @@ public class PatientAdmissionController extends BasicController {
 		patientID.setDisable(true);
 		progressBar.setVisible(false);
 	}
+	
+	private void clearAll() {
+		LONField.clear();
+		LastNameField.clear();
+		LATField.clear();;
+		PrefixField.clear();;
+		CountyField.clear();
+		StateField.clear();
+		CoverageField.clear();
+		DriversField.clear();
+		MaidenField.clear();
+		ZIPField.clear();
+		SSNField.clear();
+		AddressField.clear();
+		IDField.clear();
+		FirstNameField.clear();
+		BirthPlaceField.clear();
+		searchPatientField.clear();
+		CityField.clear();
+		ExpensesField.clear();
+		SuffixField.clear();
+		IdentifierField.clear();
+		PassportField.clear();
+
+		
+	}
+	
 
 	void fillFields(Patient patient) {
 

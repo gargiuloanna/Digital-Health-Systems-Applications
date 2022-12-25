@@ -169,7 +169,7 @@ public class ServerInteraction {
 
 		try {
 			methodOutcome = future.get();
-			return methodOutcome.getId().getValue();
+			return methodOutcome.getId().getIdPart();
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 			throw new FhirClientConnectionException("error in thread");

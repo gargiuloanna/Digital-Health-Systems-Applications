@@ -12,8 +12,6 @@ import org.hl7.fhir.r4.model.Resource;
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -29,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 
@@ -79,6 +78,10 @@ public class AdvancedSearchController extends BasicController {
 						.and(Bindings.isEmpty(LastNameField.textProperty()))
 						.and(BirthDatePicker.valueProperty().isNull())
 						.and(DeathDatePicker.valueProperty().isNull()));
+		
+		table.setEditable(true);
+		identifierColumn.setCellFactory((TextFieldTableCell.forTableColumn()));
+		identifierColumn.setEditable(true);
 	}
 
 	@FXML
