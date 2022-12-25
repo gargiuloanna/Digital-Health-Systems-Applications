@@ -18,6 +18,13 @@ public abstract class BaseResource {
 	public void setId(String id) {
 		Id = id;
 	}
+
+	public BaseResource(String id) {
+		Id = id;
+	}
+	
+	public BaseResource() {
+	}
 	
 	
 	

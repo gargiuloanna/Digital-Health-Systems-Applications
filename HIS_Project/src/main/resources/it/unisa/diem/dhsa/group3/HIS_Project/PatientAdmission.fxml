@@ -322,7 +322,7 @@
                                                             <Insets left="60.0" top="30.0" />
                                                          </HBox.margin>
                                                       </Label>
-                                                      <MenuButton fx:id="EthnicityField" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Not Hispanic or Latino">
+                                                      <MenuButton fx:id="EthnicityPicker" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Not Hispanic or Latino">
                                                          <items>
                                                             <MenuItem onAction="#ethnicitySelected" text="Hispanic or Latino" />
                                                             <MenuItem onAction="#ethnicitySelected" text="Not Hispanic or Latino" />
@@ -370,9 +370,21 @@
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="85.0" prefWidth="500.0">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
+                                       <children>
+                                          <Label prefHeight="27.0" prefWidth="100.0" text="Identifier" textAlignment="RIGHT" textFill="#1f2c71">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="60.0" top="30.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="IdentifierField" disable="true" editable="false" prefHeight="39.0" prefWidth="240.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" top="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
                                     </HBox>
                                  </children>
                               </HBox>

@@ -97,11 +97,11 @@ public class PatientResource extends BaseResource {
 	public PatientResource() {
 	}
 
-	public PatientResource(Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
+	public PatientResource(String iD, Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
 			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
 			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
 			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) {
-		super();
+		super(iD);
 		BIRTHDATE = bIRTHDATE;
 		DEATHDATE = dEATHDATE;
 		SSN = sSN;
@@ -128,12 +128,12 @@ public class PatientResource extends BaseResource {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
-	public PatientResource(LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
+	public PatientResource(String iD, LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
 			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
 			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
 			String cOUNTY, String zIP, Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE)
 			throws ParseException {
-		super();
+		super(iD);
 		if (bIRTHDATE == null)
 			BIRTHDATE = null;
 		else

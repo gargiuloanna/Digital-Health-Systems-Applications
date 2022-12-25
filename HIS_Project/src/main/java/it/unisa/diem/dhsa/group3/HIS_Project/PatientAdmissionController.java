@@ -145,9 +145,12 @@ public class PatientAdmissionController extends BasicController {
 
 	@FXML
 	private TextField SuffixField;
+	
+	@FXML
+	private TextField IdentifierField;
 
 	@FXML
-	private MenuButton EthnicityField;
+	private MenuButton EthnicityPicker;
 
 	@FXML
 	private TextField PassportField;
@@ -256,11 +259,9 @@ public class PatientAdmissionController extends BasicController {
 			public void handle(WorkerStateEvent event) {
 				if (getResource.getException() != null
 						&& getResource.getException().getClass() == FhirClientConnectionException.class) {
-					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nRetry?.",
-							ButtonType.YES, ButtonType.NO);
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+							ButtonType.OK);
 					alert.showAndWait();
-					if (alert.getResult().equals(ButtonType.YES))
-						System.out.println("yes");// searchCode(event);
 				}
 
 			}
@@ -275,9 +276,9 @@ public class PatientAdmissionController extends BasicController {
 		Patient patient = (Patient) p.createResource();
 		progressBar.setVisible(true);
 		String id = ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
-		IDField.setText(id);
+		IDField.setText(id); //TODO add generation of ID
 		disableFields();
-		progressBar.setVisible(true);
+		progressBar.setVisible(false);
 
 	}
 
@@ -328,14 +329,14 @@ public class PatientAdmissionController extends BasicController {
 	@FXML
 	void ethnicitySelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
-		EthnicityField.setText(e.getText());
+		EthnicityPicker.setText(e.getText());
 	}
 
 	private String ethnicityCode(String ethnicityText) {
 		switch (ethnicityText) {
-		case "Not Hispanic nor Latino":
+		case "Not Hispanic or Latino":
 			return "hispanic";
-		case "Hispanic nor Latino":
+		case "Hispanic or Latino":
 			return "nonhispanic";
 		default:
 			return null;
@@ -360,10 +361,10 @@ public class PatientAdmissionController extends BasicController {
 	}
 
 	private void fillFields(Patient patient) {
-
-		// add id
-		IDField.setText(patient.getIdElement().getVersionIdPart()); // TODO now it is empty because it is not on the
-																	// server
+		
+		IdentifierField.setText(patient.getIdentifierFirstRep().getValue());
+		
+		IDField.setText(patient.getIdElement().getIdPart()); // TODO now it is empty because it is not on the														// server
 		IDField.setDisable(true);
 		int index = 0;
 		// it insert the first name in the field of the name
@@ -445,8 +446,9 @@ public class PatientAdmissionController extends BasicController {
 		if (patient.getExtensionByUrl(url) != null) {
 			CodeableConcept code = (CodeableConcept) patient.getExtensionByUrl(url)
 					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category").getValue();
-			EthnicityField.setText(code.getCodingFirstRep().getDisplay());
-			EthnicityField.setDisable(true);
+			System.out.println(code.getCoding());
+			EthnicityPicker.setText(code.getCodingFirstRep().getDisplay());
+			EthnicityPicker.setDisable(true);
 		}
 
 		// identifiers
@@ -496,6 +498,10 @@ public class PatientAdmissionController extends BasicController {
 
 	private PatientResource createPatient() throws NumberFormatException, ParseException {
 		float lat = 0, lon = 0, expenses = 0, coverage = 0;
+		String id;
+		if (IdentifierField.getText().isEmpty())
+			id= null;
+		else id = IdentifierField.getText();	
 		if (!LATField.getText().isEmpty())
 			lat = Float.parseFloat(LATField.getText());
 		if (!LONField.getText().isEmpty())
@@ -505,11 +511,11 @@ public class PatientAdmissionController extends BasicController {
 		if (!CoverageField.getText().isEmpty())
 			coverage = Float.parseFloat(CoverageField.getText());
 
-		return new PatientResource(BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
+		return new PatientResource(id ,BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
 				DriversField.getText(), PassportField.getText(), PrefixField.getText(), FirstNameField.getText(),
 				LastNameField.getText(), SuffixField.getText(), MaidenField.getText(),
 				maritalCode(MaritalMenuButton.getText()), raceCode(RacePicker.getText()),
-				ethnicityCode(EthnicityField.getText()), gender(), BirthPlaceField.getText(), AddressField.getText(),
+				ethnicityCode(EthnicityPicker.getText()), gender(), BirthPlaceField.getText(), AddressField.getText(),
 				CityField.getText(), StateField.getText(), CountyField.getText(), ZIPField.getText(), lat, lon,
 				expenses, coverage);
 	}
