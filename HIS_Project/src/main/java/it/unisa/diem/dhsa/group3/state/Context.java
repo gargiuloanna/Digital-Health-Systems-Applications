@@ -30,8 +30,8 @@ public class Context extends FhirContext{
 	public IGenericClient newRestfulGenericClient(final String theServerBase) {
 		if (client == null) {
 			IRestfulClientFactory clt = getContext().getRestfulClientFactory();
-			clt.setConnectTimeout(60 * 1000); 
-			clt.setSocketTimeout(60 * 1000); 
+			clt.setConnectTimeout(10 * 1000); 
+			clt.setSocketTimeout(10 * 1000); 
 			client = clt.newGenericClient(theServerBase);
 			}
 		

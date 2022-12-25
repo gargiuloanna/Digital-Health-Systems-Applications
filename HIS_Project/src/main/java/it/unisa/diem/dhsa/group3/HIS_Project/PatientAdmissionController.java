@@ -9,11 +9,17 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.codesystems.TaskStatus;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 
 import ca.uhn.fhir.rest.client.api.IGenericClient;
@@ -31,7 +37,12 @@ import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -95,7 +106,7 @@ public class PatientAdmissionController extends BasicController {
 
 	@FXML
 	private Button SearchButton;
-	
+
 	@FXML
 	private Button AdvancedSearchButton;
 
@@ -197,27 +208,63 @@ public class PatientAdmissionController extends BasicController {
 		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank()) {
 			return;
 		}
-
 		progressBar.setVisible(true);
+		getSetPatient();
 
-		String id = searchPatientField.getText();
-		try {
-			Resource r = ServerInteraction.getResource(id);
-			if (r != null) {
-				fillFields((Patient) r);
-			} else {
-				Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
-				alert.showAndWait();
+	}
+
+	private void getSetPatient() {
+
+		Service<Resource> getResource = new Service<Resource>() {
+
+			@Override
+			protected Task<Resource> createTask() throws FhirClientConnectionException {
+				// TODO Auto-generated method stub
+				return new Task<Resource>() {
+
+					@Override
+					protected Resource call() throws FhirClientConnectionException {
+						String id = searchPatientField.getText();
+						return ServerInteraction.getResource(id);
+
+					};
+				};
 			}
-			enableFields();
-			progressBar.setVisible(false);
-		} catch (FhirClientConnectionException e) {
-			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nRetry?.", ButtonType.YES,
-					ButtonType.NO);
-			alert.showAndWait();
-			if (alert.getResult().equals(ButtonType.YES))
-				System.out.println("yes");// searchCode(event);
-		}
+		};
+
+		getResource.start();
+		getResource.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Resource r = getResource.getValue();
+
+				if (r != null) {
+					fillFields((Patient) r);
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
+					alert.showAndWait();
+				}
+				enableFields();
+				progressBar.setVisible(false);
+
+			}
+		});
+
+		getResource.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (getResource.getException() != null
+						&& getResource.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nRetry?.",
+							ButtonType.YES, ButtonType.NO);
+					alert.showAndWait();
+					if (alert.getResult().equals(ButtonType.YES))
+						System.out.println("yes");// searchCode(event);
+				}
+
+			}
+		});
 
 	}
 

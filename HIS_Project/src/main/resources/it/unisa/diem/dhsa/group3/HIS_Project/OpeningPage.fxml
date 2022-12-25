@@ -25,7 +25,7 @@
                            <children>
                               <HBox prefHeight="191.3" prefWidth="503.0">
                                  <children>
-                                    <Text fill="#4e42a9" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Hospital Information System" textAlignment="CENTER">
+                                    <Text fill="#4e42a9" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Hospital Information System" textAlignment="CENTER">
                                        <font>
                                           <Font name="Georgia Bold" size="27.0" />
                                        </font>
