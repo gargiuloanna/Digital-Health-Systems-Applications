@@ -94,78 +94,6 @@ public class PatientResource extends BaseResource {
 	@CsvBindByName
 	private Float HEALTHCARE_COVERAGE;
 
-	public PatientResource() {
-	}
-
-	public PatientResource(String iD, Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
-			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
-			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
-			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) {
-		super(iD);
-		BIRTHDATE = bIRTHDATE;
-		DEATHDATE = dEATHDATE;
-		SSN = sSN;
-		DRIVERS = dRIVERS;
-		PASSPORT = pASSPORT;
-		PREFIX = pREFIX;
-		FIRST = fIRST;
-		LAST = lAST;
-		SUFFIX = sUFFIX;
-		MAIDEN = mAIDEN;
-		MARITAL = mARITAL;
-		RACE = rACE;
-		ETHNICITY = eTHNICITY;
-		GENDER = gENDER;
-		BIRTHPLACE = bIRTHPLACE;
-		ADDRESS = aDDRESS;
-		CITY = cITY;
-		STATE = sTATE;
-		COUNTY = cOUNTY;
-		ZIP = zIP;
-		LAT = lAT;
-		LON = lON;
-		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
-		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
-	}
-
-	public PatientResource(String iD, LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
-			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
-			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
-			String cOUNTY, String zIP, Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE)
-			throws ParseException {
-		super(iD);
-		if (bIRTHDATE == null)
-			BIRTHDATE = null;
-		else
-			BIRTHDATE = Date.from(bIRTHDATE.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
-		if (dEATHDATE == null)
-			DEATHDATE = null;
-		else
-			DEATHDATE = Date.from(dEATHDATE.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
-		SSN = sSN;
-		DRIVERS = dRIVERS;
-		PASSPORT = pASSPORT;
-		PREFIX = pREFIX;
-		FIRST = fIRST;
-		LAST = lAST;
-		SUFFIX = sUFFIX;
-		MAIDEN = mAIDEN;
-		MARITAL = mARITAL;
-		RACE = rACE;
-		ETHNICITY = eTHNICITY;
-		GENDER = gENDER;
-		BIRTHPLACE = bIRTHPLACE;
-		ADDRESS = aDDRESS;
-		CITY = cITY;
-		STATE = sTATE;
-		COUNTY = cOUNTY;
-		ZIP = zIP;
-		LAT = lAT;
-		LON = lON;
-		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
-		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
-	}
-
 	public Date getBIRTHDATE() {
 		return BIRTHDATE;
 	}
@@ -355,6 +283,78 @@ public class PatientResource extends BaseResource {
 	}
 
 	public void setHEALTHCARE_COVERAGE(Float hEALTHCARE_COVERAGE) {
+		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
+	}
+
+	public PatientResource() {
+	}
+
+	public PatientResource(String iD, Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
+			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
+			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
+			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) {
+		super(iD);
+		BIRTHDATE = bIRTHDATE;
+		DEATHDATE = dEATHDATE;
+		SSN = sSN;
+		DRIVERS = dRIVERS;
+		PASSPORT = pASSPORT;
+		PREFIX = pREFIX;
+		FIRST = fIRST;
+		LAST = lAST;
+		SUFFIX = sUFFIX;
+		MAIDEN = mAIDEN;
+		MARITAL = mARITAL;
+		RACE = rACE;
+		ETHNICITY = eTHNICITY;
+		GENDER = gENDER;
+		BIRTHPLACE = bIRTHPLACE;
+		ADDRESS = aDDRESS;
+		CITY = cITY;
+		STATE = sTATE;
+		COUNTY = cOUNTY;
+		ZIP = zIP;
+		LAT = lAT;
+		LON = lON;
+		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
+		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
+	}
+
+	public PatientResource(String iD, LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
+			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
+			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
+			String cOUNTY, String zIP, Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE)
+			throws ParseException {
+		super(iD);
+		if (bIRTHDATE == null)
+			BIRTHDATE = null;
+		else
+			BIRTHDATE = Date.from(bIRTHDATE.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
+		if (dEATHDATE == null)
+			DEATHDATE = null;
+		else
+			DEATHDATE = Date.from(dEATHDATE.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
+		SSN = sSN;
+		DRIVERS = dRIVERS;
+		PASSPORT = pASSPORT;
+		PREFIX = pREFIX;
+		FIRST = fIRST;
+		LAST = lAST;
+		SUFFIX = sUFFIX;
+		MAIDEN = mAIDEN;
+		MARITAL = mARITAL;
+		RACE = rACE;
+		ETHNICITY = eTHNICITY;
+		GENDER = gENDER;
+		BIRTHPLACE = bIRTHPLACE;
+		ADDRESS = aDDRESS;
+		CITY = cITY;
+		STATE = sTATE;
+		COUNTY = cOUNTY;
+		ZIP = zIP;
+		LAT = lAT;
+		LON = lON;
+		HEALTHCARE_EXPENSES = hEALTHCARE_EXPENSES;
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 

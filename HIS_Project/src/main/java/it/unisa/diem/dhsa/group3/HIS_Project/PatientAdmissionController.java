@@ -145,7 +145,7 @@ public class PatientAdmissionController extends BasicController {
 
 	@FXML
 	private TextField SuffixField;
-	
+
 	@FXML
 	private TextField IdentifierField;
 
@@ -276,7 +276,7 @@ public class PatientAdmissionController extends BasicController {
 		Patient patient = (Patient) p.createResource();
 		progressBar.setVisible(true);
 		String id = ServerInteraction.uploadResource(patient.getIdentifierFirstRep().getValue(), patient, true);
-		IDField.setText(id); //TODO add generation of ID
+		IDField.setText(id); // TODO add generation of ID
 		disableFields();
 		progressBar.setVisible(false);
 
@@ -287,6 +287,7 @@ public class PatientAdmissionController extends BasicController {
 		MenuItem e = (MenuItem) event.getSource();
 		MaritalMenuButton.setText(e.getText());
 	}
+	
 
 	private String maritalCode(String maritalText) {
 		switch (maritalText) {
@@ -314,17 +315,20 @@ public class PatientAdmissionController extends BasicController {
 			return null;
 		}
 	}
+	
 
 	private String raceCode(String raceText) {
 		String[] splitRace = raceText.split(" ");
 		return splitRace[0].toLowerCase();
 	}
+	
 
 	@FXML
 	void raceSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		RacePicker.setText(e.getText());
 	}
+	
 
 	@FXML
 	void ethnicitySelected(ActionEvent event) {
@@ -360,11 +364,11 @@ public class PatientAdmissionController extends BasicController {
 		progressBar.setVisible(false);
 	}
 
-	private void fillFields(Patient patient) {
-		
+	void fillFields(Patient patient) {
+
 		IdentifierField.setText(patient.getIdentifierFirstRep().getValue());
-		
-		IDField.setText(patient.getIdElement().getIdPart()); // TODO now it is empty because it is not on the														// server
+
+		IDField.setText(patient.getIdElement().getIdPart()); // TODO now it is empty because it is not on the // server
 		IDField.setDisable(true);
 		int index = 0;
 		// it insert the first name in the field of the name
@@ -500,8 +504,9 @@ public class PatientAdmissionController extends BasicController {
 		float lat = 0, lon = 0, expenses = 0, coverage = 0;
 		String id;
 		if (IdentifierField.getText().isEmpty())
-			id= null;
-		else id = IdentifierField.getText();	
+			id = null;
+		else
+			id = IdentifierField.getText();
 		if (!LATField.getText().isEmpty())
 			lat = Float.parseFloat(LATField.getText());
 		if (!LONField.getText().isEmpty())
@@ -511,7 +516,7 @@ public class PatientAdmissionController extends BasicController {
 		if (!CoverageField.getText().isEmpty())
 			coverage = Float.parseFloat(CoverageField.getText());
 
-		return new PatientResource(id ,BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
+		return new PatientResource(id, BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
 				DriversField.getText(), PassportField.getText(), PrefixField.getText(), FirstNameField.getText(),
 				LastNameField.getText(), SuffixField.getText(), MaidenField.getText(),
 				maritalCode(MaritalMenuButton.getText()), raceCode(RacePicker.getText()),

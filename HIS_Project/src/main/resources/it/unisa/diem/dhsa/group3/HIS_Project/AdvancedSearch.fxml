@@ -150,7 +150,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
                            <children>
-                              <Button graphicTextGap="10.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" text="Search">
+                              <Button fx:id="searchButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="44.0" prefWidth="130.0" text="Search">
                                  <graphic>
                                     <ImageView fitHeight="38.0" fitWidth="33.0" preserveRatio="true">
                                        <image>
@@ -168,13 +168,12 @@
                   <Separator prefWidth="200.0" />
                   <TableView fx:id="table" prefHeight="284.0" prefWidth="960.0" stylesheets="@base.css">
                     <columns>
-                      <TableColumn prefWidth="100.0" text="First Name" />
-                      <TableColumn prefWidth="100.0" text="LastName" />
-                        <TableColumn prefWidth="100.0" text="BirthDate" />
-                        <TableColumn prefWidth="100.0" text="BirthPlace" />
-                        <TableColumn prefWidth="100.0" text="DeathDate" />
-                        <TableColumn prefWidth="230.0" text="SSN" />
-                        <TableColumn prefWidth="230.0" text="Identifier" />
+                      <TableColumn fx:id="firstColumn" prefWidth="120.0" text="First Name" />
+                      <TableColumn fx:id="lastColumn" prefWidth="120.0" text="LastName" />
+                        <TableColumn fx:id="birthColumn" prefWidth="130.0" text="BirthDate" />
+                        <TableColumn fx:id="deathColumn" prefWidth="130.0" text="DeathDate" />
+                        <TableColumn fx:id="ssnColumn" prefWidth="230.0" text="SSN" />
+                        <TableColumn fx:id="identifierColumn" prefWidth="230.0" text="Identifier" />
                     </columns>
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" top="30.0" />
