@@ -1,5 +1,6 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,6 +11,9 @@ import org.hl7.fhir.r4.model.Resource;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -33,8 +37,6 @@ public class AdvancedSearchController extends BasicController {
 	@FXML
 	private DatePicker BirthDatePicker;
 	@FXML
-	private TextField BirthPlaceField;
-	@FXML
 	private DatePicker DeathDatePicker;
 	@FXML
 	private TextField FirstNameField;
@@ -56,32 +58,38 @@ public class AdvancedSearchController extends BasicController {
 	private TableColumn<PatientListElem, String> ssnColumn;
 	@FXML
 	private Button searchButton;
+	
 	private ObservableList<PatientListElem> list;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		list = FXCollections.observableArrayList();
-		
-		firstColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));		
-		lastColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));		
+
+		firstColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+		lastColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 		birthColumn.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
 		deathColumn.setCellValueFactory(new PropertyValueFactory<>("deathdate"));
 		ssnColumn.setCellValueFactory(new PropertyValueFactory<>("SSN"));
 		identifierColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-		
+
 		table.setItems(list);
+
+		searchButton.disableProperty()
+				.bind(Bindings.isEmpty(FirstNameField.textProperty())
+						.and(Bindings.isEmpty(LastNameField.textProperty()))
+						.and(BirthDatePicker.valueProperty().isNull())
+						.and(DeathDatePicker.valueProperty().isNull()));
 	}
 
 	@FXML
-	void searchPatient(ActionEvent event) {
-		getPatients();
-
+	@Override
+	void SwitchToOpeningPage(ActionEvent event) throws IOException {
+		App.setRoot("PatientAdmission");
 	}
-
-	private void getPatients() {
-		
-		list.clear();
-		Service<List<Resource>> getResource = new Service<List<Resource>>() {
+	
+	@FXML
+	void searchPatient(ActionEvent event) {
+		getPatients(new Service<List<Resource>>() {
 
 			@Override
 			protected Task<List<Resource>> createTask() throws FhirClientConnectionException {
@@ -99,14 +107,45 @@ public class AdvancedSearchController extends BasicController {
 					};
 				};
 			}
-		};
+		});
 
-		getResource.start();
-		getResource.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+	}
+
+	@FXML
+	void viewAll(ActionEvent event) {
+		getPatients(new Service<List<Resource>>() {
+
+			@Override
+			protected Task<List<Resource>> createTask() throws FhirClientConnectionException {
+				// TODO Auto-generated method stub
+				return new Task<List<Resource>>() {
+
+					@Override
+					protected List<Resource> call() throws FhirClientConnectionException {
+						String name = "";
+						String family = "";
+						LocalDate birth = null;
+						LocalDate death = null;
+						return ServerInteraction.getResources(name, family, birth, death);
+
+					};
+				};
+			}
+		});
+
+	}
+
+	private void getPatients(Service<List<Resource>> service) {
+
+		list.clear();
+		
+
+		service.start();
+		service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
 			@Override
 			public void handle(WorkerStateEvent event) {
-				List<Resource> r = getResource.getValue();
+				List<Resource> r = service.getValue();
 				if (r.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
 					alert.showAndWait();
@@ -115,15 +154,15 @@ public class AdvancedSearchController extends BasicController {
 						if (r != null)
 							list.add(new PatientListElem((Patient) p));
 
-				//progressBar.setVisible(false);
+				// progressBar.setVisible(false);
 
 			}
-		});	
-		getResource.setOnFailed(new EventHandler<WorkerStateEvent>() {
+		});
+		service.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				if (getResource.getException() != null
-						&& getResource.getException().getClass() == FhirClientConnectionException.class) {
+				if (service.getException() != null
+						&& service.getException().getClass() == FhirClientConnectionException.class) {
 					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
 							ButtonType.OK);
 					alert.showAndWait();

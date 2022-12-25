@@ -107,30 +107,6 @@
                               </DatePicker>
                            </children>
                         </HBox>
-                        <HBox prefHeight="85.0" prefWidth="500.0">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="100.0" text="Birth Place" textAlignment="RIGHT" textFill="#1f2c71">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="60.0" top="30.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="BirthPlaceField" prefHeight="39.0" prefWidth="240.0">
-                                 <HBox.margin>
-                                    <Insets left="20.0" top="20.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </HBox>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="-1.0" layoutY="236.0" prefHeight="76.0" prefWidth="1000.0">
-                     <children>
                         <HBox prefHeight="60.0" prefWidth="500.0">
                            <children>
                               <Label prefHeight="32.0" prefWidth="100.0" text="Death Date" textAlignment="RIGHT" textFill="#1f2c71">
@@ -138,7 +114,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="90.0" top="30.0" />
+                                    <Insets left="60.0" top="30.0" />
                                  </HBox.margin>
                               </Label>
                               <DatePicker fx:id="DeathDatePicker" prefHeight="32.0" prefWidth="237.0">
@@ -148,7 +124,30 @@
                               </DatePicker>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0">
+                     </children>
+                  </HBox>
+                  <HBox layoutX="-1.0" layoutY="236.0" prefHeight="76.0" prefWidth="1000.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0" spacing="50.0">
+                           <children>
+                              <Button graphicTextGap="15.0" mnemonicParsing="false" onAction="#viewAll" prefHeight="46.0" prefWidth="138.0" text="View All">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="38.0" fitWidth="33.0" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/search-in-list-100.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0" spacing="50.0">
                            <children>
                               <Button fx:id="searchButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="44.0" prefWidth="130.0" text="Search">
                                  <graphic>
