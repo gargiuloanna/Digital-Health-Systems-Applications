@@ -2,6 +2,7 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.hl7.fhir.r4.model.Identifier;
@@ -25,13 +26,13 @@ public class PatientListElem {
 
 		if (patient.getBirthDate() != null) {
 			birthdate = LocalDate.ofInstant(patient.getBirthDate().toInstant(), 
-					ZoneId.of("Asia/Kolkata")).toString();
+					ZoneId.of("Europe/Paris")).format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
 			System.out.println(birthdate);
 		}
 
 		if (patient.hasDeceasedDateTimeType())
 			deathdate = LocalDate.ofInstant(patient.getDeceasedDateTimeType().getValue().
-					toInstant(), ZoneId.of("Asia/Kolkata")).toString();
+					toInstant(), ZoneId.of("Europe/Paris")).format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
 
 		List<Identifier> list = patient.getIdentifier();
 
