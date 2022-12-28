@@ -193,6 +193,7 @@ public class PatientAdmissionController extends BasicController {
 		});
 
 		NOgenderButton.setSelected(true); // select one
+		IDField.setDisable(true);
 
 		disableFields(); // disable fields that must not be accessible at the opening
 
@@ -321,6 +322,7 @@ public class PatientAdmissionController extends BasicController {
 
 			}
 		});
+		
 
 	}
 

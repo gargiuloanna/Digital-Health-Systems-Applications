@@ -44,32 +44,16 @@ public class ServerInteraction {
 	}
 
 	public static Resource getResource(String identifier) throws FhirClientConnectionException {
-		ExecutorService executor = Executors.newFixedThreadPool(2);
-
 		String id;
 		if (identifier == "") {
 			id = "0";
 		} else
 			id = identifier;
-		Future<Bundle> result = executor.submit(new Callable<Bundle>() {
-			public Bundle call() throws FhirClientConnectionException {
-				IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
-				return client.search().forResource(Patient.class)
-						.where(new TokenClientParam("identifier").exactly().code(id)).prettyPrint()
-						.returnBundle(Bundle.class).encodedJson().execute();
-			}
-		});
 
-		Bundle bundle;
-		try {
-			bundle = result.get();
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new FhirClientConnectionException("error in thread");
-		} finally {
-			executor.shutdownNow();
-		}
+		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+		Bundle bundle = client.search().forResource(Patient.class)
+				.where(new TokenClientParam("identifier").exactly().code(id)).prettyPrint().returnBundle(Bundle.class)
+				.encodedJson().execute();
 
 		// .systemAndCode("https://github.com/synthetichealth/synthea", id)
 		if (bundle.isEmpty())
@@ -80,51 +64,43 @@ public class ServerInteraction {
 
 	public static List<Resource> getResources(String firstName, String lastName, LocalDate birthDate,
 			LocalDate deathDate) throws FhirClientConnectionException {
-		ExecutorService executor = Executors.newFixedThreadPool(2);
-		String first = firstName, family = lastName;
 		Date birthdate, deathdate;
 
 		if (birthDate != null)
 			birthdate = Date.from(birthDate.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
-		else birthdate = null;
-		
+		else
+			birthdate = null;
+
 		if (deathDate != null)
 			deathdate = Date.from(deathDate.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
-		else deathdate = null;
-
-		Future<Bundle> result = executor.submit(new Callable<Bundle>() {
-			public Bundle call() throws FhirClientConnectionException {
-				IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
-				IQuery<IBaseBundle> query = client.search().forResource(Patient.class)
-						.where(Patient.NAME.matches().value(firstName))
-						.and(Patient.FAMILY.matchesExactly().value(lastName));
-				
-				if (birthdate != null)
-					query = query.and(Patient.BIRTHDATE.beforeOrEquals().day(birthdate));
-				
-				if (deathdate != null)
-					query = query.and(Patient.DEATH_DATE.beforeOrEquals().day(deathdate));
-
-				return query.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
-			}
-		});
+		else
+			deathdate = null;
 
 		Bundle bundle;
 		try {
-			bundle = result.get();
-		} catch (InterruptedException | ExecutionException e) {
+			IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+			IQuery<IBaseBundle> query = client.search().forResource(Patient.class)
+					.where(Patient.NAME.matches().value(firstName))
+					.and(Patient.FAMILY.matchesExactly().value(lastName));
+
+			if (birthdate != null)
+				query = query.and(Patient.BIRTHDATE.beforeOrEquals().day(birthdate));
+
+			if (deathdate != null)
+				query = query.and(Patient.DEATH_DATE.beforeOrEquals().day(deathdate));
+
+			bundle = query.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
+		} catch (FhirClientConnectionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new FhirClientConnectionException("error in thread");
-		} finally {
-			executor.shutdownNow();
 		}
 
 		// .systemAndCode("https://github.com/synthetichealth/synthea", id)
 		if (bundle.isEmpty())
 			return null;
 		List<Resource> list = new ArrayList<>();
-		for (BundleEntryComponent elem: bundle.getEntry()) {
+		for (BundleEntryComponent elem : bundle.getEntry()) {
 			list.add(elem.getResource());
 		}
 		return list;
@@ -135,45 +111,30 @@ public class ServerInteraction {
 			throws FhirClientConnectionException {
 		Resource new_resource = resource;
 
-		ExecutorService executor = Executors.newFixedThreadPool(2);
-
 		Resource old_resource = getResource(id);
 		MethodOutcome methodOutcome;
-		Future<MethodOutcome> future;
 
-		if (old_resource != null) {
-			if (!update) {
-				return old_resource.getIdElement().getIdPart();
-			} else {
-				future = executor.submit(new Callable<MethodOutcome>() {
-					public MethodOutcome call() throws Exception {
-						IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
-						new_resource.setId(new_resource.getClass().getSimpleName() + '/'
-								+ old_resource.getIdElement().getIdPart());
-						MethodOutcome mo = client.update().resource(new_resource).prettyPrint().encodedJson().execute();
-						return mo;
-					}
-
-				});
-			}
-		} else
-			future = executor.submit(new Callable<MethodOutcome>() {
-				public MethodOutcome call() throws Exception {
-					IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
-					MethodOutcome mo = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
-					return mo;
-				}
-
-			});
+		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
 
 		try {
-			methodOutcome = future.get();
+			if (old_resource != null) {
+				if (!update) {
+					return old_resource.getIdElement().getIdPart();
+				} else {
+
+					new_resource.setId(
+							new_resource.getClass().getSimpleName() + '/' + old_resource.getIdElement().getIdPart());
+					methodOutcome = client.update().resource(new_resource).prettyPrint().encodedJson().execute();
+
+				}
+			} else
+
+				methodOutcome = client.create().resource(new_resource).prettyPrint().encodedJson().execute();
+
 			return methodOutcome.getId().getIdPart();
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (FhirClientConnectionException e) {
 			e.printStackTrace();
 			throw new FhirClientConnectionException("error in thread");
-		} finally {
-			executor.shutdownNow();
 		}
 
 	}

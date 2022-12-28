@@ -30,7 +30,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" text="MRI" wrappingWidth="283.681640625">
+                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="MRI" wrappingWidth="283.681640625">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
