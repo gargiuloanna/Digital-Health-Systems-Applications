@@ -539,16 +539,20 @@ public class PatientAdmissionController extends BasicController {
 		}
 
 		// marital
-		MaritalMenuButton.setText(
-				V3MaritalStatus.fromCode(patient.getMaritalStatus().getCodingFirstRep().getCode()).getDefinition());
+		if(!patient.getMaritalStatus().isEmpty() && V3MaritalStatus.fromCode(patient.getMaritalStatus()
+				.getCodingFirstRep().getCode()) != null)
+			MaritalMenuButton.setText(V3MaritalStatus.fromCode(patient.getMaritalStatus()
+							.getCodingFirstRep().getCode()).getDefinition());
 
 		// address
-		index = patient.getAddress().size() - 1;
-		CityField.setText(patient.getAddress().get(index).getCity());
-		CountyField.setText(patient.getAddress().get(index).getDistrict());
-		ZIPField.setText(patient.getAddress().get(index).getPostalCode());
-		StateField.setText(patient.getAddress().get(index).getState());
-		AddressField.setText(patient.getAddress().get(index).getLine().get(0).toString());
+		if (patient.getAddress().size() > 0) {
+			index = patient.getAddress().size() - 1;
+			CityField.setText(patient.getAddress().get(index).getCity());
+			CountyField.setText(patient.getAddress().get(index).getDistrict());
+			ZIPField.setText(patient.getAddress().get(index).getPostalCode());
+			StateField.setText(patient.getAddress().get(index).getState());
+			AddressField.setText(patient.getAddress().get(index).getLine().get(0).toString());
+			}
 
 		// get lat and lon
 		url = "http://hl7.org/fhir/StructureDefinition/geolocation";
