@@ -9,6 +9,7 @@ public class Context extends FhirContext{
 	static public String server = "http://192.168.71.103:8080/fhir";
 	private IGenericClient client = null;
 	
+	@SuppressWarnings("deprecation")
 	private Context() {
 		context = FhirContext.forR4();
 	}

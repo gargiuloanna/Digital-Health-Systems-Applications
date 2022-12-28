@@ -1,5 +1,5 @@
 module it.unisa.diem.dhsa.group3.HIS_Project {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
 	requires hapi.fhir.base;
 	requires java.desktop;
