@@ -11,6 +11,7 @@ import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
+import java.util.UUID;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -104,6 +105,10 @@ public class AllergyIntoleranceResource extends BaseResource {
 		// Definition of the considered profile 
 		allergy.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"));
 
+		//add identifier
+		UUID identifier = UUID.fromString(this.toString());
+		allergy.addIdentifier().setSystem("https://www.uuidgenerator.net/").setValue(identifier.toString());
+		
 		//add date the allergy was diagnosed and the clinical status 
 		//clinical status is not present in the csv data but it is a must have value required by the profile.
 		allergy.setOnset(new DateTimeType(START));
