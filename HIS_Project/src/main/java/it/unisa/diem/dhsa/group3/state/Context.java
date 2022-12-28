@@ -1,7 +1,6 @@
 package it.unisa.diem.dhsa.group3.state;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.client.api.IRestfulClient;
 import ca.uhn.fhir.rest.client.api.IRestfulClientFactory;
 
 public class Context extends FhirContext{
