@@ -4,9 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+import org.apache.commons.lang3.SystemUtils;
 
 import it.unisa.diem.dhsa.group3.state.Context;
 
@@ -16,12 +17,20 @@ import it.unisa.diem.dhsa.group3.state.Context;
 public class App extends Application {
 
     private static Scene scene;
-
+    private Icon icon;
+   
+    public App() {
+    	super();
+    	icon = new Icon();
+    	
+    }
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("OpeningPage"), 1000, 650);
+        icon.setIcons(stage);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.setTitle("Health Information System");
         stage.show();
     }
 
