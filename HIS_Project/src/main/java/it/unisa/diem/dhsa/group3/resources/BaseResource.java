@@ -1,9 +1,7 @@
 package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.UUID;
-
 import org.hl7.fhir.r4.model.Resource;
-
 import com.opencsv.bean.CsvBindByName;
 
 public abstract class BaseResource {
