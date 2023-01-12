@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import org.apache.commons.lang3.SystemUtils;
@@ -27,7 +26,10 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("OpeningPage"), 1000, 650);
-        icon.setIcons(stage);
+        if (SystemUtils.IS_OS_MAC) {
+        	icon.macIntegration(stage);
+        }
+        icon.addIcons(stage);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Health Information System");
