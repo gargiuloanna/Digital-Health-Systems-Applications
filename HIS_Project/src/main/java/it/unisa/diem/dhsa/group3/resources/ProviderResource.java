@@ -1,27 +1,17 @@
 package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Map;
-import org.hl7.fhir.r4.model.DecimalType;
-import org.hl7.fhir.r4.model.Enumerations;
-import org.hl7.fhir.r4.model.Extension;
-import org.hl7.fhir.r4.model.HumanName;
-import org.hl7.fhir.r4.model.Meta;
-import org.hl7.fhir.r4.model.Organization;
-import org.hl7.fhir.r4.model.Practitioner;
-import org.hl7.fhir.r4.model.PractitionerRole;
-import org.hl7.fhir.r4.model.Resource;
-import org.hl7.fhir.r4.model.StringType;
+
+import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Practitioner.PractitionerQualificationComponent;
 import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;
 import com.opencsv.bean.CsvBindByName;
-import it.unisa.diem.dhsa.group3.enumerations.PracticeSettingCode;
+
+import it.unisa.diem.dhsa.group3.enumerations.ProviderSpecialtyNUCC;
+import it.unisa.diem.dhsa.group3.enumerations.ProviderSpecialtySNOMED;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
 public class ProviderResource extends BaseResource{
-	
-	//Id,,ORGANIZATION,NAME, GENDER, SPECIALITY, ADDRESS, CITY, STATE, ZIP, LAT, LON, UTILIZATION
-	
-	@CsvBindByName
-	private String Id;
 	
 	@CsvBindByName
 	private String ORGANIZATION = "";
@@ -56,14 +46,6 @@ public class ProviderResource extends BaseResource{
 	@CsvBindByName
 	private int UTILIZATION;
 	
-
-	public String getId() {
-		return Id;
-	}
-
-	public void setId(String id) {
-		Id = id;
-	}
 
 	public String getORGANIZATION() {
 		return ORGANIZATION;
@@ -155,7 +137,7 @@ public class ProviderResource extends BaseResource{
 
 	@Override
 	public String toString() {
-		return "ProviderResource [Id=" + Id + ", ORGANIZATION=" + ORGANIZATION + ", NAME=" + NAME + ", GENDER=" + GENDER
+		return "ProviderResource [Id=" + super.getId() + ", ORGANIZATION=" + ORGANIZATION + ", NAME=" + NAME + ", GENDER=" + GENDER
 				+ ", SPECIALITY=" + SPECIALITY + ", ADDRESS=" + ADDRESS + ", CITY=" + CITY + ", STATE=" + STATE
 				+ ", ZIP=" + ZIP + ", LAT=" + LAT + ", LON=" + LON + ", UTILIZATION=" + UTILIZATION + "]";
 	}
@@ -168,12 +150,11 @@ public class ProviderResource extends BaseResource{
 		d.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner"));
 		
 		// Definition of the identifier (field: id)
-		d.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(Id);
+		d.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		
 		// Definition of the official name  (fields: name)
 		String[] values = NAME.split(" ");
 		d.addName(new HumanName().setFamily(values[1]).addGiven(values[0]));
-		//d.addName(new HumanName().setText(NAME));
 
 		// Definition of the gender(field: gender)
 		V3AdministrativeGender sex = V3AdministrativeGender.valueOf(GENDER);
@@ -190,31 +171,25 @@ public class ProviderResource extends BaseResource{
 		loc.addExtension(lat);
 		loc.addExtension(lon);
 				
-		// Link the Role to the Practitioner
-		PractitionerRole r = new PractitionerRole();
-		r.setActive(true);
-		r.setPractitionerTarget(d);
-				
-		// Add US Profile to the Practitioner Role
-		r.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"));
+		// Link the qualification to the Practitioner
+		PractitionerQualificationComponent r = new PractitionerQualificationComponent();
+		PractitionerQualificationComponent r1 = new PractitionerQualificationComponent();
 		
 		// Definition of the Organization that employees the practitioner
 		Map<String, Resource> organizations = Memory.getMemory().get(OrganizationResource.class);
 		Organization o = (Organization) organizations.get(ORGANIZATION);
-		r.setOrganizationTarget(o);
+		r.setIssuer(new Reference(o));
 		
-		
-		// Definition of the speciality of the practitioner 
-		PracticeSettingCode code = PracticeSettingCode.fromCSV(SPECIALITY);
-		r.addSpecialty().addCoding().setSystem(code.getSystem()).setCode(code.toCode()).setDisplayElement(new StringType(code.getDefinition()));
-		
-		
-		
-		// Missing utilization
-		
-		
-		//return d;
-		return r;
+		// Definition of the specialty of the practitioner using SNOMED and NUCC
+		ProviderSpecialtySNOMED code = ProviderSpecialtySNOMED.fromCSV(SPECIALITY);
+		ProviderSpecialtyNUCC cod = ProviderSpecialtyNUCC.fromCSV(SPECIALITY);
+		r.setCode(new CodeableConcept(new Coding(code.getSystem(),code.toCode(), code.getDefinition())));
+		r1.setCode(new CodeableConcept(new Coding(cod.getSystem(),cod.toCode(), cod.getDefinition())));
+		d.getQualification().add(r);
+		d.getQualification().add(r1);
+	
+
+		return d;
 		
 	}
 
