@@ -97,13 +97,11 @@ public class ConditionResource extends BaseResource {
 		// Definition of the considered profile
 		c.setMeta(new Meta().addProfile(
 				"http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns"));
-		System.out.println(super.getId());
 		// add identifier
 		c.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 
 		// add period
 		Period period = new Period();
-		System.out.println(STOP);
 		if (STOP != null) {
 			period.setStart(START).setEnd(STOP);
 		} else {

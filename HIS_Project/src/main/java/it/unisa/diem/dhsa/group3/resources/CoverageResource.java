@@ -89,7 +89,7 @@ public class CoverageResource extends BaseResource {
 		// or to whom the benefit of the policy for services rendered to them or their
 		// family is due
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
-		cov.setSubscriberTarget(patient);
+		cov.setSubscriber(new Reference(patient));
 
 		// set period during which the coverage is in force (fields: START_YEAR,
 		// END_YEAR)
@@ -97,7 +97,7 @@ public class CoverageResource extends BaseResource {
 
 		// set the organization owner of the insurance coverage (field: PAYER)
 		Organization pay = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
-		cov.setPolicyHolderTarget(pay);
+		cov.setPolicyHolder(new Reference(pay));
 
 		// set the beneficiary relationship to the subscriber (patient)--> (field:
 		// OWNERSHIP)
