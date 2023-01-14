@@ -6,10 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hl7.fhir.r4.model.Resource;
-
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.client.api.IGenericClient;
 import it.unisa.diem.dhsa.group3.resources.BaseResource;
 
 //Class necessary to keep the memory of the operations performed in the application

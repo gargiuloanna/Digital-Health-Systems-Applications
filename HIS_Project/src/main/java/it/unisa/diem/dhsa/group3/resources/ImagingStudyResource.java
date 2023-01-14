@@ -2,7 +2,6 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.sql.Date;
 
-import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.ImagingStudy;
