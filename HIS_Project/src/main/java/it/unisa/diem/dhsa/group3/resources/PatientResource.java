@@ -1,10 +1,8 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-//import java.util.Date;
 import java.util.Date;
 
 import org.hl7.fhir.r4.model.*;
@@ -289,10 +287,10 @@ public class PatientResource extends BaseResource {
 	public PatientResource() {
 	}
 
-	public PatientResource(String iD, Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT, String pREFIX,
-			String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE, String eTHNICITY,
-			String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE, String cOUNTY, String zIP,
-			Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) {
+	public PatientResource(String iD, Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
+			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
+			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
+			String cOUNTY, String zIP, Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE) {
 		super(iD);
 		BIRTHDATE = bIRTHDATE;
 		DEATHDATE = dEATHDATE;
@@ -320,9 +318,9 @@ public class PatientResource extends BaseResource {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
-	public PatientResource(String iD, LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
-			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
-			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
+	public PatientResource(String iD, LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS,
+			String pASSPORT, String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL,
+			String rACE, String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
 			String cOUNTY, String zIP, Float lAT, Float lON, Float hEALTHCARE_EXPENSES, Float hEALTHCARE_COVERAGE)
 			throws ParseException {
 		super(iD);
@@ -375,8 +373,6 @@ public class PatientResource extends BaseResource {
 		Patient p = new Patient();
 		// Definition of the considered profile
 		p.setMeta(new Meta().addProfile("https://hl7.org/fhir/us/core/StructureDefinition-us-core-patient"));
-
-		// p.setId(args[head.get("id")]);
 
 		// Definition of the birthdate and deathdate(fields: birthdate, deathdate)
 		// with the addition of the extension birthplace

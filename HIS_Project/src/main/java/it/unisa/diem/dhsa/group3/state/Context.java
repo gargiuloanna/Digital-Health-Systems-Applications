@@ -1,7 +1,6 @@
 package it.unisa.diem.dhsa.group3.state;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.client.api.IRestfulClient;
 import ca.uhn.fhir.rest.client.api.IRestfulClientFactory;
 
 public class Context extends FhirContext{
@@ -10,6 +9,7 @@ public class Context extends FhirContext{
 	static public String server = "http://192.168.71.103:8080/fhir";
 	private IGenericClient client = null;
 	
+	@SuppressWarnings("deprecation")
 	private Context() {
 		context = FhirContext.forR4();
 	}

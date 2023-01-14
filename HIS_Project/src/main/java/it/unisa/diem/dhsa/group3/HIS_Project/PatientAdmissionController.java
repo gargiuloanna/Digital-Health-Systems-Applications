@@ -1,37 +1,25 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
-import org.hl7.fhir.r4.model.codesystems.TaskStatus;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 
-import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
-import it.unisa.diem.dhsa.group3.CSV.ReadCSV;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 import it.unisa.diem.dhsa.group3.resources.PatientResource;
-import it.unisa.diem.dhsa.group3.state.Context;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 
 import org.hl7.fhir.r4.model.Address;
-import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.DecimalType;
 import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
@@ -39,12 +27,10 @@ import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -53,12 +39,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressIndicator;
 
 public class PatientAdmissionController extends BasicController {
 
@@ -539,16 +523,20 @@ public class PatientAdmissionController extends BasicController {
 		}
 
 		// marital
-		MaritalMenuButton.setText(
-				V3MaritalStatus.fromCode(patient.getMaritalStatus().getCodingFirstRep().getCode()).getDefinition());
+		if(!patient.getMaritalStatus().isEmpty() && V3MaritalStatus.fromCode(patient.getMaritalStatus()
+				.getCodingFirstRep().getCode()) != null)
+			MaritalMenuButton.setText(V3MaritalStatus.fromCode(patient.getMaritalStatus()
+							.getCodingFirstRep().getCode()).getDefinition());
 
 		// address
-		index = patient.getAddress().size() - 1;
-		CityField.setText(patient.getAddress().get(index).getCity());
-		CountyField.setText(patient.getAddress().get(index).getDistrict());
-		ZIPField.setText(patient.getAddress().get(index).getPostalCode());
-		StateField.setText(patient.getAddress().get(index).getState());
-		AddressField.setText(patient.getAddress().get(index).getLine().get(0).toString());
+		if (patient.getAddress().size() > 0) {
+			index = patient.getAddress().size() - 1;
+			CityField.setText(patient.getAddress().get(index).getCity());
+			CountyField.setText(patient.getAddress().get(index).getDistrict());
+			ZIPField.setText(patient.getAddress().get(index).getPostalCode());
+			StateField.setText(patient.getAddress().get(index).getState());
+			AddressField.setText(patient.getAddress().get(index).getLine().get(0).toString());
+			}
 
 		// get lat and lon
 		url = "http://hl7.org/fhir/StructureDefinition/geolocation";
