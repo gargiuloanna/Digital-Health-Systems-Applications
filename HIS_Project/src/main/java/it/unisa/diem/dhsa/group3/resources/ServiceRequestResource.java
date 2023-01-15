@@ -6,7 +6,6 @@ import org.hl7.fhir.r4.model.*;
 
 import it.unisa.diem.dhsa.group3.enumerations.ServiceRequestCategory;
 import it.unisa.diem.dhsa.group3.enumerations.ServiceRequestCode;
-import it.unisa.diem.dhsa.group3.state.Memory;
 
 public class ServiceRequestResource extends BaseResource {
 
@@ -26,8 +25,8 @@ public class ServiceRequestResource extends BaseResource {
 	private String statusCode;
 	private String intentCode; //proposal, plan, or order... si può filtrare sull'intent
 	private String requestCode; //defines what is being requested... serve l'enumeration
-	private String subject; // the patient
-	private String encounter;
+	private Reference subject; // the patient
+	private Reference encounter;
 	private String category;
 	private Date date; // when when requested service should happen
 	private Date when; // when the request was made
@@ -36,14 +35,14 @@ public class ServiceRequestResource extends BaseResource {
 
 	
 	
-	public ServiceRequestResource(String id, String statusCode, String intentCode, String requestCode, String subject,
-			String encounter, String category, Date date, Date when, String requester, String details) {
+	public ServiceRequestResource(String id, String statusCode, String intentCode, String requestCode, Patient subject,
+			Encounter encounter, String category, Date date, Date when, String requester, String details) {
 		super(id);
 		this.statusCode = statusCode;
 		this.intentCode = intentCode;
 		this.requestCode = requestCode;
-		this.subject = subject;
-		this.encounter = encounter;
+		this.subject = new Reference(subject);
+		this.encounter = new Reference(encounter);
 		this.category = category;
 		this.date = date;
 		this.when = when;
@@ -56,8 +55,8 @@ public class ServiceRequestResource extends BaseResource {
 		this.statusCode = p.getStatus().toString();
 		this.intentCode = p.getIntent().toString();
 		this.requestCode = p.getCode().toString();
-		this.subject = p.getSubject().getIdentifier().toString();
-		this.encounter = p.getEncounter().getIdentifier().toString();
+		this.subject = p.getSubject();
+		this.encounter = p.getEncounter();
 		this.category = p.getCategoryFirstRep().toString();
 		this.date = new Date(p.getOccurrence().toString());
 		this.when = p.getAuthoredOn();
@@ -113,31 +112,23 @@ public class ServiceRequestResource extends BaseResource {
 		this.requestCode = requestCode;
 	}
 
+	
 
-
-	public String getSubject() {
+	public Reference getSubject() {
 		return subject;
 	}
 
-
-
-	public void setSubject(String subject) {
+	public void setSubject(Reference subject) {
 		this.subject = subject;
 	}
 
-
-
-	public String getEncounter() {
+	public Reference getEncounter() {
 		return encounter;
 	}
 
-
-
-	public void setEncounter(String encounter) {
+	public void setEncounter(Reference encounter) {
 		this.encounter = encounter;
 	}
-
-
 
 	public String getCategory() {
 		return category;
@@ -226,21 +217,18 @@ public class ServiceRequestResource extends BaseResource {
 		ServiceRequestCode code = ServiceRequestCode.fromCode(requestCode);
 		r.setCode(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), code.getDefinition())));
 		
-		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(subject); //get the patient with id PATIENT 
-		r.setSubject(new Reference(patient));
-		
-		Encounter enc = (Encounter) Memory.getMemory().get(EncounterResource.class).get(encounter);
-		r.setEncounter(new Reference(enc));
+		r.setSubject(subject);
+		r.setEncounter(encounter);
 		
 		ServiceRequestCategory cat = ServiceRequestCategory.fromCode(category);
 		r.addCategory(new CodeableConcept(new Coding(cat.getSystem(), cat.toCode(), cat.getDefinition())));
 		
-		
 		r.setAuthoredOn(when);// the date of the prescription
-		r.setOccurrence(new DateType(date)); // the date of the order
+		r.setOccurrence(new DateTimeType(date)); // the date of the order
+		Reference ref = new Reference();
+		ref.setIdentifier(new Identifier().setValue(requester));
 		
-		Practitioner practitioner = (Practitioner) Memory.getMemory().get(ProviderResource.class).get(requester);
-		r.setRequester(new Reference(practitioner));
+		r.setRequester(ref);
 		
 		Annotation ann = new Annotation();
 		ann.setText("Details for the order: " + details);
