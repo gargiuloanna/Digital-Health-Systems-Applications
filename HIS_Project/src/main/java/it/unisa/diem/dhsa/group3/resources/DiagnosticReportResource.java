@@ -27,10 +27,67 @@ public class DiagnosticReportResource extends BaseResource{
 	String patientId;
 	
 	
+	public ServiceRequest getServiceRequest() {
+		return serviceRequest;
+	}
+
+	public void setServiceRequest(ServiceRequest serviceRequest) {
+		this.serviceRequest = serviceRequest;
+	}
+
+	public Encounter getEncounter() {
+		return encounter;
+	}
+
+	public void setEncounter(Encounter encounter) {
+		this.encounter = encounter;
+	}
+
+	public ImagingStudy getImagingStudy() {
+		return imagingStudy;
+	}
+
+	public void setImagingStudy(ImagingStudy imagingStudy) {
+		this.imagingStudy = imagingStudy;
+	}
+
+	public String getConclusion() {
+		return conclusion;
+	}
+
+	public void setConclusion(String conclusion) {
+		this.conclusion = conclusion;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+
+	
 	public DiagnosticReportResource() {
 		super();
 	}
-	
+
 	public DiagnosticReportResource(String path, Resource service_request, Resource imaging_study, String conclusion) {
 		
 	}
@@ -91,6 +148,7 @@ public class DiagnosticReportResource extends BaseResource{
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private Resource getResource(String id) {
 		return null;
 	}
