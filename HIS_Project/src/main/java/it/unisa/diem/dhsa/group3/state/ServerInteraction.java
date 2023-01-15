@@ -10,8 +10,10 @@ import java.util.Map;
 import org.hl7.fhir.instance.model.api.IBaseBundle;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.ServiceRequest;
 
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
@@ -133,5 +135,57 @@ public class ServerInteraction {
 		}
 
 	}
+	
+	//get service request starting from id of the patient
+	public static List<Resource> getPatientServiceRequests(String id) throws Exception {
+		if (id == "" || id == null)
+			throw new Exception();
+		
+		Bundle bundle;
+		try {
+			IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+			IQuery<IBaseBundle> query = client.search().forResource(ServiceRequest.class)
+					.where(ServiceRequest.SUBJECT.hasId(id));
 
+			bundle = query.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
+		} catch (FhirClientConnectionException e) {
+			e.printStackTrace();
+			throw new FhirClientConnectionException("error in thread");
+		}
+		
+		if (bundle.isEmpty())
+			return null;
+		List<Resource> list = new ArrayList<>();
+		for (BundleEntryComponent elem : bundle.getEntry()) {
+			list.add(elem.getResource());
+		}
+		return list;
+		
+	}
+	
+	public static List<Resource> getOccurrenceServiceRequests(DateTimeType date) throws Exception {
+		if (date == null)
+			throw new Exception();
+		
+		Bundle bundle;
+		try {
+			IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
+			IQuery<IBaseBundle> query = client.search().forResource(ServiceRequest.class)
+					.where(ServiceRequest.OCCURRENCE.afterOrEquals().millis(date.getValue()));
+
+			bundle = query.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
+		} catch (FhirClientConnectionException e) {
+			e.printStackTrace();
+			throw new FhirClientConnectionException("error in thread");
+		}
+		
+		if (bundle.isEmpty())
+			return null;
+		List<Resource> list = new ArrayList<>();
+		for (BundleEntryComponent elem : bundle.getEntry()) {
+			list.add(elem.getResource());
+		}
+		return list;
+		
+	}
 }
