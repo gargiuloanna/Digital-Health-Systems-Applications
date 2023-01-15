@@ -50,6 +50,20 @@ public class ServiceRequestResource extends BaseResource {
 		this.requester = requester;
 		this.details = details;
 	}
+	
+	public ServiceRequestResource(ServiceRequest p) {
+		super(p.getIdentifier().get(0).toString());
+		this.statusCode = p.getStatus().toString();
+		this.intentCode = p.getIntent().toString();
+		this.requestCode = p.getCode().toString();
+		this.subject = p.getSubject().getIdentifier().toString();
+		this.encounter = p.getEncounter().getIdentifier().toString();
+		this.category = p.getCategoryFirstRep().toString();
+		this.date = new Date(p.getOccurrence().toString());
+		this.when = p.getAuthoredOn();
+		this.requester = p.getRequester().getIdentifier().toString();
+		this.details = p.getNoteFirstRep().getText();
+}
 
 
 
@@ -186,10 +200,10 @@ public class ServiceRequestResource extends BaseResource {
 	
 	@Override
 	public String toString() {
-		return "ServiceRequestResource [id=" + id + ", statusCode=" + statusCode + ", intentCode=" + intentCode
-				+ ", requestCode=" + requestCode + ", subject=" + subject + ", encounter=" + encounter + ", category="
-				+ category + ", date=" + date + ", when=" + when + ", requester=" + requester + ", details=" + details
-				+ "]";
+		return "Request id:" + id + "\nStatus Code: " + statusCode + "\nIntent Code: " + intentCode
+				+ "\nRequest Code: " + requestCode + "\nPatient: " + subject + "\nEncounter: " + encounter + "\nCategory: "
+				+ category + "\nDate: " + date + "\nIssued On: " + when + "\nRequester: " + requester + "\nDetails: " + details
+				+ "\n";
 	}
 
 
@@ -213,10 +227,10 @@ public class ServiceRequestResource extends BaseResource {
 		r.setCode(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), code.getDefinition())));
 		
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(subject); //get the patient with id PATIENT 
-		r.setSubjectTarget(patient);
+		r.setSubject(new Reference(patient));
 		
 		Encounter enc = (Encounter) Memory.getMemory().get(EncounterResource.class).get(encounter);
-		r.setEncounterTarget(enc);
+		r.setEncounter(new Reference(enc));
 		
 		ServiceRequestCategory cat = ServiceRequestCategory.fromCode(category);
 		r.addCategory(new CodeableConcept(new Coding(cat.getSystem(), cat.toCode(), cat.getDefinition())));
@@ -226,7 +240,7 @@ public class ServiceRequestResource extends BaseResource {
 		r.setOccurrence(new DateType(date)); // the date of the order
 		
 		Practitioner practitioner = (Practitioner) Memory.getMemory().get(ProviderResource.class).get(requester);
-		r.setRequesterTarget(practitioner);
+		r.setRequester(new Reference(practitioner));
 		
 		Annotation ann = new Annotation();
 		ann.setText("Details for the order: " + details);
