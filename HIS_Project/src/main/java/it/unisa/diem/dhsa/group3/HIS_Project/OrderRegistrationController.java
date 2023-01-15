@@ -31,7 +31,7 @@ import javafx.scene.control.Alert.AlertType;
 
 public class OrderRegistrationController extends BasicController{
 
-    @FXML
+	@FXML
     private TextField IDField;
 
     @FXML
@@ -56,7 +56,7 @@ public class OrderRegistrationController extends BasicController{
     private TextField patientField;
 
     @FXML
-    private TextField requestField;
+    private MenuButton request;
 
     @FXML
     private TextField requesterField;
@@ -66,6 +66,31 @@ public class OrderRegistrationController extends BasicController{
 
     @FXML
     private CheckBox summaryButton;
+    
+    @FXML
+    void categoryMenu(ActionEvent event) {
+
+    }
+    @FXML
+    void intentMenu(ActionEvent event) {
+
+    }
+    @FXML
+    void statusMenu(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void requestMenu(ActionEvent event) {
+
+    }
+
+    @FXML
+    void requestSelected(ActionEvent event) {
+    	MenuItem e = (MenuItem) event.getSource();
+		request.setText(e.getText());
+    }
+
 
     @FXML
     void categorySelected(ActionEvent event) {
@@ -94,7 +119,7 @@ public class OrderRegistrationController extends BasicController{
 
     @FXML
     void summaryChecked(ActionEvent event) {
-    	//implements a pdf?
+    	//TODO: implements a pdf?
     }
     
     
@@ -107,7 +132,7 @@ public class OrderRegistrationController extends BasicController{
     	Patient p = (Patient) ServerInteraction.getResource(patientField.getText());
     	Encounter e = new Encounter();
     	e.addIdentifier(new Identifier().setSystem("https://github.com/synthetichealth/synthea").setValue(encounterField.getText()));
-    	ServiceRequestResource r = new ServiceRequestResource(IDField.getText(), status.getText(), intent.getText(), requestField.getText(), 
+    	ServiceRequestResource r = new ServiceRequestResource(IDField.getText(), status.getText().toLowerCase(), intent.getText().toLowerCase(), request.getText(), 
     			p, e, category.getText(), 
     			Date.from(datepicker.getValue().atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant()), new Date(), requesterField.getText(), details.getText());
 		return r;
@@ -166,7 +191,7 @@ public class OrderRegistrationController extends BasicController{
     	if(IDField.getText().isBlank() || IDField.getText().isEmpty() ||
     	   status.getText().isBlank() || status.getText().isEmpty() ||
     	   intent.getText().isBlank() || intent.getText().isEmpty() ||
-    	   requestField.getText().isBlank() || requestField.getText().isEmpty() || 
+    	   request.getText().isBlank()|| request.getText().isEmpty() || 
     	   patientField.getText().isBlank() || patientField.getText().isEmpty() ||
     	   encounterField.getText().isBlank() || encounterField.getText().isEmpty() ||
     	   category.getText().isBlank() || category.getText().isEmpty() || 

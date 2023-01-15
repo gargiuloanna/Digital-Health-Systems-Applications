@@ -77,7 +77,7 @@
                                     <Insets left="45.0" top="35.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="IDField1" prefHeight="26.0" prefWidth="231.0">
+                              <TextField fx:id="IDField" prefHeight="26.0" prefWidth="231.0">
                                  <HBox.margin>
                                     <Insets left="20.0" top="35.0" />
                                  </HBox.margin>
@@ -94,7 +94,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="datepicker1" prefHeight="26.0" prefWidth="232.0">
+                              <DatePicker fx:id="datepicker" prefHeight="26.0" prefWidth="232.0">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -114,7 +114,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="patientField1" prefHeight="26.0" prefWidth="231.0">
+                              <TextField fx:id="patientField" prefHeight="26.0" prefWidth="231.0">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -131,7 +131,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="requesterField1" prefHeight="26.0" prefWidth="231.0">
+                              <TextField fx:id="requesterField" prefHeight="26.0" prefWidth="231.0">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -148,9 +148,9 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="category1" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Category" textFill="WHITE">
+                              <MenuButton fx:id="category" mnemonicParsing="false" onAction="#categoryMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Category" textFill="WHITE">
                                  <items>
-                                    <MenuItem fx:id="categorySelected" mnemonicParsing="false" text="Evaluation procedure (procedure)" />
+                                    <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Evaluation procedure (procedure)" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Social service procedure (procedure)" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Laboratory procedure" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Imaging" />
@@ -177,7 +177,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="encounterField1" prefHeight="26.0" prefWidth="231.0">
+                              <TextField fx:id="encounterField" prefHeight="26.0" prefWidth="231.0">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -194,14 +194,14 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="status1" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Status" textFill="WHITE">
+                              <MenuButton fx:id="status" mnemonicParsing="false" onAction="#statusMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Status" textFill="WHITE">
                                  <items>
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Draft" />
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Active" />
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Revoked" />
-                                    <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="On Hold" />
+                                    <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="On-Hold" />
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Completed" />
-                                    <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Entered in Error" />
+                                    <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Entered-in-Error" />
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Unknow" />
                                  </items>
                                  <HBox.margin>
@@ -223,16 +223,16 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="intent1" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Intent" textFill="WHITE">
+                              <MenuButton fx:id="intent" mnemonicParsing="false" onAction="#intentMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Intent" textFill="WHITE">
                                  <items>
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Proposal" />
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Plan" />
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Directive" />
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Order" />
-                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Original Order" />
-                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Reflex Order" />
-                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Filler Order" />
-                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Instance Order" />
+                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Original-Order" />
+                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Reflex-Order" />
+                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Filler-Order" />
+                                    <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Instance-Order" />
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Option" />
                                  </items>
                                  <HBox.margin>
@@ -254,11 +254,20 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="requestField1" prefHeight="26.0" prefWidth="231.0">
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </TextField>
+                              <MenuButton fx:id="request" mnemonicParsing="false" onAction="#requestMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Code" textFill="WHITE">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_189009" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_348003" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_295001" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_374009" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_401004" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_722009" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_1399002" />
+                                 </items>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </MenuButton>
                            </children>
                            <padding>
                               <Insets left="45.0" top="35.0" />
@@ -271,7 +280,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextArea fx:id="details1" prefHeight="76.0" prefWidth="243.0">
+                              <TextArea fx:id="details" prefHeight="76.0" prefWidth="243.0">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="20.0" />
                                  </HBox.margin>
