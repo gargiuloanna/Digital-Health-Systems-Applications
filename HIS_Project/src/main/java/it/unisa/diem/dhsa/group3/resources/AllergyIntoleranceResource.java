@@ -1,18 +1,8 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.sql.Date;
+import java.util.Date;
 
-import org.hl7.fhir.r4.model.AllergyIntolerance;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.DateTimeType;
-import org.hl7.fhir.r4.model.Encounter;
-import org.hl7.fhir.r4.model.Meta;
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Reference;
-import org.hl7.fhir.r4.model.Resource;
-import java.util.UUID;
-
+import org.hl7.fhir.r4.model.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
@@ -91,12 +81,12 @@ public class AllergyIntoleranceResource extends BaseResource {
 
 	@Override
 	public String toString() {
-		return "AllergyIntoleranceResource [START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT + ", ENCOUNTER="
+		return "AllergyIntoleranceResource [Id=" + super.getId() + ", START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT + ", ENCOUNTER="
 				+ ENCOUNTER + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + "]";
 	}
 
 	@Override
-	public Resource createResource() {
+	public DomainResource createResource() {
 		
 		//add patient
 		Patient p = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
@@ -106,8 +96,7 @@ public class AllergyIntoleranceResource extends BaseResource {
 		allergy.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"));
 
 		//add identifier
-		UUID identifier = UUID.fromString(this.toString());
-		allergy.addIdentifier().setSystem("https://www.uuidgenerator.net/").setValue(identifier.toString());
+		allergy.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		
 		//add date the allergy was diagnosed and the clinical status 
 		//clinical status is not present in the csv data but it is a must have value required by the profile.
@@ -121,7 +110,7 @@ public class AllergyIntoleranceResource extends BaseResource {
 
 		//add encounter when allergy was diagnosed
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
-		allergy.setEncounterTarget(e);
+		allergy.setEncounter(new Reference(e));
 		
 		//add SNOMED code and description 
 		allergy.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
