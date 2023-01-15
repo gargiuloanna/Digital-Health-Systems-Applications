@@ -222,10 +222,10 @@ public class ServiceRequestResource extends BaseResource {
 		r.addCategory(new CodeableConcept(new Coding(cat.getSystem(), cat.toCode(), cat.getDefinition())));
 		
 		
-		r.setAuthoredOn(date);// the date of the prescription
-		r.setOccurrence(new DateType(when)); // the date of the order
+		r.setAuthoredOn(when);// the date of the prescription
+		r.setOccurrence(new DateType(date)); // the date of the order
 		
-		PractitionerRole practitioner = (PractitionerRole) Memory.getMemory().get(ProviderResource.class).get(requester);
+		Practitioner practitioner = (Practitioner) Memory.getMemory().get(ProviderResource.class).get(requester);
 		r.setRequesterTarget(practitioner);
 		
 		Annotation ann = new Annotation();
