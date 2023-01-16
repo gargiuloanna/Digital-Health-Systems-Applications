@@ -11,7 +11,7 @@ import it.unisa.diem.dhsa.group3.state.Memory;
 public class ProcedureResource extends BaseResource {
 
 	@CsvBindByName
-	@CsvDate("yyyy-MM-dd'T'HH:mm:ss")
+	@CsvDate("yyyy-MM-dd'T'HH:mm")
 	private Date DATE;
 
 	@CsvBindByName
@@ -133,7 +133,7 @@ public class ProcedureResource extends BaseResource {
 
 		// set patient
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
-		p.setSubjectTarget(patient);
+		p.setSubject(new Reference(patient));
 
 		// set code and description (SNOMED code)
 		p.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
@@ -143,7 +143,7 @@ public class ProcedureResource extends BaseResource {
 
 		// Set Encounter related to the Procedure
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
-		p.setEncounterTarget(e);
+		p.setEncounter(new Reference(e));
 
 		// Set Status of the Procedure
 		p.setStatus(getStatus());
