@@ -1,32 +1,29 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.io.ByteArrayInputStream;
-
-import com.aspose.imaging.Image;
 import com.aspose.imaging.fileformats.dicom.DicomImage;
 import com.aspose.imaging.fileformats.dicom.DicomPage;
 import com.aspose.imaging.fileformats.tiff.enums.TiffExpectedFormat;
-import com.aspose.imaging.imageoptions.PngOptions;
 import com.aspose.imaging.imageoptions.TiffOptions;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Iterator;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import com.pixelmed.dicom.Attribute;
 import com.pixelmed.dicom.AttributeList;
-import com.pixelmed.dicom.AttributeListFunctionalGroupsTableModelAllFrames;
 import com.pixelmed.dicom.DicomException;
 import com.pixelmed.dicom.DicomInputStream;
 import com.pixelmed.dicom.TagFromName;
-import com.pixelmed.display.DicomImageViewer;
 
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-
+import org.dcm4che2.imageio.plugins.dcm.DicomImageReadParam;
 import org.hl7.fhir.r4.model.Attachment;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -62,57 +59,18 @@ public class DiagnosticReportResource extends BaseResource {
 
 	public DiagnosticReportResource(File file) throws IOException {
 		this.path = file.getName();
-		//String[] elems = this.path.split("_");
-		//patientId = elems[elems.length - 1].substring(0, 36);
-		//System.out.println(patientId);
+		File myDicomFile = new File("IM-0001-0001.dcm");
+        DicomInputStream dis = new DicomInputStream(myDicomFile);
+        Iterator<ImageReader> iter = ImageIO.getImageReadersByFormatName("DICOM");
+        ImageReader reader = (ImageReader) iter.next();
+        DicomImageReadParam param = (DicomImageReadParam) reader.getDefaultReadParam();
+        ImageInputStream iis = ImageIO.createImageInputStream(myDicomFile);
+        reader.setInput(iis, false);
+        BufferedImage bi = reader.read(0, param);
 
-		DicomImage dicomImage = (DicomImage) DicomImage.load(file.getCanonicalPath());
-		// Save each page as an individual PNG image.
-		System.out.println(dicomImage.getDicomPages().length);
-		for (DicomPage dicomPage : dicomImage.getDicomPages()) {
-			// Generate a file name based on the page index.
-			//if(dicomPage.getIndex() == 129) {
-				String fileName = String.format("DICOM_to_PNG.%d.tiff", dicomPage.getIndex());
-				// Save as PNG.
-				System.out.println("YES");
-				dicomPage.save("src/main/resources/" + fileName, new TiffOptions(TiffExpectedFormat.TiffNoCompressionBw));
-			//} else System.out.println("not");
-			
-		}
-		System.out.println("finished");
-		
-		try (DicomInputStream my_image = new DicomInputStream(file)) {
-			AttributeList list = new AttributeList();
-			list.read(file);
-			System.out.println(list.get(TagFromName.PixelData));
-			Attribute a = list.get(TagFromName.PixelData);
-			byte[] pixel_data = a.getByteValues(false);
-			pixelData = new int[pixel_data.length / 2];
-			int tmp1, tmp2;
-			for (int i = 0; i < pixel_data.length; i += 2) {
-				int index = i / 2;
-				tmp1 = pixel_data[i];
-				tmp2 = pixel_data[i + 1];
-				if (tmp1 < 0)
-					tmp1 += 256;
-				if (tmp2 < 0)
-					tmp2 += 256;
-				pixelData[index] = tmp1 * 256 + tmp2;
-				/*
-				 * System.out.println(tmp1); System.out.println(tmp2);
-				 * System.out.println(pixelData[index]); System.out.println(tmp1*256 + tmp2);
-				 * System.out.println(); if (i>10) break;
-				 */
-			}
-			System.out.println(pixelData.length);
+        File myJpegFile = new File("IM-0001-0001.jpg");
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(myJpegFile));
 
-			String patientName = Attribute.getDelimitedStringValuesOrEmptyString(list, TagFromName.PatientName);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (DicomException e) {
-			e.printStackTrace();
-		}
 
 	}
 	

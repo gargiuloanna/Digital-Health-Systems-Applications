@@ -12,6 +12,7 @@ module it.unisa.diem.dhsa.group3.HIS_Project {
 	requires transitive java.desktop;
 	requires dicom;
 	requires aspose.imaging;
+	requires dcm4che.imageio;
 	
 
     opens it.unisa.diem.dhsa.group3.HIS_Project to javafx.fxml;
