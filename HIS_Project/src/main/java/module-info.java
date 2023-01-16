@@ -10,6 +10,8 @@ module it.unisa.diem.dhsa.group3.HIS_Project {
 	requires javafx.graphics;
 	requires org.apache.commons.lang3;
 	requires transitive java.desktop;
+	requires dicom;
+	requires aspose.imaging;
 	
 
     opens it.unisa.diem.dhsa.group3.HIS_Project to javafx.fxml;

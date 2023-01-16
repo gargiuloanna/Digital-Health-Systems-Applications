@@ -55,6 +55,22 @@
         	<artifactId>pdfbox</artifactId>
         	<version>2.0.4</version>
         </dependency>
+        <dependency>
+        	<groupId>com.pixelmed</groupId>
+        	<artifactId>dicom</artifactId>
+        	<version>20220618</version>
+        </dependency>
+        <dependency>
+        	<groupId>javax.vecmath</groupId>
+        	<artifactId>vecmath</artifactId>
+        	<version>1.5.2</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.aspose</groupId>
+        	<artifactId>aspose-imaging</artifactId>
+        	<version>22.4</version>
+        	<classifier>jdk16</classifier>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -83,4 +99,11 @@
             </plugin>
         </plugins>
     </build>
+     <repositories>
+	    <repository>
+	        <id>AsposeJavaAPI</id>
+	        <name>Aspose Java API</name>
+	        <url>https://repository.aspose.com/repo/</url>
+	    </repository>
+</repositories>
 </project>
