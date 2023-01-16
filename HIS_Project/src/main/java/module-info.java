@@ -10,6 +10,7 @@ module it.unisa.diem.dhsa.group3.HIS_Project {
 	requires javafx.graphics;
 	requires org.apache.commons.lang3;
 	requires transitive java.desktop;
+	requires pdfbox.app;
 	
 
     opens it.unisa.diem.dhsa.group3.HIS_Project to javafx.fxml;
