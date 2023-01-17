@@ -1,8 +1,13 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import org.hl7.fhir.instance.model.api.IBaseResource;
+import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.DiagnosticReport;
 import org.hl7.fhir.r4.model.ImagingStudy;
 import org.hl7.fhir.r4.model.ServiceRequest;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Reference;
+
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
@@ -15,6 +20,8 @@ import java.util.ResourceBundle;
 
 import it.unisa.diem.dhsa.group3.resources.DiagnosticReportResource;
 import it.unisa.diem.dhsa.group3.resources.ImagingStudyResource;
+import it.unisa.diem.dhsa.group3.resources.ServiceRequestResource;
+import it.unisa.diem.dhsa.group3.state.Context;
 import it.unisa.diem.dhsa.group3.state.PDF;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.concurrent.Service;
@@ -70,17 +77,21 @@ public class LoadResultsController extends BasicController{
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(MRIController.selectedlist.size() == 0) {
-    		Alert alert = new Alert(AlertType.INFORMATION, "Select an order", ButtonType.OK);
-			alert.showAndWait();
-    	}
-    	else {
-    	patientField.setText(MRIController.selectedlist.get(0).getSubject().getIdentifier().getValue());
-    	requestField.setText(MRIController.selectedlist.get(0).getId());
-    	Date date = MRIController.selectedlist.get(0).getDate();
-    	datePicker.setValue(LocalDate.of(date.getYear() + 1900, date.getMonth()+1, date.getDate()));
-    	encounterField.setText(MRIController.selectedlist.get(0).getEncounter().getIdentifier().getValue());
-    	}
+		
+		ServiceRequestResource r = MRIController.selectedlist.get(0);
+	
+		
+    	patientField.setText(r.getSubject_id());
+    	requestField.setText(r.getId());
+    	Date date = r.getDate();
+    	datePicker.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDay()));
+    	encounterField.setText(r.getEncounter_id());
+    	
+	}
+	
+	@FXML
+	void SwitchToOpeningPage(ActionEvent event) throws IOException {
+		App.setRoot("MRI");
 	}
 	
 	@FXML
@@ -121,14 +132,14 @@ public class LoadResultsController extends BasicController{
     	else {
     	DiagnosticReportResource r = new DiagnosticReportResource();
     	ImagingStudyResource i = new ImagingStudyResource(
-    			Date.from(datePicker.getValue().atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant()), patientField.getText(), encounterField.getText(), 
+    			Date.from(datePicker.getValue().atStartOfDay(ZoneId.of("Europe/Paris")).toInstant()), patientField.getText(), encounterField.getText(), 
     			bodycodeField.getText(), bodydesField.getText(), modcodeField.getText(), moddesField.getText(),
     			sopcodeField.getText(), sopdesField.getText());
     	
     	r.setPatientId(patientField.getText());
     	//set patient not done
     	//set encounter not done
-    	r.setServiceRequest((ServiceRequest) MRIController.selectedlist.get(0).createResource());
+    	r.setServiceRequest((ServiceRequest) MRIController.selectedlist.get(0).createResource()); //invece di crearla avrebbe senso cercarla sul server
     	r.setImagingStudy((ImagingStudy) i.createResource());
     	r.setConclusion(conclusionField.getText());
     	

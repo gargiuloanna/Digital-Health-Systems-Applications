@@ -228,6 +228,8 @@ public class PatientAdmissionController extends BasicController {
 				Resource r = getResource.getValue();
 
 				if (r != null) {
+				
+					Patient p = (Patient) r;
 					fillFields((Patient) r);
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);

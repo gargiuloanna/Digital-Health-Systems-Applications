@@ -11,6 +11,7 @@ import org.hl7.fhir.r4.model.ServiceRequest;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.resources.ServiceRequestResource;
+import it.unisa.diem.dhsa.group3.state.Context;
 import it.unisa.diem.dhsa.group3.state.PDF;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.collections.FXCollections;
@@ -21,9 +22,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -31,7 +29,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 
 public class MRIController extends BasicController{
@@ -65,16 +62,23 @@ public class MRIController extends BasicController{
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	progressBar.setVisible(false);
-    	orderslist =FXCollections.observableArrayList();
-    			
-    	ViewOrders.setItems(orderslist);
+    	orderslist = FXCollections.observableArrayList();
+    	
+    	List<ServiceRequest> l = ServerInteraction.getServiceRequestResources();
+    	for (ServiceRequest p : l) {
+    		  String encoded = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
+    		  System.out.println(encoded);
+    		orderslist.add(new ServiceRequestResource(p));
+    	}
+    	ViewOrders.setItems(orderslist.sorted());
     	ViewSelectedOrder.setItems(selectedlist);
     	
     	
     	//potrebbe smettere di funzionare se garbage collected
     	ViewOrders.selectionModelProperty().getValue().selectedIndexProperty().addListener((prop, oldValue, newValue) -> {
     		selectedlist.clear();
-    		selectedlist.add(orderslist.get((int) newValue));
+    		System.out.println("old value " + oldValue + " new value " + newValue);
+    		selectedlist.add(orderslist.sorted().get((int) newValue));
     	});
     }
     
@@ -92,7 +96,7 @@ public class MRIController extends BasicController{
     	date.setYear(dateField.getValue().getYear());
     	
     	progressBar.setVisible(true);
-    	getOccurrence(date);
+    	//getOccurrence(date);
     	progressBar.setVisible(false);
     	}
     	
@@ -124,16 +128,26 @@ public class MRIController extends BasicController{
     }
     
     @FXML
-    void loadPressed(ActionEvent event) {
-    	handle(event, "LoadResults");
+    void loadPressed(ActionEvent event) throws IOException {
+    	if(MRIController.selectedlist.size() == 0) {
+    		Alert alert = new Alert(AlertType.INFORMATION, "Select an order", ButtonType.OK);
+			alert.showAndWait();
+    	}else{
+    		handle(event, "LoadResults");
+    	}
     }
     
     
 
 	/* --- Private Service Methods --- */
     private void getPatientStudies() {
-
-		Service<List<Resource>> getResource = new Service<List<Resource>>() {
+    	orderslist.clear();
+    	for (ServiceRequestResource r: orderslist){
+    		if (r.getSubject_id() == searchField.getText())
+    			orderslist.add(r);   			
+    			
+    	}
+		/*Service<List<Resource>> getResource = new Service<List<Resource>>() {
 
 			@Override
 			protected Task<List<Resource>> createTask() throws FhirClientConnectionException {
@@ -226,22 +240,15 @@ public class MRIController extends BasicController{
 
 			}
 		});
+		*/
     }
     
-    private void handle(ActionEvent event, String fxml) {
-    	Stage stage;
-        Parent root;
-        stage=(Stage) ((Button)(event.getSource())).getScene().getWindow();
-        try {
-			root = FXMLLoader.load(App.class.getResource(fxml + ".fxml"));
-			Scene scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    private void handle(ActionEvent event, String fxml) throws IOException {
+    	App.setRoot("LoadResults");
 
     }
+    
+    
     
     
 }

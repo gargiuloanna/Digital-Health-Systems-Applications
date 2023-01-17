@@ -7,6 +7,7 @@ import java.util.Date;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ServiceRequest;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
@@ -66,6 +67,7 @@ public class OrderRegistrationController extends BasicController{
 
     @FXML
     private CheckBox summaryButton;
+   
     
     @FXML
     void categoryMenu(ActionEvent event) {
@@ -113,8 +115,13 @@ public class OrderRegistrationController extends BasicController{
     
     @FXML
     void sendOrderPressed(ActionEvent event) {
-    	ServiceRequestResource r = create(event);
-    	upload((ServiceRequest) r.createResource());
+    	if(emptyFields()) {
+    		Alert alert = new Alert(AlertType.ERROR, "Fill all the fields",
+					ButtonType.OK);
+			alert.showAndWait();
+    	}else {
+    		getPatient();
+    	}
     }
 
     @FXML
@@ -123,36 +130,29 @@ public class OrderRegistrationController extends BasicController{
     }
     
     
-    private ServiceRequestResource create(ActionEvent event) {
-    	if(emptyFields()) {
-    		Alert alert = new Alert(AlertType.ERROR, "Fill all the fields",
-					ButtonType.OK);
-			alert.showAndWait();
-    	}else {
-    	Patient p = (Patient) ServerInteraction.getResource(patientField.getText());
-    	Encounter e = new Encounter();
-    	e.addIdentifier(new Identifier().setSystem("https://github.com/synthetichealth/synthea").setValue(encounterField.getText()));
+    private ServiceRequestResource create(Patient p) throws FhirClientConnectionException{
     	ServiceRequestResource r = new ServiceRequestResource(IDField.getText(), status.getText().toLowerCase(), intent.getText().toLowerCase(), request.getText(), 
-    			p, e, category.getText(), 
+    			p.getIdentifierFirstRep().getValue(), encounterField.getText(), category.getText(), 
     			Date.from(datepicker.getValue().atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant()), new Date(), requesterField.getText(), details.getText());
-		return r;
-    	}
-    	
-    	return null;
-		
+		System.out.println(r);
+    	return r;
+ 
     }
 
-    private void upload(ServiceRequest r) {
+    private void upload(ServiceRequestResource r) {
+    	
+    	ServiceRequest rr = (ServiceRequest) r.createResource();
+				
     	Service<String> upload = new Service<String>() {
 
 			@Override
 			protected Task<String> createTask() throws FhirClientConnectionException {
-				
+				// TODO Auto-generated method stub
 				return new Task<String>() {
 
 					@Override
 					protected String call() throws FhirClientConnectionException {
-						return ServerInteraction.uploadResource(r.getIdentifierFirstRep().getValue(), r, true);
+						return ServerInteraction.uploadResource(rr.getIdentifierFirstRep().getValue(), rr, true);
 
 					};
 				};
@@ -164,17 +164,22 @@ public class OrderRegistrationController extends BasicController{
 
 			@Override
 			public void handle(WorkerStateEvent event) {
+				System.out.println("success");
 				String id = upload.getValue();
-				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
+				Alert alert = new Alert(AlertType.NONE, "Resource with id:" +id +" updated correctly.",
 						ButtonType.OK);
 				alert.showAndWait();
+				
 			}
 		});
 		
 		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
+			
 			@Override
 			public void handle(WorkerStateEvent event) {
+				System.out.println("failed");
+				if(upload.getException() != null)
+					System.out.println(upload.getException().getMessage());
 				if (upload.getException() != null
 						&& upload.getException().getClass() == FhirClientConnectionException.class) {
 					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
@@ -184,6 +189,20 @@ public class OrderRegistrationController extends BasicController{
 
 			}
 		});
+		
+		
+		upload.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Alert alert = new Alert(AlertType.ERROR, "cancelled.",
+						ButtonType.OK);
+				alert.showAndWait();
+				
+			}
+			
+		});
+		
     }
     
     
@@ -204,4 +223,57 @@ public class OrderRegistrationController extends BasicController{
     return false;
     }
     
+    private void getPatient() {
+
+		Service<Resource> getResource = new Service<Resource>() {
+
+			@Override
+			protected Task<Resource> createTask() throws FhirClientConnectionException {
+				
+				return new Task<Resource>() {
+
+					@Override
+					protected Resource call() throws FhirClientConnectionException {
+						String id = patientField.getText();
+						return ServerInteraction.getResource(id);
+
+					};
+				};
+			}
+		};
+
+		getResource.start();
+		getResource.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Resource r = getResource.getValue();
+				Patient p = (Patient) r;
+				if (r != null) {
+					ServiceRequestResource s = create(p);
+					upload(s);
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION, "Patient NOT found", ButtonType.OK);
+					alert.showAndWait();
+				}
+
+			}
+		});
+
+		getResource.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (getResource.getException() != null
+						&& getResource.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+							ButtonType.OK);
+					alert.showAndWait();
+				}
+
+			}
+		});
+		
+
+	}
+
 }

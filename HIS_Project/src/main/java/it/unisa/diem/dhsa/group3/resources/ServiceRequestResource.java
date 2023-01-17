@@ -25,8 +25,8 @@ public class ServiceRequestResource extends BaseResource {
 	private String statusCode;
 	private String intentCode; //proposal, plan, or order... si può filtrare sull'intent
 	private String requestCode; //defines what is being requested... serve l'enumeration
-	private Reference subject; // the patient
-	private Reference encounter;
+	private String subject_id; // the patient
+	private String encounter_id;
 	private String category;
 	private Date date; // when when requested service should happen
 	private Date when; // when the request was made
@@ -35,36 +35,36 @@ public class ServiceRequestResource extends BaseResource {
 
 	
 	
-	public ServiceRequestResource(String id, String statusCode, String intentCode, String requestCode, Patient subject,
-			Encounter encounter, String category, Date date, Date when, String requester, String details) {
+	public ServiceRequestResource(String id, String statusCode, String intentCode, String requestCode, String subject,
+			String encounter, String category, Date date, Date when, String requester, String details) {
 		super(id);
 		this.statusCode = statusCode;
 		this.intentCode = intentCode;
 		this.requestCode = requestCode;
-		this.subject = new Reference(subject);
-		this.encounter = new Reference(encounter);
+		this.subject_id = subject;
+		this.encounter_id = encounter;
 		this.category = category;
 		this.date = date;
 		this.when = when;
 		this.requester = requester;
 		this.details = details;
 	}
-	
-	public ServiceRequestResource(ServiceRequest p) {
-		super(p.getIdentifier().get(0).toString());
-		this.statusCode = p.getStatus().toString();
-		this.intentCode = p.getIntent().toString();
-		this.requestCode = p.getCode().toString();
-		this.subject = p.getSubject();
-		this.encounter = p.getEncounter();
-		this.category = p.getCategoryFirstRep().toString();
-		this.date = new Date(p.getOccurrence().toString());
-		this.when = p.getAuthoredOn();
-		this.requester = p.getRequester().getIdentifier().toString();
-		this.details = p.getNoteFirstRep().getText();
-}
 
 
+	public ServiceRequestResource(ServiceRequest r) {
+		super();
+		this.subject_id = r.getSubject().getIdentifier().getValue();
+		this.encounter_id = r.getEncounter().getIdentifier().getValue();
+		this.id = r.getIdentifierFirstRep().getValue();
+		this.date = new Date();
+		this.statusCode = r.getStatus().getDisplay();
+		this.category = r.getCategoryFirstRep().getCodingFirstRep().getDisplay();
+		this.requestCode = r.getCode().getCodingFirstRep().getDisplay();
+		this.intentCode= r.getIntent().getDisplay();
+		this.details = r.getNoteFirstRep().getText();
+		this.when = r.getAuthoredOn();
+		this.requester = r.getRequester().getIdentifier().getValue();
+	}
 
 	public String getId() {
 		return id;
@@ -112,22 +112,27 @@ public class ServiceRequestResource extends BaseResource {
 		this.requestCode = requestCode;
 	}
 
-	
-
-	public Reference getSubject() {
-		return subject;
+	public String getSubject_id() {
+		return subject_id;
 	}
 
-	public void setSubject(Reference subject) {
-		this.subject = subject;
+
+
+
+	public void setSubject_id(String subject_id) {
+		this.subject_id = subject_id;
 	}
 
-	public Reference getEncounter() {
-		return encounter;
+
+
+
+	public String getEncounter_id() {
+		return encounter_id;
 	}
 
-	public void setEncounter(Reference encounter) {
-		this.encounter = encounter;
+
+	public void setEncounter_id(String encounter_id) {
+		this.encounter_id = encounter_id;
 	}
 
 	public String getCategory() {
@@ -192,7 +197,7 @@ public class ServiceRequestResource extends BaseResource {
 	@Override
 	public String toString() {
 		return "Request id:" + id + "\nStatus Code: " + statusCode + "\nIntent Code: " + intentCode
-				+ "\nRequest Code: " + requestCode + "\nPatient: " + subject + "\nEncounter: " + encounter + "\nCategory: "
+				+ "\nRequest Code: " + requestCode + "\nPatient: " + subject_id + "\nEncounter: " + encounter_id + "\nCategory: "
 				+ category + "\nDate: " + date + "\nIssued On: " + when + "\nRequester: " + requester + "\nDetails: " + details
 				+ "\n";
 	}
@@ -205,7 +210,7 @@ public class ServiceRequestResource extends BaseResource {
 		// Definition of the considered profile
 		r.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest"));
 		
-		r.addIdentifier().setSystem("https://www.uuidgenerator.net/dev-corner/java").setValue(id);
+		r.addIdentifier().setSystem("https://www.uuidgenerator.net/dev-corner/java").setValue(super.getId());
 		
 		ServiceRequest.ServiceRequestStatus status = ServiceRequest.ServiceRequestStatus.fromCode(statusCode);
 		r.setStatus(status);
@@ -217,8 +222,8 @@ public class ServiceRequestResource extends BaseResource {
 		ServiceRequestCode code = ServiceRequestCode.fromCode(requestCode);
 		r.setCode(new CodeableConcept(new Coding(code.getSystem(), code.toCode(), code.getDefinition())));
 		
-		r.setSubject(subject);
-		r.setEncounter(encounter);
+		r.setSubject(new Reference().setIdentifier(new Identifier().setValue(subject_id)));
+		r.setEncounter(new Reference().setIdentifier(new Identifier().setValue(encounter_id)));
 		
 		ServiceRequestCategory cat = ServiceRequestCategory.fromCode(category);
 		r.addCategory(new CodeableConcept(new Coding(cat.getSystem(), cat.toCode(), cat.getDefinition())));
