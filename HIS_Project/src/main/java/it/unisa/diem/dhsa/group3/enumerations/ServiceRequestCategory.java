@@ -17,19 +17,19 @@ public enum ServiceRequestCategory {
 	public static ServiceRequestCategory fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
-		if ("_386053000".equals(codeString))
+		if ("Evaluation procedure (procedure)".equals(codeString))
 			return _386053000;
-		if ("_410606002".equals(codeString))
+		if ("Social service procedure (procedure)".equals(codeString))
 			return _410606002;
-		if ("_108252007".equals(codeString))
+		if ("Laboratory procedure".equals(codeString))
 			return _108252007;
-		if ("_363679005".equals(codeString))
+		if ("Imaging".equals(codeString))
 			return _363679005;
-		if ("_409063005".equals(codeString))
+		if ("Counselling".equals(codeString))
 			return _409063005;
-		if ("_409073007".equals(codeString))
+		if ("Education".equals(codeString))
 			return _409073007;
-		if ("_387713003".equals(codeString))
+		if ("Surgical procedure".equals(codeString))
 			return _387713003;
 
 		throw new FHIRException("Unknown PracticeSettingCode code '" + codeString + "'");

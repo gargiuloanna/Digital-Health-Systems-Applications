@@ -1,46 +1,22 @@
 package it.unisa.diem.dhsa.group3.resources;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 
-import com.aspose.imaging.Color;
 import com.aspose.imaging.DataRecoveryMode;
-import com.aspose.imaging.Image;
 import com.aspose.imaging.LoadOptions;
-import com.aspose.imaging.fileformats.dicom.ColorType;
 import com.aspose.imaging.fileformats.dicom.DicomImage;
 import com.aspose.imaging.fileformats.dicom.DicomPage;
-import com.aspose.imaging.fileformats.tiff.enums.TiffExpectedFormat;
-import com.aspose.imaging.imageoptions.DicomOptions;
-import com.aspose.imaging.imageoptions.PngOptions;
-import com.aspose.imaging.imageoptions.TiffOptions;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
-import javax.print.attribute.standard.Compression;
-
-import com.pixelmed.dicom.Attribute;
-import com.pixelmed.dicom.AttributeList;
-import com.pixelmed.dicom.AttributeListFunctionalGroupsTableModelAllFrames;
-import com.pixelmed.dicom.DicomException;
-import com.pixelmed.dicom.DicomInputStream;
-import com.pixelmed.dicom.TagFromName;
-import com.pixelmed.display.DicomImageViewer;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 
 import org.hl7.fhir.r4.model.Attachment;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -54,7 +30,6 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Media;
-import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Media.MediaStatus;
 
 import java.util.Base64;
@@ -69,7 +44,64 @@ public class DiagnosticReportResource extends BaseResource {
 	String path;
 	String patientId;
 	byte[] pixelData;
+	
+	public ServiceRequest getServiceRequest() {
+		return serviceRequest;
+	}
 
+	public void setServiceRequest(ServiceRequest serviceRequest) {
+		this.serviceRequest = serviceRequest;
+	}
+
+	public Encounter getEncounter() {
+		return encounter;
+	}
+
+	public void setEncounter(Encounter encounter) {
+		this.encounter = encounter;
+	}
+
+	public ImagingStudy getImagingStudy() {
+		return imagingStudy;
+	}
+
+	public void setImagingStudy(ImagingStudy imagingStudy) {
+		this.imagingStudy = imagingStudy;
+	}
+
+	public String getConclusion() {
+		return conclusion;
+	}
+
+	public void setConclusion(String conclusion) {
+		this.conclusion = conclusion;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+
+	
 	public DiagnosticReportResource() {
 		super();
 	}

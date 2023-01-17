@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.LoadResultsController">
+   <children>
+      <VBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1000.0">
+               <children>
+                  <Button id="back" mnemonicParsing="false" onAction="#SwitchToOpeningPage">
+                     <graphic>
+                        <ImageView onDragDetected="#SwitchToOpeningPage">
+                           <image>
+                              <Image url="@images/back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Text fill="#4e42a9" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Load Results" wrappingWidth="366.8816521167755">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Georgia Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <HBox prefHeight="574.0" prefWidth="1000.0">
+               <children>
+                  <VBox prefHeight="574.0" prefWidth="487.0">
+                     <children>
+                        <BorderPane id="mri-border" prefHeight="203.0" prefWidth="466.0">
+                           <center>
+                              <VBox prefHeight="202.0" prefWidth="466.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                       <children>
+                                          <Label lineSpacing="10.0" prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Request" textFill="#4c43aa" wrapText="true">
+                                             <HBox.margin>
+                                                <Insets left="40.0" top="15.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="requestField" editable="false" prefHeight="26.0" prefWidth="226.0">
+                                             <HBox.margin>
+                                                <Insets top="15.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                       <children>
+                                          <Label prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Patient" textFill="#4c43aa" wrapText="true">
+                                             <HBox.margin>
+                                                <Insets left="40.0" top="15.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="patientField" editable="false" prefHeight="26.0" prefWidth="226.0">
+                                             <HBox.margin>
+                                                <Insets top="15.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                       <children>
+                                          <Label prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Encounter" textFill="#4c43aa" wrapText="true">
+                                             <HBox.margin>
+                                                <Insets left="40.0" top="15.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="encounterField" editable="false" prefHeight="26.0" prefWidth="226.0">
+                                             <HBox.margin>
+                                                <Insets top="15.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="103.0" prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                       <children>
+                                          <Label prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Date" textFill="#4c43aa" wrapText="true">
+                                             <HBox.margin>
+                                                <Insets left="40.0" top="15.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="226.0">
+                                             <HBox.margin>
+                                                <Insets top="15.0" />
+                                             </HBox.margin>
+                                          </DatePicker>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </center>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </BorderPane>
+                        <VBox id="mri-border" prefHeight="172.0" prefWidth="466.0">
+                           <children>
+                              <Label lineSpacing="10.0" prefHeight="38.0" prefWidth="90.0" stylesheets="@base.css" text="Details" textFill="#4c43aa" wrapText="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextArea fx:id="detailsField" prefHeight="152.0" prefWidth="238.0">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="20.0" right="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox id="mri-border" layoutX="10.0" layoutY="224.0" prefHeight="170.0" prefWidth="466.0">
+                           <children>
+                              <Label lineSpacing="10.0" prefHeight="28.0" prefWidth="90.0" stylesheets="@base.css" text="Conclusion" textFill="#4c43aa" wrapText="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextArea fx:id="conclusionField" prefHeight="152.0" prefWidth="238.0" style="-fx-border-radius: 40;">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="20.0" right="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="574.0" prefWidth="487.0">
+                     <children>
+                        <VBox id="mri-border" prefHeight="415.0" prefWidth="487.0">
+                           <children>
+                              <Label lineSpacing="10.0" prefHeight="38.0" prefWidth="126.0" stylesheets="@base.css" text="Imaging Study" textFill="#4c43aa" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <BorderPane id="mri-border" prefHeight="140.0" prefWidth="487.0">
+                                 <center>
+                                    <VBox prefHeight="202.0" prefWidth="466.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                             <children>
+                                                <Label lineSpacing="10.0" prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Code" textFill="#4c43aa" wrapText="true">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="bodycodeField" prefHeight="26.0" prefWidth="226.0">
+                                                   <HBox.margin>
+                                                      <Insets top="15.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                             <children>
+                                                <Label prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Description" textFill="#4c43aa" wrapText="true">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="bodydesField" prefHeight="26.0" prefWidth="226.0">
+                                                   <HBox.margin>
+                                                      <Insets top="15.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </center>
+                                 <top>
+                                    <Label text="Body Site" textFill="#081240" BorderPane.alignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </top>
+                                 <opaqueInsets>
+                                    <Insets bottom="10.0" />
+                                 </opaqueInsets>
+                              </BorderPane>
+                              <BorderPane id="mri-border" layoutX="10.0" layoutY="53.0" prefHeight="140.0" prefWidth="487.0">
+                                 <center>
+                                    <VBox prefHeight="202.0" prefWidth="466.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                             <children>
+                                                <Label lineSpacing="10.0" prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Code" textFill="#4c43aa" wrapText="true">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="modcodeField" prefHeight="26.0" prefWidth="226.0">
+                                                   <HBox.margin>
+                                                      <Insets top="15.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                             <children>
+                                                <Label prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Description" textFill="#4c43aa" wrapText="true">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="moddesField" prefHeight="26.0" prefWidth="226.0">
+                                                   <HBox.margin>
+                                                      <Insets top="15.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </center>
+                                 <top>
+                                    <Label text="Modality" textFill="#081240" BorderPane.alignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </top>
+                              </BorderPane>
+                              <BorderPane id="mri-border" layoutX="10.0" layoutY="220.0" prefHeight="140.0" prefWidth="487.0">
+                                 <center>
+                                    <VBox prefHeight="202.0" prefWidth="466.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                             <children>
+                                                <Label lineSpacing="10.0" prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Code" textFill="#4c43aa" wrapText="true">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="sopcodeField" prefHeight="26.0" prefWidth="226.0">
+                                                   <HBox.margin>
+                                                      <Insets top="15.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="46.0" prefWidth="487.0" spacing="20.0">
+                                             <children>
+                                                <Label prefHeight="80.0" prefWidth="90.0" stylesheets="@base.css" text="Description" textFill="#4c43aa" wrapText="true">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="sopdesField" prefHeight="26.0" prefWidth="226.0">
+                                                   <HBox.margin>
+                                                      <Insets top="15.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </center>
+                                 <top>
+                                    <Label text="SOP" textFill="#081240" BorderPane.alignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold Italic" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </top>
+                              </BorderPane>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <Button fx:id="lodButton" mnemonicParsing="false" onAction="#loadAction" prefHeight="30.0" prefWidth="95.0" text="Load Image">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="340.0" top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmAction" prefHeight="48.0" prefWidth="149.0" text="Confirm Results">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="180.0" top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

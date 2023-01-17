@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.PatientAdmissionController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -458,7 +458,7 @@
                                                 <Insets left="60.0" top="30.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <MenuButton fx:id="MaritalMenuButton" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" text="Select one...">
+                                          <MenuButton fx:id="MaritalMenuButton" contentDisplay="CENTER" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="240.0" style="-fx-background-color: #4c43aa;" text="Select one..." textFill="WHITE">
                                             <items>
                                               <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared null and to not have existed" />
                                                 <MenuItem onAction="#maritalSelected" text="Marriage contract has been declared dissolved and inactive" />
@@ -474,6 +474,9 @@
                                              <HBox.margin>
                                                 <Insets left="20.0" top="20.0" />
                                              </HBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
                                           </MenuButton>
                                        </children>
                                        <HBox.margin>
