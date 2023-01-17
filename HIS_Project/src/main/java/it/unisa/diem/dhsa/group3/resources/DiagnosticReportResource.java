@@ -34,6 +34,8 @@ import com.pixelmed.dicom.DicomInputStream;
 import com.pixelmed.dicom.TagFromName;
 import com.pixelmed.display.DicomImageViewer;
 
+import it.unisa.diem.dhsa.group3.state.Memory;
+import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -52,6 +54,7 @@ import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Media;
+import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Media.MediaStatus;
 
 import java.util.Base64;
@@ -76,11 +79,13 @@ public class DiagnosticReportResource extends BaseResource {
 	}
 
 	public DiagnosticReportResource(File file) {
+		this.path = file.getName();
+		String[] elems = this.path.split("_");
+		this.patientId = elems[elems.length - 1].substring(0, 36);
 		try {
 			this.path = file.getCanonicalPath();
 			handlePixelData();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -175,14 +180,20 @@ public class DiagnosticReportResource extends BaseResource {
 		// frames height modality
 		media.addPartOf(imagingStudyRef);
 		media.setSubject(patientRef);
+		content.setData(pixelData);
+		media.setContent(content);
 		dr.addMedia(new DiagnosticReport.DiagnosticReportMediaComponent(new Reference(media)));
 
 		return dr;
 
 	}
 
-	private Resource getResource(String id) {
-		return null;
+	private Resource getResource(String id, Class<? extends BaseResource> specificClass) {
+		Resource r = Memory.getMemory().get(specificClass).get(id);
+		if (r == null) {
+			r = ServerInteraction.getResource(id);
+		}
+		return r; //returns null if empty
 	}
 
 }
