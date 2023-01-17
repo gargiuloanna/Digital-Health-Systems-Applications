@@ -52,14 +52,14 @@ public class test extends Application {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         //File selectedDirectory = directoryChooser.showDialog(stage);
         //File[] files = selectedDirectory.listFiles();
-        File file = new FileChooser().showOpenDialog(stage);
+        //File file = new FileChooser().showOpenDialog(stage);
         DiagnosticReportResource dr = null;
         //Abe604_Frami345_b8dd1798-beef-094d-1be4-f90ee0e6b7d51.2.840.99999999.26401232.758647660200.dcm
         //for (File file: files) {
         	System.out.println("coso");
-        		System.out.println(file.getName());
-        		dr = new DiagnosticReportResource(file);
-        		System.out.println(file.getName());
+        		//System.out.println(file.getName());
+        		dr = new DiagnosticReportResource(null);
+        		//System.out.println(file.getName());
         	//} 
         	//byte[] array = dr.getPixelDataAsByte();
         	//Image image = convertToFxImage(Arrays.copyOfRange(array, 0, array.length/256));

@@ -1,11 +1,18 @@
 package it.unisa.diem.dhsa.group3.resources;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 
+import com.aspose.imaging.Color;
+import com.aspose.imaging.DataRecoveryMode;
 import com.aspose.imaging.Image;
+import com.aspose.imaging.LoadOptions;
+import com.aspose.imaging.fileformats.dicom.ColorType;
 import com.aspose.imaging.fileformats.dicom.DicomImage;
 import com.aspose.imaging.fileformats.dicom.DicomPage;
 import com.aspose.imaging.fileformats.tiff.enums.TiffExpectedFormat;
+import com.aspose.imaging.imageoptions.DicomOptions;
 import com.aspose.imaging.imageoptions.PngOptions;
 import com.aspose.imaging.imageoptions.TiffOptions;
 
@@ -14,6 +21,10 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.imageio.ImageIO;
+import javax.print.attribute.standard.Compression;
 
 import com.pixelmed.dicom.Attribute;
 import com.pixelmed.dicom.AttributeList;
@@ -23,6 +34,8 @@ import com.pixelmed.dicom.DicomInputStream;
 import com.pixelmed.dicom.TagFromName;
 import com.pixelmed.display.DicomImageViewer;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -41,6 +54,8 @@ import org.hl7.fhir.r4.model.ServiceRequest;
 import org.hl7.fhir.r4.model.Media;
 import org.hl7.fhir.r4.model.Media.MediaStatus;
 
+import java.util.Base64;
+
 public class DiagnosticReportResource extends BaseResource {
 
 	ServiceRequest serviceRequest;
@@ -50,7 +65,7 @@ public class DiagnosticReportResource extends BaseResource {
 	Patient patient;
 	String path;
 	String patientId;
-	int[] pixelData;
+	byte[] pixelData;
 
 	public DiagnosticReportResource() {
 		super();
@@ -60,77 +75,64 @@ public class DiagnosticReportResource extends BaseResource {
 
 	}
 
-	public DiagnosticReportResource(File file) throws IOException {
-		this.path = file.getName();
-		//String[] elems = this.path.split("_");
-		//patientId = elems[elems.length - 1].substring(0, 36);
-		//System.out.println(patientId);
-
-		DicomImage dicomImage = (DicomImage) DicomImage.load(file.getCanonicalPath());
-		// Save each page as an individual PNG image.
-		System.out.println(dicomImage.getDicomPages().length);
-		for (DicomPage dicomPage : dicomImage.getDicomPages()) {
-			// Generate a file name based on the page index.
-			//if(dicomPage.getIndex() == 129) {
-				String fileName = String.format("DICOM_to_PNG.%d.tiff", dicomPage.getIndex());
-				// Save as PNG.
-				System.out.println("YES");
-				dicomPage.save("src/main/resources/" + fileName, new TiffOptions(TiffExpectedFormat.TiffNoCompressionBw));
-			//} else System.out.println("not");
-			
-		}
-		System.out.println("finished");
-		
-		try (DicomInputStream my_image = new DicomInputStream(file)) {
-			AttributeList list = new AttributeList();
-			list.read(file);
-			System.out.println(list.get(TagFromName.PixelData));
-			Attribute a = list.get(TagFromName.PixelData);
-			byte[] pixel_data = a.getByteValues(false);
-			pixelData = new int[pixel_data.length / 2];
-			int tmp1, tmp2;
-			for (int i = 0; i < pixel_data.length; i += 2) {
-				int index = i / 2;
-				tmp1 = pixel_data[i];
-				tmp2 = pixel_data[i + 1];
-				if (tmp1 < 0)
-					tmp1 += 256;
-				if (tmp2 < 0)
-					tmp2 += 256;
-				pixelData[index] = tmp1 * 256 + tmp2;
-				/*
-				 * System.out.println(tmp1); System.out.println(tmp2);
-				 * System.out.println(pixelData[index]); System.out.println(tmp1*256 + tmp2);
-				 * System.out.println(); if (i>10) break;
-				 */
-			}
-			System.out.println(pixelData.length);
-
-			String patientName = Attribute.getDelimitedStringValuesOrEmptyString(list, TagFromName.PatientName);
-			
+	public DiagnosticReportResource(File file) {
+		try {
+			this.path = file.getCanonicalPath();
+			handlePixelData();
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (DicomException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		// DicomImageViewer.main(args);
+	}
+
+	private void handlePixelData() {
+		
+		LoadOptions lo = new LoadOptions();
+		lo.setDataRecoveryMode(DataRecoveryMode.MaximalRecover);
+		DicomImage dicomImage = (DicomImage) DicomImage.load(this.path, lo);
+
+		for (DicomPage dicomPage : dicomImage.getDicomPages()) {
+			// Generate a file name based f the page index.
+
+			BufferedImage bi = dicomPage.toBitmap();
+			ByteArrayOutputStream baos = null;
+			try {
+				baos = new ByteArrayOutputStream();
+				ImageIO.write(bi, "png", baos);
+
+				baos.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					baos.close();
+				} catch (Exception e) {
+				}
+			}
+			byte[] bytes = baos.toByteArray();
+			
+			this.pixelData = bytes;
+
+		}
 	}
 	
-	byte[] fromIntToByte(int[] data) {
-		byte[] out = new byte[data.length];
-		for(int i=0; i<data.length; i++) {
-			out[i] = (byte) (data[i]/256);
+	public static void getImageFromByte(byte[] bytes) {
+		InputStream is = new ByteArrayInputStream(bytes);
+		System.out.println(is);
+		BufferedImage bin; // new BufferedImage(256, 256, BufferedImage.TYPE_BYTE_GRAY);
+		try {
+			bin = ImageIO.read(is);
+			System.out.println(bin);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		return out;
 	}
 
-	public byte[] getPixelDataAsByte() {
-		byte[] a = fromIntToByte(pixelData);
-		return a;
-	}
-
-	public void setPixelData(int[] pixelData) {
-		this.pixelData = pixelData;
+	public byte[] getEncoded() {
+		return Base64.getEncoder().encode(this.pixelData);
 	}
 
 	@Override
