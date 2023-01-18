@@ -108,7 +108,7 @@ public class ServerInteraction {
 			throws FhirClientConnectionException {
 		Resource new_resource = resource;
 
-		Resource old_resource = getResource(id);
+		Resource old_resource = getGenericResource(resource.getClass(), id);
 		MethodOutcome methodOutcome;
 
 		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
@@ -214,9 +214,9 @@ public class ServerInteraction {
 
 	}
 	
-	public static Resource getGenericResource(String resource, String identifier){
-		Class<? extends org.hl7.fhir.r4.model.Resource> resourceClass = ServerInteraction.get_class(resource);
-		assert(resourceClass != null);
+	public static Resource getGenericResource(Class<? extends Resource>  resourceClass, String identifier){
+		if (resourceClass==null)
+			return null;
 		String id;
 		if (identifier == "") {
 			id = "0";
@@ -235,39 +235,6 @@ public class ServerInteraction {
 		return bundle.getEntryFirstRep().getResource();
 
 	}
-	
-	public static Class<? extends org.hl7.fhir.r4.model.Resource> get_class(String resource) {
-		switch (resource) {
-		case "patient":
-			return org.hl7.fhir.r4.model.Patient.class;
-		case "allergy":
-			return org.hl7.fhir.r4.model.AllergyIntolerance.class;
-		case "condition":
-			return org.hl7.fhir.r4.model.Condition.class;
-		case "device":
-			return org.hl7.fhir.r4.model.Device.class;
-		case "encounter":
-			return org.hl7.fhir.r4.model.Encounter.class;
-		case "careplan":
-			return org.hl7.fhir.r4.model.CarePlan.class;
-		case "imaging study":
-			return org.hl7.fhir.r4.model.ImagingStudy.class;
-		case "immunization":
-			return org.hl7.fhir.r4.model.Immunization.class;
-		case "medication":
-			return org.hl7.fhir.r4.model.Medication.class;
-		case "observation":
-			return org.hl7.fhir.r4.model.Observation.class;
-		case "organization":
-			return org.hl7.fhir.r4.model.Organization.class;
-		case "payer":
-			return org.hl7.fhir.r4.model.Organization.class;
-		case "procedure":
-			return org.hl7.fhir.r4.model.Procedure.class;
-		case "provider":
-			return org.hl7.fhir.r4.model.Practitioner.class;
-		}
-		return org.hl7.fhir.r4.model.Resource.class;
-	}
+
 	
 }

@@ -8,7 +8,6 @@ public final class LoadCSV {
 	public static void importing_resource(String filename, String resource) {
 		
 		resource = resource.toLowerCase();
-		System.out.println(resource);
 		Class<? extends BaseResource> resourceClass = LoadCSV.get_class(resource);
 		assert(resourceClass != null);
 		if (filename != null) {
