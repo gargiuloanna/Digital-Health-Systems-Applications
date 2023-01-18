@@ -115,7 +115,7 @@ public class MRIController extends BasicController{
     void viewPressed(ActionEvent event) {
     	try {
 			PDF.loadPDF(selectedlist.get(0).getId());
-		} catch (IOException e) {
+		} catch (IOException | IllegalArgumentException e) {
 			Alert alert = new Alert(AlertType.ERROR, "An error occurred while loading the pdf.\nPlease Retry.",ButtonType.OK);
 			alert.showAndWait();
 		} catch (IndexOutOfBoundsException e) {
