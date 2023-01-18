@@ -1,12 +1,9 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
-import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.DateTimeType;
+
 import org.hl7.fhir.r4.model.DiagnosticReport;
 import org.hl7.fhir.r4.model.ImagingStudy;
 import org.hl7.fhir.r4.model.ServiceRequest;
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Reference;
 
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
@@ -21,7 +18,6 @@ import java.util.ResourceBundle;
 import it.unisa.diem.dhsa.group3.resources.DiagnosticReportResource;
 import it.unisa.diem.dhsa.group3.resources.ImagingStudyResource;
 import it.unisa.diem.dhsa.group3.resources.ServiceRequestResource;
-import it.unisa.diem.dhsa.group3.state.Context;
 import it.unisa.diem.dhsa.group3.state.PDF;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.concurrent.Service;
