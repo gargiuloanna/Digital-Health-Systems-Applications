@@ -4,8 +4,6 @@ import java.time.ZoneId;
 
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.Encounter;
-import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ServiceRequest;
@@ -133,8 +131,7 @@ public class OrderRegistrationController extends BasicController{
     private ServiceRequestResource create(Patient p) throws FhirClientConnectionException{
     	ServiceRequestResource r = new ServiceRequestResource(IDField.getText(), status.getText().toLowerCase(), intent.getText().toLowerCase(), request.getText(), 
     			p.getIdentifierFirstRep().getValue(), encounterField.getText(), category.getText(), 
-    			Date.from(datepicker.getValue().atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant()), new Date(), requesterField.getText(), details.getText());
-		System.out.println(r);
+    			Date.from(datepicker.getValue().atStartOfDay(ZoneId.of("Europe/Paris")).toInstant()), new Date(), requesterField.getText(), details.getText());
     	return r;
  
     }
@@ -164,7 +161,6 @@ public class OrderRegistrationController extends BasicController{
 
 			@Override
 			public void handle(WorkerStateEvent event) {
-				System.out.println("success");
 				String id = upload.getValue();
 				Alert alert = new Alert(AlertType.NONE, "Resource with id:" +id +" updated correctly.",
 						ButtonType.OK);
@@ -177,9 +173,6 @@ public class OrderRegistrationController extends BasicController{
 			
 			@Override
 			public void handle(WorkerStateEvent event) {
-				System.out.println("failed");
-				if(upload.getException() != null)
-					System.out.println(upload.getException().getMessage());
 				if (upload.getException() != null
 						&& upload.getException().getClass() == FhirClientConnectionException.class) {
 					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",

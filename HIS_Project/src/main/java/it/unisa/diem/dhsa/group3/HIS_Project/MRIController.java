@@ -72,7 +72,6 @@ public class MRIController extends BasicController{
     	//potrebbe smettere di funzionare se garbage collected
     	ViewOrders.selectionModelProperty().getValue().selectedIndexProperty().addListener((prop, oldValue, newValue) -> {
     		selectedlist.clear();
-    		System.out.println("old value " + oldValue + " new value " + newValue);
     		selectedlist.add(orderslist.sorted().get((int) newValue));
     	});
     }
@@ -268,8 +267,6 @@ public class MRIController extends BasicController{
 			public void handle(WorkerStateEvent event) {
 				List<ServiceRequest> l = getResource.getValue();
 				for (ServiceRequest p : l) {
-		    		  String encoded = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
-		    		  System.out.println(encoded);
 		    		orderslist.add(new ServiceRequestResource(p));
 		    	}
 		    	ViewOrders.setItems(orderslist.sorted());
