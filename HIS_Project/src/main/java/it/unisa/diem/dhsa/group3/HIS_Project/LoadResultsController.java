@@ -86,6 +86,7 @@ public class LoadResultsController extends BasicController{
     	Date date = r.getDate();
     	datePicker.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDay()));
     	encounterField.setText(r.getEncounter_id());
+    	detailsField.setText(r.getDetails());
     	
 	}
 	
