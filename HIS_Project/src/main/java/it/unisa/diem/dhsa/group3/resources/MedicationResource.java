@@ -194,15 +194,14 @@ public class MedicationResource extends BaseResource {
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		med.setContext(new Reference(e));
 
+		// set medication --SYSTEM: RxNORM
+		med.setMedication(new CodeableConcept(new Coding("www.nlm.nih.gov/research/umls/rxnorm", CODE, DESCRIPTION)));
+
 		// add base cost for the medicine
 		MedicationKnowledge cost = new MedicationKnowledge();
 		cost.addCost(new MedicationKnowledge.MedicationKnowledgeCostComponent()
 				.setCost(new Money().setCurrency("USD").setValue(BASE_COST)));
-		cost.getAssociatedMedication().add(new Reference(new Medication()
-				.setCode(new CodeableConcept(new Coding("www.nlm.nih.gov/research/umls/rxnorm", CODE, DESCRIPTION)))));
-
-		// set medication --SYSTEM: RxNORM
-		med.setMedication(new CodeableConcept(new Coding("www.nlm.nih.gov/research/umls/rxnorm", CODE, DESCRIPTION)));
+		cost.getAssociatedMedication().add(new Reference(med));
 
 		// add reason
 		med.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
