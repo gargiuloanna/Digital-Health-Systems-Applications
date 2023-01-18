@@ -133,6 +133,7 @@ public class MRIController extends BasicController {
 	
 	   @FXML
 	    void viewAll(ActionEvent event) {
+		   
 		   getAll();
 	    }
 
@@ -205,6 +206,7 @@ public class MRIController extends BasicController {
 	}
 
 	private void getAll() {
+		orderslist.clear();
 		Service<List<ServiceRequest>> getResource = new Service<List<ServiceRequest>>() {
 
 			@Override
