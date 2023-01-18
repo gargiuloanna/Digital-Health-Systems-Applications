@@ -29,6 +29,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 
 public class MRIController extends BasicController{
@@ -54,26 +55,20 @@ public class MRIController extends BasicController{
     @FXML
     private TextField searchField;    
     @FXML
-	private ProgressIndicator progressBar;
+	private ImageView progressBar;
     
     private ObservableList<ServiceRequestResource> orderslist;
     static ObservableList<ServiceRequestResource> selectedlist = FXCollections.observableArrayList();    
 
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
-    	progressBar.setVisible(false);
+    	progressBar.setVisible(true);
+    	
     	orderslist = FXCollections.observableArrayList();
+
+    	getAll();
     	
-    	List<ServiceRequest> l = ServerInteraction.getServiceRequestResources();
-    	for (ServiceRequest p : l) {
-    		  String encoded = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
-    		  System.out.println(encoded);
-    		orderslist.add(new ServiceRequestResource(p));
-    	}
-    	ViewOrders.setItems(orderslist.sorted());
-    	ViewSelectedOrder.setItems(selectedlist);
-    	
-    	
+    	  	
     	//potrebbe smettere di funzionare se garbage collected
     	ViewOrders.selectionModelProperty().getValue().selectedIndexProperty().addListener((prop, oldValue, newValue) -> {
     		selectedlist.clear();
@@ -81,6 +76,8 @@ public class MRIController extends BasicController{
     		selectedlist.add(orderslist.sorted().get((int) newValue));
     	});
     }
+    
+    
     
     @FXML
     void FilterPressed(ActionEvent event) {
@@ -147,7 +144,7 @@ public class MRIController extends BasicController{
     			orderslist.add(r);   			
     			
     	}
-		/*Service<List<Resource>> getResource = new Service<List<Resource>>() {
+		Service<List<Resource>> getResource = new Service<List<Resource>>() {
 
 			@Override
 			protected Task<List<Resource>> createTask() throws FhirClientConnectionException {
@@ -240,7 +237,6 @@ public class MRIController extends BasicController{
 
 			}
 		});
-		*/
     }
     
     private void handle(ActionEvent event, String fxml) throws IOException {
@@ -249,7 +245,53 @@ public class MRIController extends BasicController{
     }
     
     
-    
+    private void getAll(){
+    	Service<List<ServiceRequest>> getResource = new Service<List<ServiceRequest>>() {
+
+			@Override
+			protected Task<List<ServiceRequest>> createTask() throws FhirClientConnectionException {
+				return new Task<List<ServiceRequest>>() {
+
+					@Override
+					protected List<ServiceRequest> call() throws Exception {
+						return ServerInteraction.getServiceRequestResources();
+					};
+				};
+			}
+		};
+
+		getResource.start();
+		getResource.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				List<ServiceRequest> l = getResource.getValue();
+				for (ServiceRequest p : l) {
+		    		  String encoded = Context.getContext().newJsonParser().setPrettyPrint(true).encodeResourceToString(p);
+		    		  System.out.println(encoded);
+		    		orderslist.add(new ServiceRequestResource(p));
+		    	}
+		    	ViewOrders.setItems(orderslist.sorted());
+		    	ViewSelectedOrder.setItems(selectedlist);
+		    	progressBar.setVisible(false);
+
+			}
+		});
+
+		getResource.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (getResource.getException() != null
+						&& getResource.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+							ButtonType.OK);
+					alert.showAndWait();
+				}
+				progressBar.setVisible(false);
+
+			}
+		});
+    }
     
 }
 

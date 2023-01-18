@@ -13,7 +13,7 @@ module it.unisa.diem.dhsa.group3.HIS_Project {
 	requires dicom;
 	requires aspose.imaging;
 	requires dcm4che.imageio;
-	requires pdfbox.app;
+	requires pdfbox;
 	
 
     opens it.unisa.diem.dhsa.group3.HIS_Project to javafx.fxml;

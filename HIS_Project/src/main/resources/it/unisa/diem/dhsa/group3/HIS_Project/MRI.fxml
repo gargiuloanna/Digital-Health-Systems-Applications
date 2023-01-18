@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.MRIController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.MRIController">
    <children>
       <VBox prefHeight="650.4" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -101,10 +100,6 @@
                                           <Insets bottom="5.0" top="5.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ProgressIndicator fx:id="progressBar" prefHeight="28.0" prefWidth="34.0">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" right="3.0" top="5.0" />
-                                       </HBox.margin></ProgressIndicator>
                                     <TextField fx:id="searchField" prefHeight="30.0" prefWidth="336.0" promptText="Search Patient...">
                                        <font>
                                           <Font size="14.0" />
@@ -121,6 +116,14 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Button>
+                                    <ImageView fx:id="progressBar" fitHeight="30.0" fitWidth="30.0" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/loading-gif-transparent-background.gif" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </ImageView>
                                  </children>
                               </HBox>
                            </top>

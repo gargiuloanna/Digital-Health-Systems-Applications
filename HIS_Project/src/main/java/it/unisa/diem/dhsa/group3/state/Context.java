@@ -6,7 +6,7 @@ import ca.uhn.fhir.rest.client.api.IRestfulClientFactory;
 public class Context extends FhirContext{
 	static private Context cxt = null;
 	private FhirContext context;
-	static public String server = "http://localhost:8080/fhir";
+	static public String server = "http://192.168.71.103:8080//fhir";
 	private IGenericClient client = null;
 	
 	@SuppressWarnings("deprecation")
@@ -30,8 +30,8 @@ public class Context extends FhirContext{
 	public IGenericClient newRestfulGenericClient(final String theServerBase) {
 		if (client == null) {
 			IRestfulClientFactory clt = getContext().getRestfulClientFactory();
-			clt.setConnectTimeout(10*1000); 
-			clt.setSocketTimeout(10*1000); 
+			clt.setConnectTimeout(20*1000); 
+			clt.setSocketTimeout(20*1000); 
 			client = clt.newGenericClient(theServerBase);
 			}
 		
