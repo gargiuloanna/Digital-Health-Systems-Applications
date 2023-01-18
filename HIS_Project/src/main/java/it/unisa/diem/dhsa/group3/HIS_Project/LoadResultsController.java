@@ -98,10 +98,10 @@ public class LoadResultsController extends BasicController{
     		PDF.createPDF(r.getPatientId(), 
     				r.getEncounter().toString(), 
     				r.getConclusion(), 
-    				r.getServiceRequest().getNoteFirstRep().getText(), 
+    				MRIController.selectedlist.get(0).getDetails(), 
     				r.getId(), 
-    				r.getServiceRequest().getIdentifierFirstRep().toString(), 
-    				r.getImagingStudy().getIdentifierFirstRep().toString());
+    				r.getServiceRequest(), 
+    				r.getImagingStudy());
     		upload((DiagnosticReport) r.createResource());
 			//PDF.createPDF("encounter","patientId","conclusion", "nodetails", "id");
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
@@ -134,10 +134,8 @@ public class LoadResultsController extends BasicController{
     			sopcodeField.getText(), sopdesField.getText());
     	
     	r.setPatientId(patientField.getText());
-    	//set patient not done
-    	//set encounter not done
-    	r.setServiceRequest((ServiceRequest) MRIController.selectedlist.get(0).createResource()); //invece di crearla avrebbe senso cercarla sul server
-    	r.setImagingStudy((ImagingStudy) i.createResource());
+    	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
+    	r.setImagingStudy(i.getId());
     	r.setConclusion(conclusionField.getText());
     	
     	return r;

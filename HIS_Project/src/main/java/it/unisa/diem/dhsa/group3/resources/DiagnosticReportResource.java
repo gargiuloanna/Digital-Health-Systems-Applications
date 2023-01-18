@@ -24,6 +24,7 @@ import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DiagnosticReport;
 import org.hl7.fhir.r4.model.DiagnosticReport.DiagnosticReportStatus;
 import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.ImagingStudy;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Reference;
@@ -36,37 +37,45 @@ import java.util.Base64;
 
 public class DiagnosticReportResource extends BaseResource {
 
-	ServiceRequest serviceRequest;
-	Encounter encounter;
-	ImagingStudy imagingStudy;
+	String serviceRequest;
+	String encounter;
+	String imagingStudy;
 	String conclusion;
-	Patient patient;
 	String path;
 	String patientId;
 	byte[] pixelData;
 	
-	public ServiceRequest getServiceRequest() {
+	
+	public String getServiceRequest() {
 		return serviceRequest;
 	}
 
-	public void setServiceRequest(ServiceRequest serviceRequest) {
+	public void setServiceRequest(String serviceRequest) {
 		this.serviceRequest = serviceRequest;
 	}
 
-	public Encounter getEncounter() {
+	public String getEncounter() {
 		return encounter;
 	}
 
-	public void setEncounter(Encounter encounter) {
+	public void setEncounter(String encounter) {
 		this.encounter = encounter;
 	}
 
-	public ImagingStudy getImagingStudy() {
+	public String getImagingStudy() {
 		return imagingStudy;
 	}
 
-	public void setImagingStudy(ImagingStudy imagingStudy) {
+	public void setImagingStudy(String imagingStudy) {
 		this.imagingStudy = imagingStudy;
+	}
+
+	public byte[] getPixelData() {
+		return pixelData;
+	}
+
+	public void setPixelData(byte[] pixelData) {
+		this.pixelData = pixelData;
 	}
 
 	public String getConclusion() {
@@ -75,14 +84,6 @@ public class DiagnosticReportResource extends BaseResource {
 
 	public void setConclusion(String conclusion) {
 		this.conclusion = conclusion;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
 	}
 
 	public String getPath() {
@@ -174,10 +175,10 @@ public class DiagnosticReportResource extends BaseResource {
 
 	@Override
 	public Resource createResource() {
-		Reference serviceRequestRef = new Reference(serviceRequest);
-		Reference encounterRef = new Reference(encounter);
-		Reference imagingStudyRef = new Reference(imagingStudy);
-		Reference patientRef = new Reference(patient);
+		Reference serviceRequestRef = new Reference().setIdentifier(new Identifier().setValue(serviceRequest));
+		Reference encounterRef = new Reference().setIdentifier(new Identifier().setValue(encounter));
+		Reference imagingStudyRef = new Reference().setIdentifier(new Identifier().setValue(imagingStudy));
+		Reference patientRef = new Reference().setIdentifier(new Identifier().setValue(patientId));
 
 		DiagnosticReport dr = new DiagnosticReport();
 		dr.addBasedOn(serviceRequestRef); // the use of target is deprecated
@@ -188,14 +189,12 @@ public class DiagnosticReportResource extends BaseResource {
 		// 11541-0 deprecated https://loinc.org/11541-0/ mapped onto 24590-2
 		dr.getCode().addCoding().setCode("24590-2").setSystem("http://loinc.org").setDisplay("MR Brain");
 		dr.setConclusion(conclusion);
-		dr.setEncounterTarget(encounter);
 		dr.setEncounter(encounterRef);
-		dr.setIdentifier(serviceRequest.getIdentifier()); // all the identifiers of service request are identifiers for
+		dr.addIdentifier(new Identifier().setValue(serviceRequest).setSystem("https://www.uuidgenerator.net/dev-corner/java")); // all the identifiers of service request are identifiers for
 															// report
 
 		dr.addImagingStudy(imagingStudyRef);
 		dr.setStatus(DiagnosticReportStatus.FINAL); // if exists: APPENDED
-		dr.setSubjectTarget(patient);
 		dr.setSubject(patientRef);
 
 		Attachment content = new Attachment();
@@ -204,9 +203,8 @@ public class DiagnosticReportResource extends BaseResource {
 		media.setStatus(MediaStatus.COMPLETED);
 		media.setContent(content);
 		media.addBasedOn(serviceRequestRef);
-		media.setEncounterTarget(encounter);
 		media.setEncounter(encounterRef);
-		media.setIdentifier(serviceRequest.getIdentifier()); // all the identifiers of service request are identifiers
+		media.addIdentifier(new Identifier().setValue(serviceRequest).setSystem("https://www.uuidgenerator.net/dev-corner/java")); // all the identifiers of service request are identifiers
 																// for report
 		// media.setDevice(null);
 		// frames height modality
