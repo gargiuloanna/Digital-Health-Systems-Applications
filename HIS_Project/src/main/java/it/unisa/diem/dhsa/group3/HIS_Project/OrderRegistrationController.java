@@ -20,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -62,9 +61,6 @@ public class OrderRegistrationController extends BasicController{
 
     @FXML
     private MenuButton status;
-
-    @FXML
-    private CheckBox summaryButton;
    
     
     @FXML
@@ -120,11 +116,6 @@ public class OrderRegistrationController extends BasicController{
     	}else {
     		getPatient();
     	}
-    }
-
-    @FXML
-    void summaryChecked(ActionEvent event) {
-    	//TODO: implements a pdf?
     }
     
     

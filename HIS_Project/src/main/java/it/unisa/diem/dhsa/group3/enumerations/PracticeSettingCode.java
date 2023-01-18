@@ -41,7 +41,7 @@ public enum PracticeSettingCode {
 	_418112009, /* PULMONARY MEDICINE: PULMONARY DISEASE FROM CSV */
 	_394882004, /* INTERVENTIONAL PAIN MANAGEMENT (SPECIALTY) */
 	_418960008, /* OTOLARYNGOLOGY */
-	_394803006, /* hematopathology - HEMATOLOGY/ONCOLOGY */
+	_394803006, /* HEMATOPATHOLOGY - HEMATOLOGY/ONCOLOGY */
 	_408463005, /* VASCULAR SURGERY */
 	_310157000, /* HAND SURGERY */
 	_408466002, /* CARDIAC SURGERY: INTERVENTIONAL CARDIOLOGY FROM CSV */
@@ -471,7 +471,7 @@ public enum PracticeSettingCode {
 		case _418960008:
 			return "418960008";/* OTOLARYNGOLOGY */
 		case _394803006:
-			return "394803006";/* hematopathology - HEMATOLOGY/ONCOLOGY */
+			return "394803006";/* HEMATOLOGY - HEMATOLOGY/ONCOLOGY */
 		case _408463005:
 			return "408463005";/* VASCULAR SURGERY */
 		case _310157000:
@@ -489,7 +489,7 @@ public enum PracticeSettingCode {
 		case _408457001:
 			return "408457001";/* MAXILLOFACIAL SURGERY */
 		case _408439002:
-			return "408439002";/* _721943002 - ALLERGY/ ---_408480009 IMMUNOLOGY?? */
+			return "408439002";/* IMMUNOLOGY */
 		case _394589003:
 			return "394589003";/* NEPHROLOGY */
 		case _309337009:
@@ -633,7 +633,7 @@ public enum PracticeSettingCode {
 		case _418960008:
 			return "Otolaryngology";/* OTOLARYNGOLOGY */
 		case _394803006:
-			return "Hematopathology";/* hematopathology - HEMATOLOGY/ONCOLOGY */
+			return "Hematopathology";/* HEMATOPATHOLOGY - HEMATOLOGY/ONCOLOGY */
 		case _408463005:
 			return "Vascular Surgery";/* VASCULAR SURGERY */
 		case _310157000:

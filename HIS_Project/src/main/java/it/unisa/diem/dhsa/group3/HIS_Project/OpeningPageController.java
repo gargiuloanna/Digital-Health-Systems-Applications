@@ -4,8 +4,6 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
-
-// Controller FINITO
 public class OpeningPageController {
 
     
@@ -28,8 +26,5 @@ public class OpeningPageController {
     private void import_csv_btn()throws IOException{
     	App.setRoot("ImportCSVs");
     }
-    
-    
-    
 }
 

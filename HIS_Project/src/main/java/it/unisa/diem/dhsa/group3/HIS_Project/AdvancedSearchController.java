@@ -100,7 +100,7 @@ public class AdvancedSearchController extends BasicController {
 
 			@Override
 			protected Task<List<Resource>> createTask() throws FhirClientConnectionException {
-				// TODO Auto-generated method stub
+				
 				return new Task<List<Resource>>() {
 
 					@Override
@@ -124,7 +124,7 @@ public class AdvancedSearchController extends BasicController {
 
 			@Override
 			protected Task<List<Resource>> createTask() throws FhirClientConnectionException {
-				// TODO Auto-generated method stub
+				
 				return new Task<List<Resource>>() {
 
 					@Override
@@ -161,7 +161,7 @@ public class AdvancedSearchController extends BasicController {
 						if (r != null)
 							list.add(new PatientListElem((Patient) p));
 				progressBar.setVisible(false);
-				// progressBar.setVisible(false);
+				
 
 			}
 		});

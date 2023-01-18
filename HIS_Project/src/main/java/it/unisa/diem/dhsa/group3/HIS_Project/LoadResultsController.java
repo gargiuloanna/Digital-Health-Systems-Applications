@@ -2,10 +2,6 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 
 import org.hl7.fhir.r4.model.DiagnosticReport;
-import org.hl7.fhir.r4.model.ImagingStudy;
-import org.hl7.fhir.r4.model.Resource;
-import org.hl7.fhir.r4.model.ServiceRequest;
-
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
@@ -96,16 +92,8 @@ public class LoadResultsController extends BasicController{
     void confirmAction(ActionEvent event) {
 		DiagnosticReportResource r = createDiagnosticReport();
     	try {
-    		/*PDF.createPDF(r.getPatientId(), 
-    				r.getEncounter(), 
-    				r.getConclusion(), 
-    				MRIController.selectedlist.get(0).getDetails(), 
-    				r.getId(), 
-    				r.getServiceRequest(), 
-    				r.getImagingStudy());*/
     		PDF.createPDF(PDF.getDataFieds(r));
     		uploadDiagnosticReport((DiagnosticReport) r.createResource());
-			//PDF.createPDF("encounter","patientId","conclusion", "nodetails", "id");
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
 			alert.showAndWait();
 			handle(event, "MRI");
@@ -134,13 +122,11 @@ public class LoadResultsController extends BasicController{
     			Date.from(datePicker.getValue().atStartOfDay(ZoneId.of("Europe/Paris")).toInstant()), patientField.getText(), encounterField.getText(), 
     			bodycodeField.getText(), bodydesField.getText(), modcodeField.getText(), moddesField.getText(),
     			sopcodeField.getText(), sopdesField.getText());
-    	//uploadImagingStudy((ImagingStudy) i.createResource());
     	r.setPatientId(patientField.getText());
     	r.setEncounter(encounterField.getText());
     	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
     	r.setImagingStudy(i.getId());
     	r.setConclusion(conclusionField.getText());
-    	//luigia puoi fare una prova
     	return r;
     	}
     	
@@ -205,51 +191,8 @@ public class LoadResultsController extends BasicController{
 
 			}
 		});
-	}
+	}	
 	
-	private void uploadImagingStudy(ImagingStudy r){
-		Service<String> upload = new Service<String>() {
-
-			@Override
-			protected Task<String> createTask() throws FhirClientConnectionException {
-				
-				return new Task<String>() {
-
-					@Override
-					protected String call() throws FhirClientConnectionException {
-						return ServerInteraction.uploadResource(r.getIdentifierFirstRep().getValue(), r, true);
-
-					};
-				};
-			}
-		};
-
-		upload.start();
-		upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-			@Override
-			public void handle(WorkerStateEvent event) {
-				String id = upload.getValue();
-				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
-						ButtonType.OK);
-				alert.showAndWait();
-			}
-		});
-		
-		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
-			@Override
-			public void handle(WorkerStateEvent event) {
-				if (upload.getException() != null
-						&& upload.getException().getClass() == FhirClientConnectionException.class) {
-					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
-							ButtonType.OK);
-					alert.showAndWait();
-				}
-
-			}
-		});
-	}
 	private boolean emptyFields() {
 		if (bodycodeField.getText().isBlank() || bodycodeField.getText().isEmpty() ||
  	   bodydesField.getText().isBlank() || bodydesField.getText().isEmpty() ||

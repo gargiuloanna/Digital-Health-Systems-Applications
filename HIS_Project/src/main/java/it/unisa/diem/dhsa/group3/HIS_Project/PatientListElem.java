@@ -20,7 +20,7 @@ public class PatientListElem {
 	String id = "";
 
 	public PatientListElem(Patient patient) {
-		// ce4ce4d8-d4e2-aca2-5a92-8ce703c5077a
+		
 		firstName = patient.getNameFirstRep().getGivenAsSingleString();
 		lastName = patient.getNameFirstRep().getFamily();
 

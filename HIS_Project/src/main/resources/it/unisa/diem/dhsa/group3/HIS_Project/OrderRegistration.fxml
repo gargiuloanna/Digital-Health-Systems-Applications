@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -154,7 +153,7 @@
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Social service procedure (procedure)" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Laboratory procedure" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Imaging" />
-                                    <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Counselling" />
+                                    <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Counseling" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Education" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Surgical procedure" />
                                  </items>
@@ -299,20 +298,12 @@
             </ScrollPane>
             <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="123.0" prefWidth="1000.0">
                <children>
-                  <CheckBox fx:id="summaryButton" mnemonicParsing="false" onAction="#summaryChecked" text="Get Order Summary" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="80.0" top="45.0" />
-                     </HBox.margin>
-                  </CheckBox>
                   <Button fx:id="SendOrderButton" mnemonicParsing="false" onAction="#sendOrderPressed" prefHeight="46.0" prefWidth="137.0" text="Send Order" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="450.0" top="50.0" />
+                        <Insets left="790.0" top="50.0" />
                      </HBox.margin>
                   </Button>
                </children>

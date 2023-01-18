@@ -8,7 +8,7 @@ public enum ServiceRequestCategory {
 	 _410606002, /*Social service procedure (procedure)*/	
 	 _108252007, /*Laboratory procedure*/	
 	 _363679005, /*Imaging*/
-	 _409063005, /*Counselling*/	
+	 _409063005, /*Counseling*/	
 	 _409073007, /*Education*/	
 	 _387713003, /*Surgical procedure*/
 	 NULL;
@@ -25,7 +25,7 @@ public enum ServiceRequestCategory {
 			return _108252007;
 		if ("Imaging".equals(codeString))
 			return _363679005;
-		if ("Counselling".equals(codeString))
+		if ("Counseling".equals(codeString))
 			return _409063005;
 		if ("Education".equals(codeString))
 			return _409073007;
@@ -46,7 +46,7 @@ public enum ServiceRequestCategory {
 		case _363679005:
 			return "363679005";/*Imaging*/
 		case _409063005:
-			return "409063005";/*Counselling*/
+			return "409063005";/*Counseling*/
 		case _409073007:
 			return "409073007";/*Education*/
 		case _387713003:
@@ -72,7 +72,7 @@ public enum ServiceRequestCategory {
 		case _363679005:
 			return "Imaging";/*Imaging*/
 		case _409063005:
-			return "Counselling";/*Counselling*/
+			return "Counseling";/*Counseling*/
 		case _409073007:
 			return "Education";/*Education*/
 		case _387713003:

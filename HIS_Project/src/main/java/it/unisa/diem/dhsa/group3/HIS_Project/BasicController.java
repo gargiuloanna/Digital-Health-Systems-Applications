@@ -16,8 +16,8 @@ public abstract class BasicController implements Initializable {
 	}
 	
 	 @FXML
-		void SwitchToOpeningPage(ActionEvent event) throws IOException {
-			App.setRoot("OpeningPage");
+	void SwitchToOpeningPage(ActionEvent event) throws IOException {
+		App.setRoot("OpeningPage");
 		}
 
 }

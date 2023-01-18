@@ -41,7 +41,7 @@ public enum ProviderSpecialtySNOMED {
 	_418112009, /* PULMONARY MEDICINE: PULMONARY DISEASE FROM CSV */
 	_394882004, /* INTERVENTIONAL PAIN MANAGEMENT (SPECIALTY) */
 	_418960008, /* OTOLARYNGOLOGY */
-	_394803006, /* hematopathology - HEMATOLOGY/ONCOLOGY */
+	_394803006, /* HEMATOPATHOLOGY - HEMATOLOGY/ONCOLOGY */
 	_408463005, /* VASCULAR SURGERY */
 	_310157000, /* HAND SURGERY */
 	_408466002, /* CARDIAC SURGERY: INTERVENTIONAL CARDIOLOGY FROM CSV */
@@ -471,7 +471,7 @@ public enum ProviderSpecialtySNOMED {
 		case _418960008:
 			return "418960008";/* OTOLARYNGOLOGY */
 		case _394803006:
-			return "394803006";/* hematopathology - HEMATOLOGY/ONCOLOGY */
+			return "394803006";/* HEMATOPATHOLOGY - HEMATOLOGY/ONCOLOGY */
 		case _408463005:
 			return "408463005";/* VASCULAR SURGERY */
 		case _310157000:
@@ -633,7 +633,7 @@ public enum ProviderSpecialtySNOMED {
 		case _418960008:
 			return "Otolaryngology";/* OTOLARYNGOLOGY */
 		case _394803006:
-			return "Hematopathology";/* hematopathology - HEMATOLOGY/ONCOLOGY */
+			return "Hematopathology";/* HEMATOPATHOLOGY - HEMATOLOGY/ONCOLOGY */
 		case _408463005:
 			return "Vascular Surgery";/* VASCULAR SURGERY */
 		case _310157000:

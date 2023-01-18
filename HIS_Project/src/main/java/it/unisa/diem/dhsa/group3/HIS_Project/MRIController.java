@@ -26,7 +26,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
@@ -86,13 +85,6 @@ public class MRIController extends BasicController {
 			alert.showAndWait();
 		} else {
 			DateTimeType date = new DateTimeType(dateField.getValue().toString());
-
-			/*
-			 * date.setDay(dateField.getValue().getDayOfMonth());
-			 * date.setMonth(dateField.getValue().getMonthValue());
-			 * date.setYear(dateField.getValue().getYear()); date.setPrecision();
-			 */
-
 			progressBar.setVisible(true);
 			getOccurrence(date);
 			progressBar.setVisible(false);
@@ -108,7 +100,7 @@ public class MRIController extends BasicController {
 			;
 		} else {
 			progressBar.setVisible(true);
-			// getPatientStudies();
+			getPatientStudies();
 			progressBar.setVisible(false);
 		}
 	}
@@ -145,45 +137,15 @@ public class MRIController extends BasicController {
 	    }
 
 	/* --- Private Service Methods --- */
-	/*
-	 * private void getPatientStudies() { orderslist.clear(); for
-	 * (ServiceRequestResource r: orderslist){ if (r.getSubject_id() ==
-	 * searchField.getText()) orderslist.add(r);
-	 * 
-	 * } Service<List<Resource>> getResource = new Service<List<Resource>>() {
-	 * 
-	 * @Override protected Task<List<Resource>> createTask() throws
-	 * FhirClientConnectionException { return new Task<List<Resource>>() {
-	 * 
-	 * @Override protected List<Resource> call() throws Exception { String
-	 * id_patient = searchField.getText(); return
-	 * ServerInteraction.getPatientServiceRequests(id_patient); }; }; } };
-	 * 
-	 * getResource.start(); getResource.setOnSucceeded(new
-	 * EventHandler<WorkerStateEvent>() {
-	 * 
-	 * @Override public void handle(WorkerStateEvent event) { List<Resource> r =
-	 * getResource.getValue(); if (r.size() == 0) { Alert alert = new
-	 * Alert(AlertType.INFORMATION, "No requests found for this patient",
-	 * ButtonType.OK); alert.showAndWait(); } else for (Resource p : r) if (r !=
-	 * null) orderslist.add(new ServiceRequestResource((ServiceRequest) p));
-	 * progressBar.setVisible(false);
-	 * 
-	 * } });
-	 * 
-	 * getResource.setOnFailed(new EventHandler<WorkerStateEvent>() {
-	 * 
-	 * @Override public void handle(WorkerStateEvent event) { if
-	 * (getResource.getException() != null && getResource.getException().getClass()
-	 * == FhirClientConnectionException.class) { Alert alert = new
-	 * Alert(AlertType.ERROR,
-	 * "Error in the connection to the server.\nPlease retry.", ButtonType.OK);
-	 * alert.showAndWait(); }
-	 * 
-	 * } });
-	 * 
-	 * }
-	 */
+	
+	 private void getPatientStudies() { 
+		 orderslist.clear();
+		 for (ServiceRequestResource r : orderslist) {
+			 if(r.getSubject_id().equalsIgnoreCase(searchField.getText()))
+				 orderslist.add(r);
+		 }
+	  }
+	 
 
 	private void getOccurrence(DateTimeType date) {
 		Service<List<Resource>> service = new Service<List<Resource>>() {

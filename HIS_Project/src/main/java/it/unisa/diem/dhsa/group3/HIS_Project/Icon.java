@@ -30,19 +30,12 @@ public final class Icon {
 	}
 
 	public void macIntegration(Stage stage) {
-		// <a target="_blank"
-		// href="https://icons8.com/icon/OESdlMYQIKWs/medical-doctor">Medical Doctor</a>
-		// icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-
 		Taskbar taskbar = Taskbar.getTaskbar();
 		taskbar.setIconImage(image);
 
 	}
 	
 	public void addIcons(Stage stage) {
-		// <a target="_blank"
-		// href="https://icons8.com/icon/OESdlMYQIKWs/medical-doctor">Medical Doctor</a>
-		// icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 		stage.getIcons().add(icon);
 		stage.getIcons().add(icon16);
 		stage.getIcons().add(icon32);
@@ -50,8 +43,5 @@ public final class Icon {
 		stage.getIcons().add(icon64);
 		stage.getIcons().add(icon96);
 		stage.getIcons().add(icon100);
-		
-
-
 	}
 }

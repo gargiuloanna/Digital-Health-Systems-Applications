@@ -207,7 +207,7 @@ public class PatientAdmissionController extends BasicController {
 
 			@Override
 			protected Task<Resource> createTask() throws FhirClientConnectionException {
-				// TODO Auto-generated method stub
+				
 				return new Task<Resource>() {
 
 					@Override
@@ -228,8 +228,6 @@ public class PatientAdmissionController extends BasicController {
 				Resource r = getResource.getValue();
 
 				if (r != null) {
-				
-					Patient p = (Patient) r;
 					fillFields((Patient) r);
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION, "Patient not found", ButtonType.OK);
@@ -267,7 +265,7 @@ public class PatientAdmissionController extends BasicController {
 
 			@Override
 			protected Task<String> createTask() throws FhirClientConnectionException {
-				// TODO Auto-generated method stub
+				
 				return new Task<String>() {
 
 					@Override
@@ -307,8 +305,7 @@ public class PatientAdmissionController extends BasicController {
 				progressBar.setVisible(false);
 
 			}
-		});
-		
+		});	
 
 	}
 
@@ -425,7 +422,7 @@ public class PatientAdmissionController extends BasicController {
 
 		IdentifierField.setText(patient.getIdentifierFirstRep().getValue());
 
-		IDField.setText(patient.getIdElement().getIdPart()); // TODO now it is empty because it is not on the // server
+		IDField.setText(patient.getIdElement().getIdPart()); 
 		IDField.setDisable(true);
 		int index = 0;
 		// it insert the first name in the field of the name
