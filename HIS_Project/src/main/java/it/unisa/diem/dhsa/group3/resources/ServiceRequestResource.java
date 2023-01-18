@@ -236,7 +236,7 @@ public class ServiceRequestResource extends BaseResource {
 		r.setRequester(ref);
 		
 		Annotation ann = new Annotation();
-		ann.setText("Details for the order: " + details);
+		ann.setText(details);
 		r.addNote(ann);
 		
 		return r;
