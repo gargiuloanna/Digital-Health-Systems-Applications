@@ -96,10 +96,12 @@ public class LoadResultsController extends BasicController{
     		uploadDiagnosticReport((DiagnosticReport) r.createResource());
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
 			alert.showAndWait();
-			handle(event, "MRI");
+			App.setRoot("MRI");
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the creation of the PDF\n Please Retry.",ButtonType.OK);
 			alert.showAndWait();
+		} catch (FhirClientConnectionException e) {
+			System.out.println("ma perchè");
 		}
     }
 
@@ -134,21 +136,6 @@ public class LoadResultsController extends BasicController{
 
 	}
 	
-	private void handle(ActionEvent event, String fxml) {
-    	Stage stage;
-        Parent root;
-        stage=(Stage) ((Button)(event.getSource())).getScene().getWindow();
-        try {
-			root = FXMLLoader.load(App.class.getResource(fxml + ".fxml"));
-			Scene scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-    }
-	
 	private void uploadDiagnosticReport(DiagnosticReport r){
 		Service<String> upload = new Service<String>() {
 
@@ -175,6 +162,7 @@ public class LoadResultsController extends BasicController{
 				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
 						ButtonType.OK);
 				alert.showAndWait();
+				
 			}
 		});
 		
@@ -191,6 +179,8 @@ public class LoadResultsController extends BasicController{
 
 			}
 		});
+		
+		
 	}	
 	
 	private boolean emptyFields() {
