@@ -215,7 +215,7 @@ public class ServerInteraction {
 
 	}
 	
-	public static List<org.hl7.fhir.r4.model.Resource> getGenericResource(String resource, String identifier){
+	public static Resource getGenericResource(String resource, String identifier){
 		Class<? extends org.hl7.fhir.r4.model.Resource> resourceClass = ServerInteraction.get_class(resource);
 		assert(resourceClass != null);
 		String id;
@@ -232,11 +232,8 @@ public class ServerInteraction {
 		// .systemAndCode("https://github.com/synthetichealth/synthea", id)
 		if (bundle.isEmpty())
 			return null;
-		List<org.hl7.fhir.r4.model.Resource> list = new ArrayList<>();
-		for (BundleEntryComponent elem : bundle.getEntry()) {
-			list.add(elem.getResource());
-		}
-		return list;
+		
+		return bundle.getEntryFirstRep().getResource();
 
 	}
 	

@@ -96,13 +96,14 @@ public class LoadResultsController extends BasicController{
     void confirmAction(ActionEvent event) {
 		DiagnosticReportResource r = createDiagnosticReport();
     	try {
-    		PDF.createPDF(r.getPatientId(), 
+    		/*PDF.createPDF(r.getPatientId(), 
     				r.getEncounter(), 
     				r.getConclusion(), 
     				MRIController.selectedlist.get(0).getDetails(), 
     				r.getId(), 
     				r.getServiceRequest(), 
-    				r.getImagingStudy());
+    				r.getImagingStudy());*/
+    		PDF.createPDF(PDF.getDataFieds(r));
     		uploadDiagnosticReport((DiagnosticReport) r.createResource());
 			//PDF.createPDF("encounter","patientId","conclusion", "nodetails", "id");
 			Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
@@ -133,7 +134,7 @@ public class LoadResultsController extends BasicController{
     			Date.from(datePicker.getValue().atStartOfDay(ZoneId.of("Europe/Paris")).toInstant()), patientField.getText(), encounterField.getText(), 
     			bodycodeField.getText(), bodydesField.getText(), modcodeField.getText(), moddesField.getText(),
     			sopcodeField.getText(), sopdesField.getText());
-    	uploadImagingStudy((ImagingStudy) i.createResource());
+    	//uploadImagingStudy((ImagingStudy) i.createResource());
     	r.setPatientId(patientField.getText());
     	r.setEncounter(encounterField.getText());
     	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
