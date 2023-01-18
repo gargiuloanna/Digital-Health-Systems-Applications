@@ -273,7 +273,7 @@ public class MRIController extends BasicController{
 		    	}
 		    	ViewOrders.setItems(orderslist.sorted());
 		    	ViewSelectedOrder.setItems(selectedlist);
-		    	progressBar.setVisible(false);
+		    	progressBar.setVisible(false);//
 
 			}
 		});
