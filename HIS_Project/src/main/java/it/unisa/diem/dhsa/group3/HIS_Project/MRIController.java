@@ -11,7 +11,6 @@ import org.hl7.fhir.r4.model.ServiceRequest;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.resources.ServiceRequestResource;
-import it.unisa.diem.dhsa.group3.state.Context;
 import it.unisa.diem.dhsa.group3.state.PDF;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.collections.FXCollections;
@@ -56,6 +55,9 @@ public class MRIController extends BasicController {
 	private TextField searchField;
 	@FXML
 	private ImageView progressBar;
+	@FXML
+	private Button viewallButton;
+
 
 	private ObservableList<ServiceRequestResource> orderslist;
 	static ObservableList<ServiceRequestResource> selectedlist = FXCollections.observableArrayList();
@@ -134,6 +136,11 @@ public class MRIController extends BasicController {
 			handle(event, "LoadResults");
 		}
 	}
+	
+	   @FXML
+	    void viewAll(ActionEvent event) {
+		   getAll();
+	    }
 
 	/* --- Private Service Methods --- */
 	/*
