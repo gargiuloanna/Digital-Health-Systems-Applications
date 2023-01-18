@@ -18,7 +18,6 @@ import org.hl7.fhir.r4.model.ServiceRequest;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.gclient.IQuery;
-import ca.uhn.fhir.rest.gclient.ReferenceClientParam;
 import ca.uhn.fhir.rest.gclient.TokenClientParam;
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
@@ -138,7 +137,7 @@ public class ServerInteraction {
 	}
 	
 	//get service request starting from id of the patient
-	public static List<Resource> getPatientServiceRequests(String id) throws Exception {
+	/*public static List<Resource> getPatientServiceRequests(String id) throws Exception {
 		if (id == "" || id == null)
 			throw new Exception();
 		
@@ -164,7 +163,7 @@ public class ServerInteraction {
 		//non c'è bisogno di cercare di nuovo sul server
 	
 		
-	}
+	}*/
 	
 	public static List<Resource> getOccurrenceServiceRequests(DateTimeType date) throws Exception {
 		if (date == null)

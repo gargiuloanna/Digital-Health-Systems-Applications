@@ -2,11 +2,10 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.Annotation;
+
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Encounter;
-import org.hl7.fhir.r4.model.Medication;
 import org.hl7.fhir.r4.model.MedicationKnowledge;
 import org.hl7.fhir.r4.model.MedicationStatement;
 import org.hl7.fhir.r4.model.Money;

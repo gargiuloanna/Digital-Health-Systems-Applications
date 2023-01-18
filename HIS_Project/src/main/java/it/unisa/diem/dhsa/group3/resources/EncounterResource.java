@@ -8,7 +8,6 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.enumerations.EncounterClass;
-import it.unisa.diem.dhsa.group3.enumerations.EncountersSettingCode;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
 public class EncounterResource extends BaseResource {
