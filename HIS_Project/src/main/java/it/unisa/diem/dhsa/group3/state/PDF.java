@@ -13,6 +13,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Patient;
+
+import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.resources.DiagnosticReportResource;
 
 
@@ -21,7 +23,7 @@ public final class PDF {
 	private static PDPage page = new PDPage();
 	private static PDPageContentStream content;
 	
-	public static Map<String, String> getDataFieds(DiagnosticReportResource drr) {
+	public static Map<String, String> getDataFieds(DiagnosticReportResource drr) throws FhirClientConnectionException{
 		String subject = drr.getPatientId();
 		String serviceReq = drr.getServiceRequest();
 		String encounter= drr.getEncounter();

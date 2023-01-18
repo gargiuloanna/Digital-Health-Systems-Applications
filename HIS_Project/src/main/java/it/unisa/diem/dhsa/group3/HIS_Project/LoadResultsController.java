@@ -84,6 +84,7 @@ public class LoadResultsController extends BasicController{
 	}
 	
 	@FXML
+	@Override
 	void SwitchToOpeningPage(ActionEvent event) throws IOException {
 		App.setRoot("MRI");
 	}
@@ -92,16 +93,20 @@ public class LoadResultsController extends BasicController{
     void confirmAction(ActionEvent event) {
 		DiagnosticReportResource r = createDiagnosticReport();
     	try {
-    		PDF.createPDF(PDF.getDataFieds(r));
-    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
-			alert.showAndWait();
-			App.setRoot("MRI");
+    		if(r != null) {
+	    		PDF.createPDF(PDF.getDataFieds(r));
+	    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
+				alert.showAndWait();
+				App.setRoot("MRI");
+    		}
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the creation of the PDF\n Please Retry.",ButtonType.OK);
 			alert.showAndWait();
 		} catch (FhirClientConnectionException e) {
-			System.out.println("ma perchè");
+			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+					ButtonType.OK);
+			alert.showAndWait();
 		}
     }
 
@@ -152,7 +157,7 @@ public class LoadResultsController extends BasicController{
 				};
 			}
 		};
-
+	
 		upload.start();
 		upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
@@ -167,7 +172,6 @@ public class LoadResultsController extends BasicController{
 		});
 		
 		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
-
 			@Override
 			public void handle(WorkerStateEvent event) {
 				if (upload.getException() != null
@@ -179,6 +183,8 @@ public class LoadResultsController extends BasicController{
 
 			}
 		});
+		
+		
 		
 		
 	}	
