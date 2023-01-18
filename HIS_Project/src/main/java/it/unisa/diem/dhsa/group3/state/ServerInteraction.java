@@ -158,15 +158,15 @@ public class ServerInteraction {
 		List<Resource> list = new ArrayList<>();
 		for (BundleEntryComponent elem : bundle.getEntry()) {
 			ServiceRequest r = (ServiceRequest) elem.getResource();
-			if r.getSubject().getIdentifier().getValue()
-			list.add(elem.getResource());
+			if (r.getSubject().getIdentifier().getValue())
+				list.add(elem.getResource());
 		}
 		return list;
 		//non c'è bisogno di cercare di nuovo sul server
 	
 		
-	}*/
-	
+	}
+	*/
 	public static List<Resource> getOccurrenceServiceRequests(DateTimeType date) throws Exception {
 		if (date == null)
 			throw new Exception();
@@ -198,7 +198,8 @@ public class ServerInteraction {
 		Bundle bundle;
 		try {
 			IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
-			IQuery<IBaseBundle> query = client.search().forResource(ServiceRequest.class).include(ServiceRequest.INCLUDE_ALL);
+			IQuery<IBaseBundle> query = client.search().forResource(ServiceRequest.class)
+					.include(ServiceRequest.INCLUDE_ALL);
 
 			bundle = query.prettyPrint().returnBundle(Bundle.class).encodedJson().execute();
 		} catch (FhirClientConnectionException e) {
