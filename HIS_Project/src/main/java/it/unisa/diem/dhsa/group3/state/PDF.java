@@ -89,7 +89,7 @@ public final class PDF {
 		
 		metaData.put("comparison","None available");
 		metaData.put("technique", "Not available");
-		//metaData.put("findings", "details");//drr.getDetails()
+		metaData.put("findings", "details");//drr.getDetails()
 		//dovrebbe essere presente in DiagnostiicReportResource
 		metaData.put("impression", drr.getConclusion());
 		
@@ -128,32 +128,32 @@ public final class PDF {
 									+ metaData.get("patient name suffix") + " " 
 									+ metaData.get("maiden") + " " 
 									+ metaData.get("patient surname"));
-		writeNewLine(-10, "PATIENT ID: " + metaData.get("patient id"));
-		writeNewLine(-10, "DOB: " + metaData.get("birth date") + " - AGE: " + metaData.get("age"));
+		writeNewLine(-30, "PATIENT ID: " + metaData.get("patient id"));
+		writeNewLine(-30, "DOB: " + metaData.get("birth date") + " - AGE: " + metaData.get("age"));
 		
-		writeNewLine(-20, "Diagnostic Report  n. " + metaData.get("imaging study id"));
-		writeNewLine(-10, "EXAM DATE: " + metaData.get("date"));
+		writeNewLine(-40, "Diagnostic Report  n. " + metaData.get("imaging study id"));
+		writeNewLine(-30, "EXAM DATE: " + metaData.get("date"));
 		
-		writeNewLine(-20, "Refer to Request  n. " + metaData.get("service request id"));
-		writeNewLine(-10, "EXAM DATE: " + metaData.get("date"));
+		writeNewLine(-40, "Refer to Request  n. " + metaData.get("service request id"));
+		writeNewLine(-30, "EXAM DATE: " + metaData.get("date"));
 		
 		//writeNewLine(-20, metaData.get("imaging study modality") + " - " + metaData.get("body site"));
 		
 		//writeNewLine(-20, "Indication: " + metaData.get("encounter class") + " - " + metaData.get("encounter description"));
-		writeNewLine(-10, "(ENCOUNTER ID) " + metaData.get("encounter id"));
+		writeNewLine(-30, "(ENCOUNTER ID) " + metaData.get("encounter id"));
 		
-		writeNewLine(-20, "Comparison: " + metaData.get("comparison"));
+		writeNewLine(-40, "Comparison: " + metaData.get("comparison"));
 		
-		writeNewLine(-20, "Technique: " + metaData.get("technique"));
+		writeNewLine(-30, "Technique: " + metaData.get("technique"));
 		
-		writeNewLine(-20, "Findings:");
-		/*for(String s: metaData.get("details").split(".", 50)) {
-			writeNewLine(-10, s);
-		}*/
+		writeNewLine(-30, "Findings:");
+		for(String s: metaData.get("findings").split(" ")) {
+			writeNewLine(-20, s);
+		}
 		
-		writeNewLine(-20, "Impression:");
-		for(String s: metaData.get("impression").split(".", 50)) {
-			writeNewLine(-10, s);
+		writeNewLine(-20, "Conlusion:");
+		for(String s: metaData.get("impression").split(" ")) {
+			writeNewLine(-20, s);
 		}
 		
 		//writeNewLine(-30, "Doctor: " + metaData.get("requester"));
