@@ -56,11 +56,6 @@
         	<version>2.0.4</version>
         </dependency>
         <dependency>
-        	<groupId>com.pixelmed</groupId>
-        	<artifactId>dicom</artifactId>
-        	<version>20220618</version>
-        </dependency>
-        <dependency>
         	<groupId>javax.vecmath</groupId>
         	<artifactId>vecmath</artifactId>
         	<version>1.5.2</version>

@@ -106,7 +106,7 @@ public class MRIController extends BasicController{
 			alert.showAndWait();;
 		} else {
 		progressBar.setVisible(true);
-		getPatientStudies();
+		//getPatientStudies();
     	progressBar.setVisible(false);
 		}
     }
@@ -137,6 +137,7 @@ public class MRIController extends BasicController{
     
 
 	/* --- Private Service Methods --- */
+    /*
     private void getPatientStudies() {
     	orderslist.clear();
     	for (ServiceRequestResource r: orderslist){
@@ -190,7 +191,7 @@ public class MRIController extends BasicController{
 			}
 		});
 
-	}
+	} */
     
     private void getOccurrence(DateTimeType date) {
     	Service<List<Resource>> service = new Service<List<Resource>>() {
