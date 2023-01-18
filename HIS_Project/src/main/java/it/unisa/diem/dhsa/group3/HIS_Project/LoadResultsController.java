@@ -96,7 +96,7 @@ public class LoadResultsController extends BasicController{
 		DiagnosticReportResource r = createDiagnosticReport();
     	try {
     		PDF.createPDF(r.getPatientId(), 
-    				r.getEncounter().toString(), 
+    				r.getEncounter(), 
     				r.getConclusion(), 
     				MRIController.selectedlist.get(0).getDetails(), 
     				r.getId(), 
@@ -134,10 +134,11 @@ public class LoadResultsController extends BasicController{
     			sopcodeField.getText(), sopdesField.getText());
     	
     	r.setPatientId(patientField.getText());
+    	r.setEncounter(encounterField.getText());
     	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
     	r.setImagingStudy(i.getId());
     	r.setConclusion(conclusionField.getText());
-    	
+    	//luigia puoi fare una prova
     	return r;
     	}
     	
