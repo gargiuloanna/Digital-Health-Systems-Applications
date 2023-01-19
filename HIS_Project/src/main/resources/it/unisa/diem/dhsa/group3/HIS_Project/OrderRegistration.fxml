@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
 	<children>
       <VBox prefHeight="200.0" prefWidth="400.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -255,13 +255,13 @@
                               </Label>
                               <MenuButton fx:id="request" mnemonicParsing="false" onAction="#requestMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Code" textFill="WHITE">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_189009" />
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_348003" />
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_295001" />
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_374009" />
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_401004" />
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_722009" />
-                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="_1399002" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of bladder" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of pelvis" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of pelvis,  prostate and bladder" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="Bone imaging of limited area" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="Ultrasound peripheral imaging,  real time scan" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="Three dimensional ultrasound imaging of heart" />
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="Magnetic resonance imaging of chest" />
                                  </items>
                                  <font>
                                     <Font size="14.0" />
