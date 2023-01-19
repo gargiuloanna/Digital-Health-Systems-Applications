@@ -194,26 +194,22 @@ public class PayerResource extends BaseOrganization {
 		// add identifier
 		payer.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		
-		//set state
+		//set state (a must have value)
 		payer.setActive(true);
 		
-		// add name of the payer organization and its type
+		// add name of the payer organization (field: name, a must have value) and its type
 		payer.setName(super.getNAME());
 		payer.addType(new CodeableConcept(new Coding(OrganizationType.PAY.getSystem(), OrganizationType.PAY.toCode(),
 				OrganizationType.PAY.getDefinition())));
 
-		// add address
+		// add address (fields: address, city, state_headquarted, zip)
 		payer.addAddress().setCity(super.getCITY()).addLine(super.getADDRESS()).setPostalCode(super.getZIP())
 				.setState(STATE_HEADQUARTERED);
 
-		// add phone: contact point -> phone
+		// add phone: contact point -> phone (field: phone)
 		payer.addTelecom().setSystem(ContactPointSystem.PHONE).setValue(super.getPHONE());
 
-		Coverage coverage = new Coverage();
-		// amount uncovered is what the patient has to pay on their own since it is not
-		// covered by insurance
-		coverage.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(AMOUNT_UNCOVERED));
-
+		
 		return payer;
 
 	}

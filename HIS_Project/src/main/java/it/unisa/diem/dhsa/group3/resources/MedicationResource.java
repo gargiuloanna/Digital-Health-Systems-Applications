@@ -2,7 +2,7 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
-
+import org.hl7.fhir.r4.model.Annotation;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Encounter;
@@ -177,38 +177,42 @@ public class MedicationResource extends BaseResource {
 
 	@Override
 	public Resource createResource() {
+		
 		MedicationStatement med = new MedicationStatement();
+		
+		//set identifier
+		med.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 
-		// add effective period: the period in which the medication was/is taken
+		// add effective period: the period in which the medication was/is taken (fields: start, stop) 
 		if (STOP != null)
 			med.setEffective(new Period().setEnd(STOP).setStart(START));
 		else
 			med.setEffective(new Period().setStart(START));
 
-		// add patient
+		// add patient involved (field: patient)
 		Patient p = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		med.setSubject(new Reference(p));
 
-		// add encounter
+		// add encounter (field: encounter)
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		med.setContext(new Reference(e));
 
-		// set medication --SYSTEM: RxNORM
+		// set medication --SYSTEM: RxNORM (fields: code, description)
 		med.setMedication(new CodeableConcept(new Coding("www.nlm.nih.gov/research/umls/rxnorm", CODE, DESCRIPTION)));
 
-		// add base cost for the medicine
+		// add base cost for the medicine (base_cost)
 		MedicationKnowledge cost = new MedicationKnowledge();
 		cost.addCost(new MedicationKnowledge.MedicationKnowledgeCostComponent()
 				.setCost(new Money().setCurrency("USD").setValue(BASE_COST)));
 		cost.getAssociatedMedication().add(new Reference(med));
 
-		// add reason
+		// add reason (fields: reasoncode, reasondescription)
 		med.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 
-		// add expenses
-		/*Annotation a = new Annotation();
-		a.setText("DISPENSES= " + DISPENSES + "TOTALCOST= " + TOTALCOST + "PAYER_COVERAGE= " + PAYER_COVERAGE);
-		med.addNote(a);*/
+		// add expenses and total_cost as annotation
+		Annotation a = new Annotation();
+		a.setText("Number of times the prescription was filled is = " + DISPENSES + "The total cost of the prescription, including all dispenses is:  " + TOTALCOST+ "$");
+		med.addNote(a);
 		
 		return med;
 	}

@@ -5,7 +5,18 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Address;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.DecimalType;
+import org.hl7.fhir.r4.model.Enumerations;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.Meta;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;
 import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 

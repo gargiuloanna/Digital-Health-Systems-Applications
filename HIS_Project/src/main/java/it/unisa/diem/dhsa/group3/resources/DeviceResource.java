@@ -114,25 +114,25 @@ public class DeviceResource extends BaseResource {
 		stat.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 
 		// add time: Start when the device was associated to the patient, Stop when the
-		// device was removed
+		// device was removed-->(fields: start, stop)
 		if (STOP != null)
 			d.setOccurrence(new Period().setStart(START).setEnd(STOP));
 		else
 			d.setOccurrence(new Period().setStart(START));
 
-		// add patient
+		// add patient (field: patient)
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		d.setSubject(new Reference(patient));
 
-		// add SNOMED code and description of the device
+		// add SNOMED code and description of the device (fields: code, description)
 		d.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 
-		// add Encounter
+		// add Encounter (field: encounter)
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		d.setEncounter(new Reference(e));
 
 		// add full UDI carrier(as the human readable form (HRF) representation of the
-		// barcode
+		// barcode (field: UDI)
 		// string as printed on the packaging of the device) to the device instance
 		DeviceUdiCarrierComponent comp = new DeviceUdiCarrierComponent();
 		comp.setCarrierHRF(UDI);

@@ -1,7 +1,13 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
+import org.hl7.fhir.r4.model.DecimalType;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.Meta;
+import org.hl7.fhir.r4.model.Organization;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.OrganizationType;
 import com.opencsv.bean.CsvBindByName;
 
@@ -68,10 +74,10 @@ public class OrganizationResource extends BaseOrganization {
 		// add identifier
 		o.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		
-		//set state
+		//set state (a must have value)
 		o.setActive(true);
 		
-		// add the name of the organization and its type
+		// add the name of the organization (field: name, a must have value) and its type
 		o.setName(super.getNAME());
 		o.getType().add(new CodeableConcept(new Coding(OrganizationType.PROV.toCode(),
 				OrganizationType.PROV.getSystem(), OrganizationType.PROV.getDefinition())));
@@ -86,7 +92,7 @@ public class OrganizationResource extends BaseOrganization {
 		loc.addExtension(lat);
 		loc.addExtension(lon);
 
-		// contact point -> phone
+		// contact point -> phone (field: phone)
 		o.addTelecom().setSystem(ContactPointSystem.PHONE).setValue(super.getPHONE());
 
 		return o;
