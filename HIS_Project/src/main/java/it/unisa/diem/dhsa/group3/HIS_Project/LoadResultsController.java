@@ -30,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 
@@ -63,6 +64,8 @@ public class LoadResultsController extends BasicController{
     private TextField sopcodeField;
     @FXML
     private TextField sopdesField;
+    @FXML
+    private ImageView progressBar;
 
     private File chosen;
     
@@ -92,8 +95,10 @@ public class LoadResultsController extends BasicController{
 		DiagnosticReportResource r = createDiagnosticReport();
     	try {
     		if(r != null) {
+    			progressBar.setVisible(true);
 	    		PDF.createPDF(PDF.getDataFieds(r));
 	    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
+	    		progressBar.setVisible(false);
 				Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
 				alert.showAndWait();
 				App.setRoot("MRI");

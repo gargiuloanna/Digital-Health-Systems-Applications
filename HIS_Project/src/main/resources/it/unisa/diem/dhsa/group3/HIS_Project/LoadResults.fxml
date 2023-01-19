@@ -345,14 +345,29 @@
                               <Insets left="340.0" top="20.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmAction" prefHeight="48.0" prefWidth="149.0" text="Confirm Results">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="progressBar" fitHeight="49.0" fitWidth="64.0" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/loading-gif-transparent-background.gif" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmAction" prefHeight="48.0" prefWidth="149.0" text="Confirm Results">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
                            <VBox.margin>
-                              <Insets left="180.0" top="20.0" />
+                              <Insets />
                            </VBox.margin>
-                        </Button>
+                           <padding>
+                              <Insets left="110.0" top="20.0" />
+                           </padding>
+                        </HBox>
                      </children>
                   </VBox>
                </children>

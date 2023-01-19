@@ -71,6 +71,14 @@
                         <Insets left="20.0" top="5.0" />
                      </HBox.margin>
                   </Button>
+                  <ImageView fx:id="progressFilter" fitHeight="30.0" fitWidth="30.0" preserveRatio="true">
+                     <image>
+                        <Image url="@images/loading-gif-transparent-background.gif" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
                </children>
                <VBox.margin>
                   <Insets />
@@ -129,7 +137,7 @@
                                           <Image url="@images/loading-gif-transparent-background.gif" />
                                        </image>
                                        <HBox.margin>
-                                          <Insets top="5.0" />
+                                          <Insets left="5.0" top="5.0" />
                                        </HBox.margin>
                                     </ImageView>
                                  </children>

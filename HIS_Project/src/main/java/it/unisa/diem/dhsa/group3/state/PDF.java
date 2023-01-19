@@ -199,7 +199,9 @@ public final class PDF {
 	
 	public static void  loadPDF(String report_number) throws IOException {
 		File file = new File("Report" + report_number + ".pdf");
-		Desktop.getDesktop().open(file);
+		Desktop desktop = Desktop.getDesktop();
+		//windows & mac
+		desktop.open(file);
 	}
 	
 }
