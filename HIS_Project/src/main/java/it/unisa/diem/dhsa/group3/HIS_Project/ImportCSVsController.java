@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -78,9 +79,12 @@ public class ImportCSVsController extends BasicController {
 	@FXML
 	private CheckBox checkBox;
 	
+	@FXML
+	private ImageView progressBar;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		progressBar.setVisible(false);
 		encounterField.disableProperty()
 				.bind((patientField.textProperty().isEmpty()).or(organizationField.textProperty().isEmpty())
 						.or(providerField.textProperty().isEmpty()).or(payerField.textProperty().isEmpty()));
@@ -125,7 +129,7 @@ public class ImportCSVsController extends BasicController {
 
 	@FXML
 	void send_clicked(ActionEvent event) {
-
+		progressBar.setVisible(true);
 		boolean patientOK = check(patientField, "patient", true);
 		boolean organizationOK = check(organizationField, "organization", true);
 		boolean payerOK = check(payerField, "payers", true);
@@ -153,6 +157,7 @@ public class ImportCSVsController extends BasicController {
 		check(supplyField, "supplies", patientOK && encounterOK);
 		try{
 			ServerInteraction.sendToServer(checkBox.isSelected());
+			progressBar.setVisible(false);
 		} catch (FhirClientConnectionException e) {
 			error("Error in the connection with the server");
 		}
