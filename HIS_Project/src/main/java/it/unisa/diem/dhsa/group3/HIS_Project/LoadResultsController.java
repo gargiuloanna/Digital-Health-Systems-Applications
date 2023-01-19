@@ -33,6 +33,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class LoadResultsController extends BasicController{
@@ -66,7 +67,7 @@ public class LoadResultsController extends BasicController{
     @FXML
     private TextField sopdesField;
 
-    
+    private String imagePath;
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -112,7 +113,9 @@ public class LoadResultsController extends BasicController{
 
     @FXML
     void loadAction(ActionEvent event) {
-    	//if we want to load the image
+    	FileChooser f = new FileChooser();
+    	f.showOpenDialog(null);
+    	
     }    
 	
 	private DiagnosticReportResource createDiagnosticReport() {
