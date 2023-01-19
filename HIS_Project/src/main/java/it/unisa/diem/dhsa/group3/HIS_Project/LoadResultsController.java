@@ -111,7 +111,9 @@ public class LoadResultsController extends BasicController{
     @FXML
     void loadAction(ActionEvent event) {
     	FileChooser f = new FileChooser();
-    	f.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("DICOM Extension", "*.<dcm>"));
+    	FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("DICOM Extension", "*.dcm");
+    	f.getExtensionFilters().add(fileExtensions);
+    	System.out.println(f.getSelectedExtensionFilter());
     	chosen = f.showOpenDialog(null);
     	
     }    

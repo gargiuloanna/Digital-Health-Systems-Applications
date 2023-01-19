@@ -56,7 +56,7 @@ public class ServiceRequestResource extends BaseResource {
 		this.subject_id = r.getSubject().getIdentifier().getValue();
 		this.encounter_id = r.getEncounter().getIdentifier().getValue();
 		this.id = r.getIdentifierFirstRep().getValue();
-		this.date = new Date();
+		this.date = r.getOccurrenceDateTimeType().getValue();
 		this.statusCode = r.getStatus().toCode();
 		this.category = r.getCategoryFirstRep().getCodingFirstRep().getDisplay();
 		this.requestCode = "_" + r.getCode().getCodingFirstRep().getCode();
