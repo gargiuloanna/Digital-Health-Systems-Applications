@@ -1,9 +1,17 @@
 package it.unisa.diem.dhsa.group3.resources;
 
+
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Observation.ObservationStatus;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Quantity;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.StringType;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -126,7 +134,7 @@ public class ObservationResource extends BaseResource {
 		// set the date and time the observation was performed (field: date)
 		observation.setIssued(DATE);
 		
-		//set the status of the observation
+		//set the status of the observation (a must have value)
 		observation.setStatus(getStatus());
 		
 		// set patient involved into the observation (field: patient)

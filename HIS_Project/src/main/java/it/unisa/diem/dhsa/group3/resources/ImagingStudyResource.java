@@ -37,7 +37,6 @@ public class ImagingStudyResource extends BaseResource {
 
 	@CsvBindByName
 	private String SOP_DESCRIPTION = "";
-	
 
 	public ImagingStudyResource(Date dATE, String pATIENT, String eNCOUNTER, String bODYSITE_CODE,
 			String bODYSITE_DESCRIPTION, String mODALITY_CODE, String mODALITY_DESCRIPTION, String sOP_CODE,
@@ -137,6 +136,11 @@ public class ImagingStudyResource extends BaseResource {
 	@Override
 	public Resource createResource() {
 
+		// Representation of the content produced in a DICOM imaging study. A study
+		// comprises a set of series, each of which includes a set of Service-Object
+		// Pair Instances (SOP Instances - images or other data) acquired or produced in
+		// a common context. A series is of only one modality (e.g. X-ray, CT, MR,
+		// ultrasound), but a study may have multiple series of different modalities.
 		ImagingStudy im = new ImagingStudy();
 		ImagingStudy.ImagingStudySeriesComponent comp = new ImagingStudy.ImagingStudySeriesComponent();
 		ImagingStudy.ImagingStudySeriesInstanceComponent instance = new ImagingStudy.ImagingStudySeriesInstanceComponent();
@@ -144,24 +148,26 @@ public class ImagingStudyResource extends BaseResource {
 		// add identifier
 		im.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 
-		// add date and the time the study was conducted 
+		// add date and the time the study was conducted (field: date)
 		im.setStarted(DATE);
 
-		// add patient (the subject of the imaging study)
-		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); 
+		// add patient (the subject of the imaging study)--> (field: patient)
+		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		im.setSubject(new Reference(patient));
 
-		// add encounter reference
+		// add encounter reference --> (field: encounter)
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		im.setEncounter(new Reference(encounter));
 
-		// add body (SNOMED codification) --> the anatomical structures examined in the series sequence
+		// add body (SNOMED codification) --> the anatomical structures examined in the
+		// series sequence -->(fields: bodysite_code, bodysite_description)
 		comp.setBodySite(new Coding("https://www.snomed.org/", BODYSITE_CODE, BODYSITE_DESCRIPTION));
 
-		// add modality (DICOM codification) of the series
+		// add modality (DICOM codification) of the series --> (fields: modality_code, modality_description)
 		comp.setModality(new Coding("https://dicom.nema.org/", MODALITY_CODE, MODALITY_DESCRIPTION));
 
-		// add SOP (DICOM codification)--> The DICOM SOP Instance UID for this image or other DICOM content.
+		// add SOP (DICOM codification)--> The DICOM SOP Instance UID for this image or
+		// other DICOM content (fields: sop_code, sop_description).
 		instance.setSopClass(new Coding("https://dicom.nema.org/", SOP_CODE, SOP_DESCRIPTION));
 		comp.addInstance(instance);
 

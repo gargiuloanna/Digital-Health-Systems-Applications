@@ -3,7 +3,14 @@ package it.unisa.diem.dhsa.group3.resources;
 import java.util.Date;
 
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Coverage;
+import org.hl7.fhir.r4.model.Organization;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Period;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.SubscriberRelationship;
 
 import com.opencsv.bean.CsvBindByName;
@@ -29,6 +36,11 @@ public class CoverageResource extends BaseResource {
 
 	@CsvBindByName
 	private String OWNERSHIP = "";
+	
+	@Override
+	public String getId() {
+		return PATIENT.concat(PAYER).concat(String.valueOf(END_YEAR.getDate()+1900));
+	}
 
 	public String getPATIENT() {
 		return PATIENT;
@@ -72,7 +84,7 @@ public class CoverageResource extends BaseResource {
 
 	@Override
 	public String toString() {
-		return "CoverageResource [Id=" + super.getId() + ", PATIENT=" + PATIENT + ", START_YEAR=" + START_YEAR
+		return "CoverageResource [Id=" + this.getId() + ", PATIENT=" + PATIENT + ", START_YEAR=" + START_YEAR
 				+ ", END_YEAR=" + END_YEAR + ", PAYER=" + PAYER + ", OWNERSHIP=" + OWNERSHIP + "]";
 	}
 
@@ -82,8 +94,8 @@ public class CoverageResource extends BaseResource {
 		Coverage cov = new Coverage();
 
 		// set identifier
-		cov.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
-		// set the patient who is the subscriber of the policy (field: PATIENT)
+		cov.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(this.getId());
+		// set the patient who is the subscriber of the policy (field: patient)
 		// The party who has signed-up for or 'owns' the contractual relationship to the
 		// policy
 		// or to whom the benefit of the policy for services rendered to them or their
@@ -91,16 +103,17 @@ public class CoverageResource extends BaseResource {
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		cov.setSubscriber(new Reference(patient));
 
-		// set period during which the coverage is in force (fields: START_YEAR,
-		// END_YEAR)
+		// set period during which the coverage is in force (fields: start_year,
+		// end_year)
 		cov.setPeriod(new Period().setStart(START_YEAR).setEnd(END_YEAR));
+		
 
-		// set the organization owner of the insurance coverage (field: PAYER)
+		// set the organization owner of the insurance coverage (field: payer)
 		Organization pay = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
 		cov.setPolicyHolder(new Reference(pay));
 
 		// set the beneficiary relationship to the subscriber (patient)--> (field:
-		// OWNERSHIP)
+		// ownership)
 		SubscriberRelationship ownership;
 		try {
 			ownership = SubscriberRelationship.fromCode(OWNERSHIP.toUpperCase());

@@ -90,7 +90,7 @@ public class ConditionResource extends BaseResource {
 	public Resource createResource() {
 
 		// Definition of the condition resource with the reference to the patient
-		// involved
+		// involved (field: patient, a must have value)
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		Condition c = new Condition(new Reference(patient));
 
@@ -100,7 +100,7 @@ public class ConditionResource extends BaseResource {
 		// add identifier
 		c.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 
-		// add period
+		// add period (fields: start, stop)
 		Period period = new Period();
 		if (STOP != null) {
 			period.setStart(START).setEnd(STOP);
@@ -109,16 +109,17 @@ public class ConditionResource extends BaseResource {
 		}
 		c.setOnset(period);
 
-		// set category assigned to the condition
+		// set category assigned to the condition (a must have value for the profile)
 		c.getCategory()
 				.add(new CodeableConcept(new Coding(ConditionCategory.ENCOUNTERDIAGNOSIS.toCode(),
 						ConditionCategory.ENCOUNTERDIAGNOSIS.getSystem(),
 						ConditionCategory.ENCOUNTERDIAGNOSIS.getDefinition())));
-		// add encounter reference
+		
+		// add encounter reference (field: encounter)
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		c.setEncounter(new Reference(e));
 
-		// add the snomed code about the diagnosis with the description
+		// add the snomed code about the diagnosis with the description (fields: code, description, a must have value)
 		c.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 
 		return c;

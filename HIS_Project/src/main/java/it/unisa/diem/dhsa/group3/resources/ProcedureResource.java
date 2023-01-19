@@ -2,7 +2,17 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Annotation;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Meta;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Procedure;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
+
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
@@ -128,27 +138,27 @@ public class ProcedureResource extends BaseResource {
 
 		// set identifier
 		p.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
-		// add date
+		// add date (field:date, a must have value)
 		p.setPerformed(new DateTimeType(DATE));
 
-		// set patient
+		// set patient (filed: patient, a must have value)
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		p.setSubject(new Reference(patient));
 
-		// set code and description (SNOMED code)
+		// set code and description (SNOMED code)-->(fields: code, description, must have values)
 		p.setCode(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 
-		// set code and description (SNOMED code) for the resource
+		// set code and description (SNOMED code) for the reason (fields: reasoncode, reason description)
 		p.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 
-		// Set Encounter related to the Procedure
+		// Set Encounter related to the Procedure (field: encounter)
 		Encounter e = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		p.setEncounter(new Reference(e));
 
-		// Set Status of the Procedure
+		// Set Status of the Procedure (a must have value)
 		p.setStatus(getStatus());
 
-		// add the base cost of the procedure as note
+		// add the base cost of the procedure as note (field: base_cost)
 		Annotation ann = new Annotation();
 		ann.setText("Base Cost of the procedure = " + BASE_COST);
 		p.addNote(ann);

@@ -55,6 +55,8 @@ public class MRIController extends BasicController {
 	@FXML
 	private ImageView progressBar;
 	@FXML
+    private ImageView progressFilter;
+	@FXML
 	private Button viewallButton;
 
 
@@ -64,7 +66,7 @@ public class MRIController extends BasicController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		progressBar.setVisible(true);
-
+		progressFilter.setVisible(false);
 		orderslist = FXCollections.observableArrayList();
 
 		getAll();
@@ -83,16 +85,15 @@ public class MRIController extends BasicController {
 
 	@FXML
 	void FilterPressed(ActionEvent event) {
-
 		if (dateField.getValue() == null) {
 			Alert alert = new Alert(AlertType.INFORMATION, "Select a date", ButtonType.OK);
 			alert.showAndWait();
 		} else {
 			selectedlist.clear();
 			DateTimeType date = new DateTimeType(dateField.getValue().toString());
-			progressBar.setVisible(true);
+			progressFilter.setVisible(true);
 			getOccurrence(date);
-			progressBar.setVisible(false);
+			progressFilter.setVisible(false);
 		}
 
 	}
@@ -145,12 +146,14 @@ public class MRIController extends BasicController {
 	/* --- Private Service Methods --- */
 	
 	 private void getPatientStudies() { 
-		 orderslist.clear();
+		 ObservableList<ServiceRequestResource> tmp = FXCollections.observableArrayList();
 		 for (ServiceRequestResource r : orderslist) {
 			 if(r.getSubject_id().equalsIgnoreCase(searchField.getText()))
-				 orderslist.add(r);
-		 }
-	  }
+				 tmp.add(r);
+			}
+		 orderslist.clear();
+		 orderslist.addAll(tmp);
+	 }
 	 
 
 	private void getOccurrence(DateTimeType date) {
@@ -177,6 +180,7 @@ public class MRIController extends BasicController {
 				if (r.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION, "No requests found for this date", ButtonType.OK);
 					alert.showAndWait();
+					orderslist.clear();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION, "Request found for this date", ButtonType.OK);
 					alert.showAndWait();

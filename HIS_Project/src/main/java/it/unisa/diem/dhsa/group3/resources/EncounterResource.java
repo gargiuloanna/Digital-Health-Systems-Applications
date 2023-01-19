@@ -2,7 +2,21 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Account;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Coverage;
+import org.hl7.fhir.r4.model.Coverage.CostToBeneficiaryComponent;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Meta;
+import org.hl7.fhir.r4.model.Money;
+import org.hl7.fhir.r4.model.Organization;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Period;
+import org.hl7.fhir.r4.model.Practitioner;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -13,11 +27,11 @@ import it.unisa.diem.dhsa.group3.state.Memory;
 public class EncounterResource extends BaseResource {
 
 	@CsvBindByName
-	@CsvDate("yyyy-MM-dd")
+	@CsvDate("yyyy-MM-dd'T'HH:mm")
 	private Date START;
 
 	@CsvBindByName
-	@CsvDate("yyyy-MM-dd")
+	@CsvDate("yyyy-MM-dd'T'HH:mm")
 	private Date STOP;
 
 	@CsvBindByName
@@ -176,7 +190,7 @@ public class EncounterResource extends BaseResource {
 				+ BASE_ENCOUNTER_COST + ", TOTAL_CLAIM_COST=" + TOTAL_CLAIM_COST + ", PAYER_COVERAGE=" + PAYER_COVERAGE
 				+ ", REASONCODE=" + REASONCODE + ", REASONDESCRIPTION=" + REASONDESCRIPTION + "]";
 	}
-	
+
 	private Encounter.EncounterStatus getStatus() {
 		if (STOP.after(START) && STOP != null)
 			return Encounter.EncounterStatus.FINISHED;
@@ -196,6 +210,7 @@ public class EncounterResource extends BaseResource {
 	public Resource createResource() {
 
 		Encounter e = new Encounter();
+
 		// Definition of the considered profile
 		e.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter"));
 
@@ -210,45 +225,54 @@ public class EncounterResource extends BaseResource {
 			period.setStart(START);
 		e.setPeriod(period);
 
+		// set the status (a must have value)
 		e.setStatus(getStatus());
-		
-		// set patient
-		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT); 
+
+		// set patient present at the encounter (field: patient, a must have value)
+		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		e.setSubject(new Reference(patient));
 
-		// set organization
+		// set organization that is primarily responsible for this Encounter's services
+		// (field: organization)
 		Organization o = (Organization) Memory.getMemory().get(OrganizationResource.class).get(ORGANIZATION);
 		e.setServiceProvider(new Reference(o));
 
-		// set provider
+		// set provider responsible for providing the service (field: provider)
 		Practitioner practitioner = (Practitioner) Memory.getMemory().get(ProviderResource.class).get(PROVIDER);
 		e.addParticipant().setIndividual(new Reference(practitioner));
 
-		// set payer
-		/*Organization payer = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
+		// set payer with its coverage through the account resource
+		String id = PATIENT.concat(PAYER).concat(String.valueOf(START.getYear() + 1900));
+		Organization payer = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
+		Coverage cov = (Coverage) Memory.getMemory().get(CoverageResource.class).get(id);
 		Account a = new Account();
-		a.addCoverage().setCoverage(new Reference().setIdentifier(payer.getIdentifier().get(0)));*/
+		if (cov != null) {
+			cov.getCostToBeneficiary().add(
+					new CostToBeneficiaryComponent().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE)));
+			a.addCoverage().setCoverage(new Reference(cov));
+		} else {
+			Coverage c = new Coverage();
+			c.setPolicyHolder(new Reference(payer));
+			c.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE));
+			a.addCoverage().setCoverage(new Reference(c));
+		}
+		e.getAccount().add(new Reference(a));
 
-
+		// set concepts representing classification of patient encounter (field:
+		// encounterclass, a must have value)
 		EncounterClass eclass = EncounterClass.fromCSV(ENCOUNTERCLASS);
 		e.setClass_(new Coding(eclass.getSystem(), eclass.toCode(), eclass.getDefinition()));
 
-		// code & description
-		//EncountersSettingCode code = EncountersSettingCode.fromCSV(DESCRIPTION);
-		e.addType(new CodeableConcept(new Coding("https://www.snomed.org/",CODE, DESCRIPTION)));
+		// Specific type of encounter (fields: code, description, must have values)
+		// EncountersSettingCode code = EncountersSettingCode.fromCSV(DESCRIPTION);
+		e.addType(new CodeableConcept(new Coding("https://www.snomed.org/", CODE, DESCRIPTION)));
 
-		// TODO:base encounter cost e total claim cost
-		// Annotation ann = new Annotation();
-		// ann.setText("TOTAL_CLAIM_COST= " + TOTAL_CLAIM_COST +"PAYER_COVERAGE=
-		// "+PAYER_COVERAGE);
-		// e.addNote(ann);
-
-		// add reason code 
+		// set the reason the encounter takes place, expressed as a code (fields:
+		// reasoncode, reasondescription)
 		e.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 
 		return e;
 
 	}
-
 
 }

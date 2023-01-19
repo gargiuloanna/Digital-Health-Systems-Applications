@@ -1,8 +1,10 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import java.net.URL;
 import java.time.ZoneId;
 
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
@@ -26,6 +28,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 
 public class OrderRegistrationController extends BasicController{
 
@@ -61,6 +64,8 @@ public class OrderRegistrationController extends BasicController{
 
     @FXML
     private MenuButton status;
+    @FXML
+    private ImageView progressBar;
    
     
     @FXML
@@ -80,6 +85,11 @@ public class OrderRegistrationController extends BasicController{
     void requestMenu(ActionEvent event) {
 
     }
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+    	progressBar.setVisible(false);
+	}
 
     @FXML
     void requestSelected(ActionEvent event) {
@@ -114,7 +124,9 @@ public class OrderRegistrationController extends BasicController{
 					ButtonType.OK);
 			alert.showAndWait();
     	}else {
+    		progressBar.setVisible(true);
     		getPatient();
+    		progressBar.setVisible(false);
     	}
     }
     

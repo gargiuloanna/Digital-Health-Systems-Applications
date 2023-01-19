@@ -1,9 +1,18 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.util.Map;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DecimalType;
+import org.hl7.fhir.r4.model.Enumerations;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Meta;
+import org.hl7.fhir.r4.model.Organization;
+import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.Practitioner.PractitionerQualificationComponent;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.V3AdministrativeGender;
 import com.opencsv.bean.CsvBindByName;
 
@@ -176,11 +185,11 @@ public class ProviderResource extends BaseResource{
 		PractitionerQualificationComponent r1 = new PractitionerQualificationComponent();
 		
 		// Definition of the Organization that employees the practitioner
-		Map<String, Resource> organizations = Memory.getMemory().get(OrganizationResource.class);
-		Organization o = (Organization) organizations.get(ORGANIZATION);
+		Organization o = (Organization)Memory.getMemory().get(OrganizationResource.class).get(ORGANIZATION);
+		
 		r.setIssuer(new Reference(o));
 		
-		// Definition of the specialty of the practitioner using SNOMED and NUCC
+		// Definition of the specialty of the practitioner using SNOMED and NUCC (field: specialty)
 		ProviderSpecialtySNOMED code = ProviderSpecialtySNOMED.fromCSV(SPECIALITY);
 		ProviderSpecialtyNUCC cod = ProviderSpecialtyNUCC.fromCSV(SPECIALITY);
 		r.setCode(new CodeableConcept(new Coding(code.getSystem(),code.toCode(), code.getDefinition())));

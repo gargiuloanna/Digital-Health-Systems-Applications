@@ -2,7 +2,16 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Annotation;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.Immunization;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
+
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
@@ -11,7 +20,7 @@ import it.unisa.diem.dhsa.group3.state.Memory;
 public class ImmunizationResource extends BaseResource {
 
 	@CsvBindByName
-	@CsvDate("yyyy-MM-dd'T'HH:mm:ss")
+	@CsvDate("yyyy-MM-dd'T'HH:mm")
 	private Date DATE;
 
 	@CsvBindByName
@@ -102,21 +111,22 @@ public class ImmunizationResource extends BaseResource {
 		// add identifier
 		i.addIdentifier().setSystem("https://www.uuidgenerator.net/").setValue(super.getId());
 
-		// add date
+		// add date (field: date, a must have value)
 		i.setRecorded(DATE);
 
-		// add patient
+		// add patient (field: patient, a must have value)
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		i.setPatient(new Reference(patient));
-		// add encounter
+
+		// add encounter (field: encounter)
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		i.setEncounter(new Reference(encounter));
 
-		// set vaccine
+		// set vaccine code (fields: code, description, a must have value)
 		i.setVaccineCode(new CodeableConcept(
 				new Coding("https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=cvx", CODE, DESCRIPTION)));
 
-		// set the status of the immunization
+		// set the status of the immunization (a must have value)
 		i.setStatus(getStatus());
 
 		// add note for BASE COST

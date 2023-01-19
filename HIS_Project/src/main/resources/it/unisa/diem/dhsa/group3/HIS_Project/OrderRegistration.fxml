@@ -298,12 +298,20 @@
             </ScrollPane>
             <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="123.0" prefWidth="1000.0">
                <children>
+                  <ImageView fx:id="progressBar" fitHeight="46.0" fitWidth="56.0" preserveRatio="true">
+                     <image>
+                        <Image url="@images/loading-gif-transparent-background.gif" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="700.0" top="50.0" />
+                     </HBox.margin>
+                  </ImageView>
                   <Button fx:id="SendOrderButton" mnemonicParsing="false" onAction="#sendOrderPressed" prefHeight="46.0" prefWidth="137.0" text="Send Order" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="790.0" top="50.0" />
+                        <Insets left="20.0" top="50.0" />
                      </HBox.margin>
                   </Button>
                </children>

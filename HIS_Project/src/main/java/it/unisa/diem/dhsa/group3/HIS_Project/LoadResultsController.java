@@ -30,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 
@@ -63,11 +64,14 @@ public class LoadResultsController extends BasicController{
     private TextField sopcodeField;
     @FXML
     private TextField sopdesField;
+    @FXML
+    private ImageView progressBar;
 
-    private File chosen;
+    private File chosen = new File ("");
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		progressBar.setVisible(false);
 		
 		ServiceRequestResource r = MRIController.selectedlist.get(0);
 	
@@ -92,11 +96,9 @@ public class LoadResultsController extends BasicController{
 		DiagnosticReportResource r = createDiagnosticReport();
     	try {
     		if(r != null) {
+    			progressBar.setVisible(true);
 	    		PDF.createPDF(PDF.getDataFieds(r));
 	    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
-				alert.showAndWait();
-				App.setRoot("MRI");
     		}
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the creation of the PDF\n Please Retry.",ButtonType.OK);
@@ -181,7 +183,7 @@ public class LoadResultsController extends BasicController{
 				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
 						ButtonType.OK);
 				alert.showAndWait();
-				
+				progressBar.setVisible(false);
 			}
 		});
 		
