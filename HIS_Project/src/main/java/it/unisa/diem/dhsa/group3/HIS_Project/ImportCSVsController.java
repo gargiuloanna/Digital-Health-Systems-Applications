@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -67,9 +68,6 @@ public class ImportCSVsController extends BasicController {
 	private TextField providerField;
 
 	@FXML
-	private TextField supplyField;
-
-	@FXML
 	private TextField transactionField;
 
 	@FXML
@@ -78,9 +76,12 @@ public class ImportCSVsController extends BasicController {
 	@FXML
 	private CheckBox checkBox;
 	
+	@FXML
+	private ImageView progressBar;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		progressBar.setVisible(false);
 		encounterField.disableProperty()
 				.bind((patientField.textProperty().isEmpty()).or(organizationField.textProperty().isEmpty())
 						.or(providerField.textProperty().isEmpty()).or(payerField.textProperty().isEmpty()));
@@ -113,8 +114,6 @@ public class ImportCSVsController extends BasicController {
 				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
 		devicesField.disableProperty()
 				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
-		supplyField.disableProperty()
-				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
 
 		sendBtn.disableProperty().bind(Bindings.isEmpty(patientField.textProperty())
 				.and(Bindings.isEmpty(organizationField.textProperty()))
@@ -125,7 +124,7 @@ public class ImportCSVsController extends BasicController {
 
 	@FXML
 	void send_clicked(ActionEvent event) {
-
+		progressBar.setVisible(true);
 		boolean patientOK = check(patientField, "patient", true);
 		boolean organizationOK = check(organizationField, "organization", true);
 		boolean payerOK = check(payerField, "payers", true);
@@ -150,9 +149,9 @@ public class ImportCSVsController extends BasicController {
 		check(immunizationField, "immunizations", patientOK && encounterOK);
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
-		check(supplyField, "supplies", patientOK && encounterOK);
 		try{
 			ServerInteraction.sendToServer(checkBox.isSelected());
+			progressBar.setVisible(false);
 		} catch (FhirClientConnectionException e) {
 			error("Error in the connection with the server");
 		}
@@ -221,7 +220,6 @@ public class ImportCSVsController extends BasicController {
 		payerField.clear();
 		proceduresField.clear();
 		providerField.clear();
-		supplyField.clear();
 		transactionField.clear();
 	}
 
