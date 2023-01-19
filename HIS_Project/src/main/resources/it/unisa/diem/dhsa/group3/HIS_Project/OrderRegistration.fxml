@@ -255,6 +255,7 @@
                               </Label>
                               <MenuButton fx:id="request" mnemonicParsing="false" onAction="#requestMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Code" textFill="WHITE">
                                  <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="Magnetic resonance imaging of head" />
                                     <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of bladder" />
                                     <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of pelvis" />
                                     <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of pelvis,  prostate and bladder" />

@@ -4,6 +4,7 @@ import org.hl7.fhir.exceptions.FHIRException;
 
 public enum ServiceRequestCode {
 	
+	_241601008, /*Magnetic resonance imaging of head*/
 	_1292009, /*MRI of bladder*/
 	_2690005, /*MRI of pelvis*/
 	_3991004, /*MRI of pelvis,  prostate and bladder*/
@@ -16,6 +17,7 @@ public enum ServiceRequestCode {
 	
 	public static ServiceRequestCode fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString)) return NULL;
+		if("Magnetic resonance imaging of head".equals(codeString)) return _241601008;
 		if ("MRI of bladder".equals(codeString)) return _1292009;
 		if ("MRI of pelvis".equals(codeString)) return _2690005;
 		if ("MRI of pelvis,  prostate and bladder".equals(codeString)) return _3991004;
@@ -28,6 +30,7 @@ public enum ServiceRequestCode {
 	
 	public String toCode() {
 		switch (this) {
+		case _241601008: return "241601008"; /*Magnetic resonance imaging of head*/
 		case _1292009: return "1292009"; /*MRI of bladder*/
 		case _2690005: return "2690005"; /*MRI of pelvis*/
 		case _3991004: return "3991004"; /*MRI of pelvis, prostate and bladder*/
@@ -46,6 +49,7 @@ public enum ServiceRequestCode {
 	
 	public String getDefinition() {
 		switch (this) {
+		case _241601008: return "Magnetic resonance imaging of head";
 		case _1292009: return "MRI of bladder";
 		case _2690005: return "MRI of pelvis";
 		case _3991004: return "MRI of pelvis, prostate and bladder";
