@@ -99,7 +99,6 @@ public class LoadResultsController extends BasicController{
     			progressBar.setVisible(true);
 	    		PDF.createPDF(PDF.getDataFieds(r));
 	    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
-	    		progressBar.setVisible(false);
     		}
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the creation of the PDF\n Please Retry.",ButtonType.OK);
@@ -184,7 +183,7 @@ public class LoadResultsController extends BasicController{
 				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
 						ButtonType.OK);
 				alert.showAndWait();
-				
+				progressBar.setVisible(false);
 			}
 		});
 		
