@@ -24,21 +24,11 @@ import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 public class ServerInteraction {
 
 	//to upload CSVs on server
-	public static List<String> sendToServer(boolean update) {
-		List<String> ids = new ArrayList<>();
+	public static void sendToServer(boolean update) throws FhirClientConnectionException{
 		Memory mem = Memory.getMemory();
-		String id;
 		for (Map<String, Resource> map : mem.values())
-			for (String key : map.keySet()) {
-				try {
-					id = uploadResource(key, map.get(key), update);
-					ids.add(id);
-				} catch (FhirClientConnectionException e) {
-					System.out.println("Error in the connection");
-				}
-			}
-		System.out.println("ids" + ids);
-		return ids;
+			for (String key : map.keySet()) 
+				uploadResource(key, map.get(key), update);					
 	}
 
 
