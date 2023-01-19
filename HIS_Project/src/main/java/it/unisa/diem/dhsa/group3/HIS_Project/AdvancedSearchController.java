@@ -109,7 +109,7 @@ public class AdvancedSearchController extends BasicController {
 						String family = LastNameField.getText();
 						LocalDate birth = BirthDatePicker.getValue();
 						LocalDate death = DeathDatePicker.getValue();
-						return ServerInteraction.getResources(name, family, birth, death);
+						return ServerInteraction.advancedPatientSearch(name, family, birth, death);
 
 					};
 				};
@@ -133,7 +133,7 @@ public class AdvancedSearchController extends BasicController {
 						String family = "";
 						LocalDate birth = null;
 						LocalDate death = null;
-						return ServerInteraction.getResources(name, family, birth, death);
+						return ServerInteraction.advancedPatientSearch(name, family, birth, death);
 
 					};
 				};

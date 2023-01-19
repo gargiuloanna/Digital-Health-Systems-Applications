@@ -30,7 +30,7 @@ public final class PDF {
 		String imStudy = drr.getImagingStudy();
 		Map<String,String> metaData = new HashMap<>();
 		metaData.put("patient id", subject);
-		Patient p = (Patient)ServerInteraction.getResource(subject);
+		Patient p = (Patient)ServerInteraction.getResource(Patient.class, subject);
 		int index = 0;
 		// it insert the first name in the field of the name
 		for (HumanName humanName : p.getName()) {

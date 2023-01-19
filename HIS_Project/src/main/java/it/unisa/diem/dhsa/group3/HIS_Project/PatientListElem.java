@@ -27,7 +27,6 @@ public class PatientListElem {
 		if (patient.getBirthDate() != null) {
 			birthdate = LocalDate.ofInstant(patient.getBirthDate().toInstant(), 
 					ZoneId.of("Europe/Paris")).format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
-			System.out.println(birthdate);
 		}
 
 		if (patient.hasDeceasedDateTimeType())

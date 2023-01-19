@@ -93,7 +93,6 @@ public class MRIController extends BasicController {
 			DateTimeType date = new DateTimeType(dateField.getValue().toString());
 			progressFilter.setVisible(true);
 			getOccurrence(date);
-			progressFilter.setVisible(false);
 		}
 
 	}
@@ -191,6 +190,7 @@ public class MRIController extends BasicController {
 
 				}
 				progressBar.setVisible(false);
+				progressFilter.setVisible(false);
 			}
 
 		});
@@ -223,7 +223,7 @@ public class MRIController extends BasicController {
 
 					@Override
 					protected List<ServiceRequest> call() throws Exception {
-						return ServerInteraction.getServiceRequestResources();
+						return (List<ServiceRequest>) ServerInteraction.getResources(ServiceRequest.class);
 					};
 				};
 			}

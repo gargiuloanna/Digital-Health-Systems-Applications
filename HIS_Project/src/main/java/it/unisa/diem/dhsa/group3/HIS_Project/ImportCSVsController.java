@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.CSV.LoadCSV;
 import it.unisa.diem.dhsa.group3.state.Memory;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
@@ -145,7 +147,11 @@ public class ImportCSVsController extends BasicController {
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
 		check(supplyField, "supplies", patientOK && encounterOK);
-		ServerInteraction.sendToServer(false);
+		try{
+			ServerInteraction.sendToServer(false);
+		} catch (FhirClientConnectionException e) {
+			error("Error in the connection with the server");
+		}
 		clearAll();
 
 	}

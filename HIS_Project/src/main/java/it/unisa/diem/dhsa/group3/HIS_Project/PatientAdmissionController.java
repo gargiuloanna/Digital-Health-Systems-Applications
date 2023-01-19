@@ -213,7 +213,7 @@ public class PatientAdmissionController extends BasicController {
 					@Override
 					protected Resource call() throws FhirClientConnectionException {
 						String id = searchPatientField.getText();
-						return ServerInteraction.getResource(id);
+						return ServerInteraction.getResource(Patient.class, id);
 
 					};
 				};
