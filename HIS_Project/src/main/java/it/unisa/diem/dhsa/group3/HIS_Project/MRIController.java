@@ -73,7 +73,11 @@ public class MRIController extends BasicController {
 		ViewOrders.selectionModelProperty().getValue().selectedIndexProperty()
 				.addListener((prop, oldValue, newValue) -> {
 					selectedlist.clear();
-					selectedlist.add(orderslist.sorted().get((int) newValue));
+					try {
+					selectedlist.add(orderslist.get((int) newValue));
+					}catch (IndexOutOfBoundsException e) {
+						selectedlist.clear();
+					}
 				});
 	}
 
@@ -84,6 +88,7 @@ public class MRIController extends BasicController {
 			Alert alert = new Alert(AlertType.INFORMATION, "Select a date", ButtonType.OK);
 			alert.showAndWait();
 		} else {
+			selectedlist.clear();
 			DateTimeType date = new DateTimeType(dateField.getValue().toString());
 			progressBar.setVisible(true);
 			getOccurrence(date);
@@ -173,9 +178,9 @@ public class MRIController extends BasicController {
 					Alert alert = new Alert(AlertType.INFORMATION, "No requests found for this date", ButtonType.OK);
 					alert.showAndWait();
 				} else {
-					orderslist.clear();
 					Alert alert = new Alert(AlertType.INFORMATION, "Request found for this date", ButtonType.OK);
 					alert.showAndWait();
+					orderslist.clear();
 					for (Resource p : r)
 						if (r != null)
 							orderslist.add(new ServiceRequestResource((ServiceRequest) p));
@@ -206,7 +211,6 @@ public class MRIController extends BasicController {
 	}
 
 	private void getAll() {
-		orderslist.clear();
 		Service<List<ServiceRequest>> getResource = new Service<List<ServiceRequest>>() {
 
 			@Override
@@ -227,10 +231,11 @@ public class MRIController extends BasicController {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				List<ServiceRequest> l = getResource.getValue();
+				orderslist.clear();
 				for (ServiceRequest p : l) {
 					orderslist.add(new ServiceRequestResource(p));
 				}
-				ViewOrders.setItems(orderslist.sorted());
+				ViewOrders.setItems(orderslist);
 				ViewSelectedOrder.setItems(selectedlist);
 				progressBar.setVisible(false);//
 
