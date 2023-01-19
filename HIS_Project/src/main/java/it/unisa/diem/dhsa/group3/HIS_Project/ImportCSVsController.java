@@ -68,9 +68,6 @@ public class ImportCSVsController extends BasicController {
 	private TextField providerField;
 
 	@FXML
-	private TextField supplyField;
-
-	@FXML
 	private TextField transactionField;
 
 	@FXML
@@ -117,8 +114,6 @@ public class ImportCSVsController extends BasicController {
 				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
 		devicesField.disableProperty()
 				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
-		supplyField.disableProperty()
-				.bind((patientField.textProperty().isEmpty()).or(encounterField.textProperty().isEmpty()));
 
 		sendBtn.disableProperty().bind(Bindings.isEmpty(patientField.textProperty())
 				.and(Bindings.isEmpty(organizationField.textProperty()))
@@ -154,7 +149,6 @@ public class ImportCSVsController extends BasicController {
 		check(immunizationField, "immunizations", patientOK && encounterOK);
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
-		check(supplyField, "supplies", patientOK && encounterOK);
 		try{
 			ServerInteraction.sendToServer(checkBox.isSelected());
 			progressBar.setVisible(false);
@@ -226,7 +220,6 @@ public class ImportCSVsController extends BasicController {
 		payerField.clear();
 		proceduresField.clear();
 		providerField.clear();
-		supplyField.clear();
 		transactionField.clear();
 	}
 

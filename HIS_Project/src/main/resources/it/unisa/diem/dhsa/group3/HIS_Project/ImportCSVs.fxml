@@ -259,20 +259,6 @@
                                     <Insets right="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supplies" wrappingWidth="130.0">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="supplyField" prefHeight="25.0" prefWidth="674.0" />
-                                    <Button mnemonicParsing="false" onAction="#load_csv_btn" text="..." />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets right="10.0" />
-                                 </VBox.margin>
-                              </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="200.0">
                                  <children>
                                     <CheckBox fx:id="checkBox" mnemonicParsing="false" text="Override server resources">
