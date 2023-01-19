@@ -126,7 +126,6 @@ public class OrderRegistrationController extends BasicController{
     	}else {
     		progressBar.setVisible(true);
     		getPatient();
-    		progressBar.setVisible(false);
     	}
     }
     
@@ -252,7 +251,7 @@ public class OrderRegistrationController extends BasicController{
 					Alert alert = new Alert(AlertType.INFORMATION, "Patient NOT found", ButtonType.OK);
 					alert.showAndWait();
 				}
-
+				progressBar.setVisible(false);
 			}
 		});
 
