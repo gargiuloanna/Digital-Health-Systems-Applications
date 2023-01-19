@@ -55,6 +55,8 @@ public class MRIController extends BasicController {
 	@FXML
 	private ImageView progressBar;
 	@FXML
+    private ImageView progressFilter;
+	@FXML
 	private Button viewallButton;
 
 
@@ -83,16 +85,15 @@ public class MRIController extends BasicController {
 
 	@FXML
 	void FilterPressed(ActionEvent event) {
-
 		if (dateField.getValue() == null) {
 			Alert alert = new Alert(AlertType.INFORMATION, "Select a date", ButtonType.OK);
 			alert.showAndWait();
 		} else {
 			selectedlist.clear();
 			DateTimeType date = new DateTimeType(dateField.getValue().toString());
-			progressBar.setVisible(true);
+			progressFilter.setVisible(true);
 			getOccurrence(date);
-			progressBar.setVisible(false);
+			progressFilter.setVisible(false);
 		}
 
 	}

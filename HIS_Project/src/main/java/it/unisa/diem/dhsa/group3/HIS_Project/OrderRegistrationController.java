@@ -26,6 +26,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 
 public class OrderRegistrationController extends BasicController{
 
@@ -61,6 +62,8 @@ public class OrderRegistrationController extends BasicController{
 
     @FXML
     private MenuButton status;
+    @FXML
+    private ImageView progressBar;
    
     
     @FXML
@@ -114,7 +117,9 @@ public class OrderRegistrationController extends BasicController{
 					ButtonType.OK);
 			alert.showAndWait();
     	}else {
+    		progressBar.setVisible(true);
     		getPatient();
+    		progressBar.setVisible(false);
     	}
     }
     
