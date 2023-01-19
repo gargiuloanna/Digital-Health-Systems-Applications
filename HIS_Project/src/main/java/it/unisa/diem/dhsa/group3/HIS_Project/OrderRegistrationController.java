@@ -230,7 +230,7 @@ public class OrderRegistrationController extends BasicController{
 					@Override
 					protected Resource call() throws FhirClientConnectionException {
 						String id = patientField.getText();
-						return ServerInteraction.getResource(id);
+						return ServerInteraction.getResource(Patient.class, id);
 
 					};
 				};
