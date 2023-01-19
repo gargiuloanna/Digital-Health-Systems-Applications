@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -73,7 +74,10 @@ public class ImportCSVsController extends BasicController {
 
 	@FXML
 	private Button sendBtn;
-
+	
+	@FXML
+	private CheckBox checkBox;
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
@@ -148,7 +152,7 @@ public class ImportCSVsController extends BasicController {
 		check(devicesField, "devices", patientOK && encounterOK);
 		check(supplyField, "supplies", patientOK && encounterOK);
 		try{
-			ServerInteraction.sendToServer(false);
+			ServerInteraction.sendToServer(checkBox.isSelected());
 		} catch (FhirClientConnectionException e) {
 			error("Error in the connection with the server");
 		}
