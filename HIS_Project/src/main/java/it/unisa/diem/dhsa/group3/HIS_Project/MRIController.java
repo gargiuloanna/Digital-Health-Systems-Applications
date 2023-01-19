@@ -66,7 +66,7 @@ public class MRIController extends BasicController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		progressBar.setVisible(true);
-
+		progressFilter.setVisible(false);
 		orderslist = FXCollections.observableArrayList();
 
 		getAll();

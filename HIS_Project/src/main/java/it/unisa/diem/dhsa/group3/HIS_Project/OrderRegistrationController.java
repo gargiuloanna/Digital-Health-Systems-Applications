@@ -1,8 +1,10 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
+import java.net.URL;
 import java.time.ZoneId;
 
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
@@ -83,6 +85,11 @@ public class OrderRegistrationController extends BasicController{
     void requestMenu(ActionEvent event) {
 
     }
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+    	progressBar.setVisible(false);
+	}
 
     @FXML
     void requestSelected(ActionEvent event) {

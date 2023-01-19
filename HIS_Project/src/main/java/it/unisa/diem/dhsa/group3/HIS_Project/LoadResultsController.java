@@ -67,10 +67,11 @@ public class LoadResultsController extends BasicController{
     @FXML
     private ImageView progressBar;
 
-    private File chosen;
+    private File chosen = new File ("");
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		progressBar.setVisible(false);
 		
 		ServiceRequestResource r = MRIController.selectedlist.get(0);
 	
@@ -99,9 +100,6 @@ public class LoadResultsController extends BasicController{
 	    		PDF.createPDF(PDF.getDataFieds(r));
 	    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
 	    		progressBar.setVisible(false);
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Results Loaded",ButtonType.OK);
-				alert.showAndWait();
-				App.setRoot("MRI");
     		}
 		} catch (IOException e) {
 			Alert alert = new Alert(AlertType.ERROR, "Error in the creation of the PDF\n Please Retry.",ButtonType.OK);
