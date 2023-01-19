@@ -145,12 +145,14 @@ public class MRIController extends BasicController {
 	/* --- Private Service Methods --- */
 	
 	 private void getPatientStudies() { 
-		 orderslist.clear();
+		 ObservableList<ServiceRequestResource> tmp = FXCollections.observableArrayList();
 		 for (ServiceRequestResource r : orderslist) {
 			 if(r.getSubject_id().equalsIgnoreCase(searchField.getText()))
-				 orderslist.add(r);
-		 }
-	  }
+				 tmp.add(r);
+			}
+		 orderslist.clear();
+		 orderslist.addAll(tmp);
+	 }
 	 
 
 	private void getOccurrence(DateTimeType date) {
@@ -177,6 +179,7 @@ public class MRIController extends BasicController {
 				if (r.size() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION, "No requests found for this date", ButtonType.OK);
 					alert.showAndWait();
+					orderslist.clear();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION, "Request found for this date", ButtonType.OK);
 					alert.showAndWait();
