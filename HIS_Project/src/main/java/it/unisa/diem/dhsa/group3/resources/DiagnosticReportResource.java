@@ -97,6 +97,16 @@ public class DiagnosticReportResource extends BaseResource {
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
+	
+	public void setImage(File file) {
+		this.path = file.getName();
+		try {
+			this.path = file.getCanonicalPath();
+			handlePixelData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 	public DiagnosticReportResource() {
@@ -105,20 +115,6 @@ public class DiagnosticReportResource extends BaseResource {
 
 	public DiagnosticReportResource(String path, Resource service_request, Resource imaging_study, String conclusion) {
 
-	}
-
-	public DiagnosticReportResource(File file) {
-		this.path = file.getName();
-		String[] elems = this.path.split("_");
-		this.patientId = elems[elems.length - 1].substring(0, 36);
-		try {
-			this.path = file.getCanonicalPath();
-			handlePixelData();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// DicomImageViewer.main(args);
 	}
 
 	private void handlePixelData() {
@@ -163,6 +159,7 @@ public class DiagnosticReportResource extends BaseResource {
 			throw new RuntimeException(e);
 		}
 	}
+	
 
 	public byte[] getEncoded() {
 		return Base64.getEncoder().encode(this.pixelData);
@@ -211,14 +208,6 @@ public class DiagnosticReportResource extends BaseResource {
 
 		return dr;
 
-	}
-
-	private Resource getResource(String id, Class<? extends BaseResource> specificClass) {
-		Resource r = Memory.getMemory().get(specificClass).get(id);
-		if (r == null) {
-			r = ServerInteraction.getResource(id);
-		}
-		return r; //returns null if empty
 	}
 
 }

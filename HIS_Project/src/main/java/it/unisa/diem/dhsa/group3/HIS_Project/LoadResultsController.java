@@ -5,6 +5,7 @@ import org.hl7.fhir.r4.model.DiagnosticReport;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -23,9 +24,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -34,7 +32,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class LoadResultsController extends BasicController{
 
@@ -67,7 +64,7 @@ public class LoadResultsController extends BasicController{
     @FXML
     private TextField sopdesField;
 
-    private String imagePath;
+    private File chosen;
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -114,7 +111,8 @@ public class LoadResultsController extends BasicController{
     @FXML
     void loadAction(ActionEvent event) {
     	FileChooser f = new FileChooser();
-    	f.showOpenDialog(null);
+    	f.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("DICOM Extension", "*.<dcm>"));
+    	chosen = f.showOpenDialog(null);
     	
     }    
 	
@@ -122,21 +120,32 @@ public class LoadResultsController extends BasicController{
     	
     	if(emptyFields()) {
     		Alert alert = new Alert(AlertType.ERROR, "Fill the fields",ButtonType.OK);
-			alert.showAndWait();
-			
+			alert.showAndWait();			
 			return null;
     	}
     	else {
+    	//define report
     	DiagnosticReportResource r = new DiagnosticReportResource();
+    	
+    	//create imaging study
     	ImagingStudyResource i = new ImagingStudyResource(
     			Date.from(datePicker.getValue().atStartOfDay(ZoneId.of("Europe/Paris")).toInstant()), patientField.getText(), encounterField.getText(), 
     			bodycodeField.getText(), bodydesField.getText(), modcodeField.getText(), moddesField.getText(),
     			sopcodeField.getText(), sopdesField.getText());
+    	
+    	//set fields
     	r.setPatientId(patientField.getText());
     	r.setEncounter(encounterField.getText());
     	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
     	r.setImagingStudy(i.getId());
     	r.setConclusion(conclusionField.getText());
+    	
+    	//set media if present
+    	if(!chosen.toString().equals("")) {
+    		r.setImage(chosen);
+    		chosen = new File("");
+    		System.out.println("chosen after assigning the image"+ chosen);
+    	}
     	return r;
     	}
     	
