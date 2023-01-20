@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.LoadResultsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.LoadResultsController">
    <children>
       <VBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -276,7 +276,7 @@
                                     </VBox>
                                  </center>
                                  <top>
-                                    <Label text="Modality" textFill="#081240" BorderPane.alignment="CENTER">
+                                    <Label styleClass="DarkText" text="Modality" textFill="#081240" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="System Bold Italic" size="14.0" />
                                        </font>
@@ -325,7 +325,7 @@
                                     </VBox>
                                  </center>
                                  <top>
-                                    <Label text="SOP" textFill="#081240" BorderPane.alignment="CENTER">
+                                    <Label styleClass="DarkText" text="SOP" textFill="#081240" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="System Bold Italic" size="14.0" />
                                        </font>
@@ -337,14 +337,23 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </VBox>
-                        <Button fx:id="lodButton" mnemonicParsing="false" onAction="#loadAction" prefHeight="30.0" prefWidth="95.0" text="Load Image">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="484.0" spacing="10.0">
                            <VBox.margin>
-                              <Insets left="340.0" top="20.0" />
+                              <Insets left="5.0" top="20.0" />
                            </VBox.margin>
-                        </Button>
+                           <children>
+                              <Text id="file-label" fx:id="fileLabel" fill="#081240" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="lodButton" mnemonicParsing="false" onAction="#loadAction" prefHeight="30.0" prefWidth="95.0" text="Load Image">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <ImageView fx:id="progressBar" fitHeight="49.0" fitWidth="64.0" preserveRatio="true">

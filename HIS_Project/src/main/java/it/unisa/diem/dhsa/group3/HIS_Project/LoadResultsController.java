@@ -28,9 +28,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 
@@ -66,7 +68,9 @@ public class LoadResultsController extends BasicController{
     private TextField sopdesField;
     @FXML
     private ImageView progressBar;
-
+    @FXML
+    private Text fileLabel;
+    
     private File chosen = new File ("");
     
 	@Override
@@ -116,7 +120,14 @@ public class LoadResultsController extends BasicController{
     	FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("DICOM Extension", "*.dcm");
     	f.getExtensionFilters().add(fileExtensions);
     	chosen = f.showOpenDialog(null);
+    	if (chosen == null)
+    			return;
     	try {
+    		String path = "";
+    		if (chosen.getCanonicalPath().length()>48) {
+    			path= "..." + chosen.getCanonicalPath().substring(chosen.getCanonicalPath().length()-48);
+        	}
+    		fileLabel.setText(path);
     		startDicomViewer(chosen.getCanonicalPath());
     	} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -12,6 +12,12 @@ Text {
  -fx-font-size: 15.0pt;
 }
 
+#file-label {
+ -fx-font-smoothing-type: lcd;
+ -fx-fill: #081240;
+ -fx-font-size: 10.0pt;
+}
+
 #back {
     -fx-background-color: -background;
 
