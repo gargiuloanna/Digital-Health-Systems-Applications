@@ -115,10 +115,24 @@ public class LoadResultsController extends BasicController{
     	FileChooser f = new FileChooser();
     	FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("DICOM Extension", "*.dcm");
     	f.getExtensionFilters().add(fileExtensions);
-    	System.out.println(f.getSelectedExtensionFilter());
     	chosen = f.showOpenDialog(null);
+    	try {
+    		startDicomViewer(chosen.getCanonicalPath());
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
-    }    
+    }   
+    
+    private static void startDicomViewer(String path) throws IOException, InterruptedException {
+    	String[] cmd = {"java", "-jar", "src/main/resources/it/unisa/diem/dhsa/group3/HIS_Project/DicomView.jar", path};
+		Process pr =  Runtime.getRuntime().exec(cmd);
+		pr.waitFor();
+    }
 	
 	private DiagnosticReportResource createDiagnosticReport() {
     	
