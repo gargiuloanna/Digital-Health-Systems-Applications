@@ -111,7 +111,7 @@ public class DeviceResource extends BaseResource {
 		DeviceUseStatement stat = new DeviceUseStatement();
 
 		// add identifier
-		stat.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		stat.addIdentifier().setSystem("https://www.uuidgenerator.net").setValue(super.getId());
 
 		// add time: Start when the device was associated to the patient, Stop when the
 		// device was removed-->(fields: start, stop)

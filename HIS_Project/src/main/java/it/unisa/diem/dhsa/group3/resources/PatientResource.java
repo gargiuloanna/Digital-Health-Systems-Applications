@@ -23,6 +23,7 @@ import org.hl7.fhir.r4.model.codesystems.V3MaritalStatus;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
+import ca.uhn.fhir.model.api.TemporalPrecisionEnum;
 import it.unisa.diem.dhsa.group3.enumerations.OMBEthnicityCategories;
 import it.unisa.diem.dhsa.group3.enumerations.OMBRaceCategories;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;

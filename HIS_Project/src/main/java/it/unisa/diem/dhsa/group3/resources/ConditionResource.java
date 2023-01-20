@@ -98,7 +98,7 @@ public class ConditionResource extends BaseResource {
 		c.setMeta(new Meta().addProfile(
 				"http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns"));
 		// add identifier
-		c.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		c.addIdentifier().setSystem("https://www.uuidgenerator.net/").setValue(super.getId());
 
 		// add period (fields: start, stop)
 		Period period = new Period();

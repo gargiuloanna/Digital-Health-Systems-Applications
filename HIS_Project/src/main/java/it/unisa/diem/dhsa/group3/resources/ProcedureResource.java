@@ -137,7 +137,7 @@ public class ProcedureResource extends BaseResource {
 		p.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"));
 
 		// set identifier
-		p.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		p.addIdentifier().setSystem("https://www.uuidgenerator.net").setValue(super.getId());
 		// add date (field:date, a must have value)
 		p.setPerformed(new DateTimeType(DATE));
 

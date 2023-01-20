@@ -181,7 +181,7 @@ public class MedicationResource extends BaseResource {
 		MedicationStatement med = new MedicationStatement();
 		
 		//set identifier
-		med.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		med.addIdentifier().setSystem("https://www.uuidgenerator.net").setValue(super.getId());
 
 		// add effective period: the period in which the medication was/is taken (fields: start, stop) 
 		if (STOP != null)

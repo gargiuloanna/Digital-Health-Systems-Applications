@@ -104,7 +104,7 @@ public class AllergyIntoleranceResource extends BaseResource {
 				new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"));
 
 		// add identifier
-		allergy.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		allergy.addIdentifier().setSystem("https://www.uuidgenerator.net/").setValue(super.getId());
 
 		// add date the allergy was diagnosed and the clinical status (field: start)
 		// clinical status is not present in the csv data but it is a must have value

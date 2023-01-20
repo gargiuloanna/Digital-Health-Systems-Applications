@@ -8,6 +8,7 @@ import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Immunization;
+import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
@@ -107,9 +108,12 @@ public class ImmunizationResource extends BaseResource {
 	@Override
 	public Resource createResource() {
 		Immunization i = new Immunization();
+		
+		// Add US Profile to the Procedure
+		i.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization"));
 
 		// add identifier
-		i.addIdentifier().setSystem("https://www.uuidgenerator.net/").setValue(super.getId());
+		i.addIdentifier().setSystem("https://www.uuidgenerator.net").setValue(super.getId());
 
 		// add date (field: date, a must have value)
 		i.setRecorded(DATE);

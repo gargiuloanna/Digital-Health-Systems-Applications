@@ -129,7 +129,7 @@ public class ObservationResource extends BaseResource {
 		Observation observation = new Observation();
 		
 		// set identifier
-		observation.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		observation.addIdentifier().setSystem("https://www.uuidgenerator.net").setValue(super.getId());
 		
 		// set the date and time the observation was performed (field: date)
 		observation.setIssued(DATE);
