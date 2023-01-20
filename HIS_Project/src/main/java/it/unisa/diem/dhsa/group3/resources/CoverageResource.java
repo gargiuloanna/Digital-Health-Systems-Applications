@@ -1,5 +1,7 @@
 package it.unisa.diem.dhsa.group3.resources;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.hl7.fhir.exceptions.FHIRException;
@@ -24,12 +26,12 @@ public class CoverageResource extends BaseResource {
 	private String PATIENT = "";
 
 	@CsvBindByName
-	@CsvDate("yyyy")
-	private Date START_YEAR;
+	//@CsvDate("yyyy")
+	private String START_YEAR;
 
 	@CsvBindByName
-	@CsvDate("yyyy")
-	private Date END_YEAR;
+	//@CsvDate("yyyy")
+	private String END_YEAR;
 
 	@CsvBindByName
 	private String PAYER = "";
@@ -39,7 +41,8 @@ public class CoverageResource extends BaseResource {
 	
 	@Override
 	public String getId() {
-		return PATIENT.concat(PAYER).concat(String.valueOf(END_YEAR.getDate()+1900));
+		//return PATIENT.concat(PAYER).concat(String.valueOf(END_YEAR.getDate()+1900));
+		return PATIENT.concat(PAYER).concat(END_YEAR);
 	}
 
 	public String getPATIENT() {
@@ -50,19 +53,19 @@ public class CoverageResource extends BaseResource {
 		PATIENT = pATIENT;
 	}
 
-	public Date getSTART_YEAR() {
+	public String getSTART_YEAR() {
 		return START_YEAR;
 	}
 
-	public void setSTART_YEAR(Date sTART_YEAR) {
+	public void setSTART_YEAR(String sTART_YEAR) {
 		START_YEAR = sTART_YEAR;
 	}
 
-	public Date getEND_YEAR() {
+	public String getEND_YEAR() {
 		return END_YEAR;
 	}
 
-	public void setEND_YEAR(Date eND_YEAR) {
+	public void setEND_YEAR(String eND_YEAR) {
 		END_YEAR = eND_YEAR;
 	}
 
@@ -105,7 +108,12 @@ public class CoverageResource extends BaseResource {
 
 		// set period during which the coverage is in force (fields: start_year,
 		// end_year)
-		cov.setPeriod(new Period().setStart(START_YEAR).setEnd(END_YEAR));
+		SimpleDateFormat d = new SimpleDateFormat("yyyy");
+		try {
+			cov.setPeriod(new Period().setStart(d.parse(START_YEAR)).setEnd(d.parse(END_YEAR)));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
 		
 
 		// set the organization owner of the insurance coverage (field: payer)
