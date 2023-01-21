@@ -90,7 +90,7 @@ public class CoverageResource extends BaseResource {
 		Coverage cov = new Coverage();
 
 		// set identifier
-		cov.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
+		cov.addIdentifier().setSystem("https://www.uuidgenerator.net").setValue(super.getId());
 		// set the patient who is the subscriber of the policy (field: patient)
 		// The party who has signed-up for or 'owns' the contractual relationship to the
 		// policy
