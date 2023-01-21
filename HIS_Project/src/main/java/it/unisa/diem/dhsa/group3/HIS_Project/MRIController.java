@@ -221,6 +221,7 @@ public class MRIController extends BasicController {
 			protected Task<List<ServiceRequest>> createTask() throws FhirClientConnectionException {
 				return new Task<List<ServiceRequest>>() {
 
+					@SuppressWarnings("unchecked")
 					@Override
 					protected List<ServiceRequest> call() throws Exception {
 						return (List<ServiceRequest>) ServerInteraction.getResources(ServiceRequest.class);

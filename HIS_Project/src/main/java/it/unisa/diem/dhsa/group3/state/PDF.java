@@ -29,10 +29,7 @@ public final class PDF {
 	private static PDPage page = new PDPage();
 	private static PDPageContentStream content;
 	
-	public static Map<String, String> getDataFieds(DiagnosticReportResource drr) throws FhirClientConnectionException{
-		Patient p = (Patient)ServerInteraction.getResource(Patient.class, drr.getPatientId());
-		ServiceRequest serviceReq = (ServiceRequest) ServerInteraction.getResource(ServiceRequest.class, drr.getServiceRequest());
-		ImagingStudy imStudy = (ImagingStudy) ServerInteraction.getResource(ImagingStudy.class, drr.getImagingStudy());
+	public static Map<String, String> getDataFieds(DiagnosticReportResource drr, ImagingStudy imStudy, Patient p, ServiceRequest serviceReq) throws FhirClientConnectionException{
 		String encounter= drr.getEncounter();
 		Map<String,String> metaData = new HashMap<>();
 		metaData.put("patient id", p.getIdentifierFirstRep().getValue());
@@ -46,28 +43,28 @@ public final class PDF {
 					index = humanName.getGiven().size() - 1;
 					metaData.put("patient name", humanName.getGiven().get(index).getValueNotNull()); // it insert the last name in the field of the names
 					metaData.put("patient surname", humanName.getFamily());
-				}else {
-					metaData.put("patient name", "No name available");
-					metaData.put("patient surname", "No surname available");
-
+				}
 				//insert the prefix in the corresponding field
 				metaData.put("patient name prefix", "");
 				if (!humanName.getPrefix().isEmpty()) {
 					index = humanName.getPrefix().size() - 1;
 					metaData.put("patient name prefix", humanName.getPrefix().get(index).getValueNotNull());
 				}
-				
 				metaData.put("patient name suffix", "");
 				if (!humanName.getSuffix().isEmpty()) {
 					index = humanName.getSuffix().size() - 1;
+					System.out.println("SUFFIX " + humanName.getSuffix().get(index));
 					metaData.put("patient name suffix", humanName.getSuffix().get(index).getValueNotNull());
+				}else {
+					metaData.put("patient name suffix", "");
 				}
+				
+				
 			}
 			metaData.put("maiden", "");
 			if (humanName.getUse().equals(HumanName.NameUse.MAIDEN)) {
 				metaData.put("maiden", humanName.getFamily()); // only one maiden name for person
 			}		
-		}
 		}
 		metaData.put("birth date", p.getBirthDate().toString());
 		
@@ -162,7 +159,7 @@ public final class PDF {
 		
 		//add icon to the file
 		content = new PDPageContentStream(doc, page);
-		String path = "src\\main\\java\\it\\unisa\\diem\\dhsa\\group3\\state\\icon64.png";
+		String path = "src/main/resources/it/unisa/diem/dhsa/group3/HIS_Project/icons/icons8-medical-doctor-64.png";
 		File f = new File(path);
 		PDImageXObject image = PDImageXObject.createFromFileByContent(f, doc);
 		content.drawImage(image, 75, 725);
