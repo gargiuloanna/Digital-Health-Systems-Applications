@@ -41,6 +41,8 @@ public final class LoadCSV {
 			return OrganizationResource.class;
 		case "payers":
 			return PayerResource.class;
+		case "transactions":
+			return CoverageResource.class;
 		case "procedures":
 			return ProcedureResource.class;
 		case "providers":

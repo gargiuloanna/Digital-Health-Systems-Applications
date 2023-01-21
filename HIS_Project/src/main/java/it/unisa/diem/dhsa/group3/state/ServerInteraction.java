@@ -141,7 +141,7 @@ public class ServerInteraction {
 			id = identifier;
 
 		IGenericClient client = Context.getContext().newRestfulGenericClient(Context.server);
-		Bundle bundle = client.search().forResource(resourceClass)
+		Bundle bundle = client.search().forResource(resourceClass)//.include(Resource.INCLUDE_ALL)
 				.where(new TokenClientParam("identifier").exactly().code(id)).prettyPrint().returnBundle(Bundle.class)
 				.encodedJson().execute();
 		if (bundle.isEmpty())

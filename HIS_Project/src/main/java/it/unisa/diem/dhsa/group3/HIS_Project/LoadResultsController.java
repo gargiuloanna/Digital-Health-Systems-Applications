@@ -2,6 +2,9 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 
 import org.hl7.fhir.r4.model.DiagnosticReport;
+import org.hl7.fhir.r4.model.ImagingStudy;
+import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.ServiceRequest;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
@@ -28,7 +31,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -83,7 +85,7 @@ public class LoadResultsController extends BasicController{
     	patientField.setText(r.getSubject_id());
     	requestField.setText(r.getId());
     	Date date = r.getDate();
-    	datePicker.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDay()));
+    	datePicker.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDate()));
     	encounterField.setText(r.getEncounter_id());
     	detailsField.setText(r.getDetails());
     	
@@ -97,20 +99,11 @@ public class LoadResultsController extends BasicController{
 	
 	@FXML
     void confirmAction(ActionEvent event) {
-		DiagnosticReportResource r = createDiagnosticReport();
-    	try {
-    		if(r != null) {
-    			progressBar.setVisible(true);
-	    		PDF.createPDF(PDF.getDataFieds(r));
-	    		uploadDiagnosticReport((DiagnosticReport) r.createResource());
-    		}
-		} catch (IOException e) {
-			Alert alert = new Alert(AlertType.ERROR, "Error in the creation of the PDF\n Please Retry.",ButtonType.OK);
-			alert.showAndWait();
-		} catch (FhirClientConnectionException e) {
-			Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
-					ButtonType.OK);
-			alert.showAndWait();
+		if(emptyFields()) {
+    		Alert alert = new Alert(AlertType.ERROR, "Fill the fields",ButtonType.OK);
+			alert.showAndWait();			
+		}else {
+		uploadReport();
 		}
     }
 
@@ -130,10 +123,8 @@ public class LoadResultsController extends BasicController{
     		fileLabel.setText(path);
     		startDicomViewer(chosen.getCanonicalPath());
     	} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -145,14 +136,7 @@ public class LoadResultsController extends BasicController{
 		pr.waitFor();
     }
 	
-	private DiagnosticReportResource createDiagnosticReport() {
-    	
-    	if(emptyFields()) {
-    		Alert alert = new Alert(AlertType.ERROR, "Fill the fields",ButtonType.OK);
-			alert.showAndWait();			
-			return null;
-    	}
-    	else {
+	private void uploadReport() {
     	//define report
     	DiagnosticReportResource r = new DiagnosticReportResource();
     	
@@ -162,27 +146,81 @@ public class LoadResultsController extends BasicController{
     			bodycodeField.getText(), bodydesField.getText(), modcodeField.getText(), moddesField.getText(),
     			sopcodeField.getText(), sopdesField.getText());
     	
-    	//set fields
+    	//upload imaging study on server
+    	//set fields    	
     	r.setPatientId(patientField.getText());
     	r.setEncounter(encounterField.getText());
     	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
-    	r.setImagingStudy(i.getId());
+    	r.setImagingStudy(i.getId());    	
     	r.setConclusion(conclusionField.getText());
     	
     	//set media if present
     	if(!chosen.toString().equals("")) {
     		r.setImage(chosen);
     		chosen = new File("");
-    		System.out.println("chosen after assigning the image"+ chosen);
-    	}
-    	return r;
     	}
     	
+    	upload(r, i);
+    	}
     	
 
-	}
+private void upload(DiagnosticReportResource r, ImagingStudyResource i) {
+	ImagingStudy s = (ImagingStudy) i.createResource();
+	//check id
+	System.out.println("IMAGING RESOURCE ID      " +  i.getId() + " ASSEGNATO A DIAGNOSTIC REPORT");
+	System.out.println("IMAGING STUDY IDENTIFIER " +  s.getIdentifierFirstRep().getValue());
 	
-	private void uploadDiagnosticReport(DiagnosticReport r){
+	Service<String> upload = new Service<String>() {
+
+		@Override
+		protected Task<String> createTask() throws FhirClientConnectionException {
+			
+			return new Task<String>() {
+
+				@Override
+				protected String call() throws FhirClientConnectionException {
+					return ServerInteraction.uploadResource(s.getIdentifierFirstRep().getValue(), s, true);
+
+				};
+			};
+		}
+	};
+
+	upload.start();
+	upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+		@Override
+		public void handle(WorkerStateEvent event) {
+			String id = upload.getValue();
+			Alert alert = new Alert(AlertType.NONE, "Study with id:" +id +" updated correctly.",ButtonType.OK);
+			alert.showAndWait();
+			progressBar.setVisible(false);
+	    	if(r != null) {
+	    	progressBar.setVisible(true);
+	    	uploadDiagnosticReport(r, s);
+	    	}
+		}
+	});
+	
+	upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
+		@Override
+		public void handle(WorkerStateEvent event) {
+			if (upload.getException() != null
+					&& upload.getException().getClass() == FhirClientConnectionException.class) {
+				Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+						ButtonType.OK);
+				alert.showAndWait();
+			}
+
+		}
+	});	
+	
+}
+	
+	
+	private void uploadDiagnosticReport(DiagnosticReportResource r, ImagingStudy i){
+		DiagnosticReport s = (DiagnosticReport) r.createResource();
+		System.out.println("DIAGNOSTIC IMAGING IDENTIFIER " +  s.getImagingStudyFirstRep().getIdentifier().getValue());
 		Service<String> upload = new Service<String>() {
 
 			@Override
@@ -192,7 +230,7 @@ public class LoadResultsController extends BasicController{
 
 					@Override
 					protected String call() throws FhirClientConnectionException {
-						return ServerInteraction.uploadResource(r.getIdentifierFirstRep().getValue(), r, true);
+						return ServerInteraction.uploadResource(s.getIdentifierFirstRep().getValue(), s, true);
 
 					};
 				};
@@ -205,10 +243,24 @@ public class LoadResultsController extends BasicController{
 			@Override
 			public void handle(WorkerStateEvent event) {
 				String id = upload.getValue();
-				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
-						ButtonType.OK);
-				alert.showAndWait();
-				progressBar.setVisible(false);
+				try {
+					 
+					 Patient p = (Patient)ServerInteraction.getResource(Patient.class, r.getPatientId());
+					 ServiceRequest srr = (ServiceRequest) ServerInteraction.getResource(ServiceRequest.class, r.getServiceRequest());
+					PDF.createPDF(PDF.getDataFieds(r, i, p, srr));
+					Alert alert = new Alert(AlertType.NONE, "Report with id:" +id +" updated correctly.",ButtonType.OK);
+					alert.showAndWait();
+					progressBar.setVisible(false);
+				} catch (FhirClientConnectionException e) {
+					Alert alertConnection= new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",ButtonType.OK);
+					alertConnection.showAndWait();
+					progressBar.setVisible(false);
+				} catch (IOException e) {
+					e.printStackTrace();
+					Alert alertPDF= new Alert(AlertType.ERROR, "Error in the creation of the PDF.\nPlease retry.",ButtonType.OK);
+					alertPDF.showAndWait();
+					progressBar.setVisible(false);
+				}
 			}
 		});
 		
@@ -229,6 +281,7 @@ public class LoadResultsController extends BasicController{
 		
 		
 	}	
+	
 	
 	private boolean emptyFields() {
 		if (bodycodeField.getText().isBlank() || bodycodeField.getText().isEmpty() ||

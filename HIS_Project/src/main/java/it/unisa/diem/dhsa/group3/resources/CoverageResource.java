@@ -1,7 +1,5 @@
 package it.unisa.diem.dhsa.group3.resources;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.hl7.fhir.exceptions.FHIRException;
@@ -26,12 +24,12 @@ public class CoverageResource extends BaseResource {
 	private String PATIENT = "";
 
 	@CsvBindByName
-	//@CsvDate("yyyy")
-	private String START_YEAR;
+	@CsvDate("yyyy")
+	private Date START_YEAR;
 
 	@CsvBindByName
-	//@CsvDate("yyyy")
-	private String END_YEAR;
+	@CsvDate("yyyy")
+	private Date END_YEAR;
 
 	@CsvBindByName
 	private String PAYER = "";
@@ -39,11 +37,6 @@ public class CoverageResource extends BaseResource {
 	@CsvBindByName
 	private String OWNERSHIP = "";
 	
-	@Override
-	public String getId() {
-		//return PATIENT.concat(PAYER).concat(String.valueOf(END_YEAR.getDate()+1900));
-		return PATIENT.concat(PAYER).concat(END_YEAR);
-	}
 
 	public String getPATIENT() {
 		return PATIENT;
@@ -53,19 +46,19 @@ public class CoverageResource extends BaseResource {
 		PATIENT = pATIENT;
 	}
 
-	public String getSTART_YEAR() {
+	public Date getSTART_YEAR() {
 		return START_YEAR;
 	}
 
-	public void setSTART_YEAR(String sTART_YEAR) {
+	public void setSTART_YEAR(Date sTART_YEAR) {
 		START_YEAR = sTART_YEAR;
 	}
 
-	public String getEND_YEAR() {
+	public Date getEND_YEAR() {
 		return END_YEAR;
 	}
 
-	public void setEND_YEAR(String eND_YEAR) {
+	public void setEND_YEAR(Date eND_YEAR) {
 		END_YEAR = eND_YEAR;
 	}
 
@@ -87,7 +80,7 @@ public class CoverageResource extends BaseResource {
 
 	@Override
 	public String toString() {
-		return "CoverageResource [Id=" + this.getId() + ", PATIENT=" + PATIENT + ", START_YEAR=" + START_YEAR
+		return "CoverageResource [Id=" + super.getId() + ", PATIENT=" + PATIENT + ", START_YEAR=" + START_YEAR
 				+ ", END_YEAR=" + END_YEAR + ", PAYER=" + PAYER + ", OWNERSHIP=" + OWNERSHIP + "]";
 	}
 
@@ -97,7 +90,7 @@ public class CoverageResource extends BaseResource {
 		Coverage cov = new Coverage();
 
 		// set identifier
-		cov.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(this.getId());
+		cov.addIdentifier().setSystem("https://github.com/synthetichealth/synthea").setValue(super.getId());
 		// set the patient who is the subscriber of the policy (field: patient)
 		// The party who has signed-up for or 'owns' the contractual relationship to the
 		// policy
@@ -108,12 +101,7 @@ public class CoverageResource extends BaseResource {
 
 		// set period during which the coverage is in force (fields: start_year,
 		// end_year)
-		SimpleDateFormat d = new SimpleDateFormat("yyyy");
-		try {
-			cov.setPeriod(new Period().setStart(d.parse(START_YEAR)).setEnd(d.parse(END_YEAR)));
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
+		cov.setPeriod(new Period().setStart(START_YEAR).setEnd(END_YEAR));
 		
 
 		// set the organization owner of the insurance coverage (field: payer)

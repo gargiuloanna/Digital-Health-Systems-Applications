@@ -152,13 +152,22 @@ public class ImagingStudyResource extends BaseResource {
 		im.setStarted(DATE);
 
 		// add patient (the subject of the imaging study)--> (field: patient)
+		try {
 		Patient patient = (Patient) Memory.getMemory().get(PatientResource.class).get(PATIENT);
 		im.setSubject(new Reference(patient));
+		}catch (NullPointerException e){
+		im.setSubject(new Reference().setIdentifier(new Identifier().setValue(PATIENT)));
+		}
+		
 
 		// add encounter reference --> (field: encounter)
+		try {
 		Encounter encounter = (Encounter) Memory.getMemory().get(EncounterResource.class).get(ENCOUNTER);
 		im.setEncounter(new Reference(encounter));
-
+		} catch (NullPointerException e){
+		im.setEncounter(new Reference().setIdentifier(new Identifier().setValue(ENCOUNTER)));
+		}
+		
 		// add body (SNOMED codification) --> the anatomical structures examined in the
 		// series sequence -->(fields: bodysite_code, bodysite_description)
 		comp.setBodySite(new Coding("https://www.snomed.org/", BODYSITE_CODE, BODYSITE_DESCRIPTION));

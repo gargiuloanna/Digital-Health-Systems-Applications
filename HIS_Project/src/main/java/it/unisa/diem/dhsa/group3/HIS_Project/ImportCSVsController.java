@@ -77,11 +77,11 @@ public class ImportCSVsController extends BasicController {
 	private CheckBox checkBox;
 	
 	@FXML
-	private ImageView progressBar;
+	private ImageView progressFilter;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		progressBar.setVisible(false);
+		progressFilter.setVisible(false);
 		encounterField.disableProperty()
 				.bind((patientField.textProperty().isEmpty()).or(organizationField.textProperty().isEmpty())
 						.or(providerField.textProperty().isEmpty()).or(payerField.textProperty().isEmpty()));
@@ -124,7 +124,7 @@ public class ImportCSVsController extends BasicController {
 
 	@FXML
 	void send_clicked(ActionEvent event) {
-		progressBar.setVisible(true);
+		progressFilter.setVisible(true);
 		boolean patientOK = check(patientField, "patient", true);
 		boolean organizationOK = check(organizationField, "organization", true);
 		boolean payerOK = check(payerField, "payers", true);
@@ -139,7 +139,7 @@ public class ImportCSVsController extends BasicController {
 		encounterOK = check(encounterField, "encounter", organizationOK && patientOK && providerOK && payerOK);
 		providerOK = check(providerField, "provider", organizationOK);
 		
-		check(transactionField, "payer transition", patientOK && payerOK);
+		check(transactionField, "payer transitions", patientOK && payerOK);
 		check(proceduresField, "procedures ", patientOK && encounterOK);
 		check(conditionField, "conditions", patientOK && encounterOK);
 		check(allergyField, "allergies", patientOK && encounterOK);
@@ -151,7 +151,7 @@ public class ImportCSVsController extends BasicController {
 		check(devicesField, "devices", patientOK && encounterOK);
 		try{
 			ServerInteraction.sendToServer(checkBox.isSelected());
-			progressBar.setVisible(false);
+			progressFilter.setVisible(false);
 		} catch (FhirClientConnectionException e) {
 			error("Error in the connection with the server");
 		}

@@ -6,7 +6,6 @@ import org.hl7.fhir.r4.model.Account;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Coverage;
-import org.hl7.fhir.r4.model.Coverage.CostToBeneficiaryComponent;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.Meta;
@@ -242,20 +241,12 @@ public class EncounterResource extends BaseResource {
 		e.addParticipant().setIndividual(new Reference(practitioner));
 
 		// set payer with its coverage through the account resource
-		String id = PATIENT.concat(PAYER).concat(String.valueOf(START.getYear() + 1900));
 		Organization payer = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
-		Coverage cov = (Coverage) Memory.getMemory().get(CoverageResource.class).get(id);
 		Account a = new Account();
-		if (cov != null) {
-			cov.getCostToBeneficiary().add(
-					new CostToBeneficiaryComponent().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE)));
-			a.addCoverage().setCoverage(new Reference(cov));
-		} else {
-			Coverage c = new Coverage();
-			c.setPolicyHolder(new Reference(payer));
-			c.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE));
-			a.addCoverage().setCoverage(new Reference(c));
-		}
+		Coverage c = new Coverage();
+		c.setPolicyHolder(new Reference(payer));
+		c.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE));
+		a.addCoverage().setCoverage(new Reference(c));
 		e.getAccount().add(new Reference(a));
 
 		// set concepts representing classification of patient encounter (field:
