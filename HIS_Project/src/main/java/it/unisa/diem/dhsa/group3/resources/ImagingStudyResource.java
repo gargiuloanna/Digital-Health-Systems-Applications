@@ -37,6 +37,12 @@ public class ImagingStudyResource extends BaseResource {
 
 	@CsvBindByName
 	private String SOP_DESCRIPTION = "";
+	
+	
+
+	public ImagingStudyResource() {
+		super();
+	}
 
 	public ImagingStudyResource(Date dATE, String pATIENT, String eNCOUNTER, String bODYSITE_CODE,
 			String bODYSITE_DESCRIPTION, String mODALITY_CODE, String mODALITY_DESCRIPTION, String sOP_CODE,

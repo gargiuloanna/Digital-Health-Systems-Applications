@@ -26,9 +26,13 @@ public class ServerInteraction {
 	//to upload CSVs on server
 	public static void sendToServer(boolean update) throws FhirClientConnectionException{
 		Memory mem = Memory.getMemory();
-		for (Map<String, Resource> map : mem.values())
-			for (String key : map.keySet()) 
-				uploadResource(key, map.get(key), update);					
+		for (Map<String, Resource> map : mem.values()) {
+			for (String key : map.keySet()) {
+				uploadResource(key, map.get(key), update);
+				}
+				
+			}
+		
 	}
 
 

@@ -136,8 +136,9 @@ public class ImportCSVsController extends BasicController {
 			clearAll();
 			return;
 		}
-		encounterOK = check(encounterField, "encounter", organizationOK && patientOK && providerOK && payerOK);
 		providerOK = check(providerField, "provider", organizationOK);
+		encounterOK = check(encounterField, "encounter", organizationOK && patientOK && providerOK && payerOK);
+		
 		
 		check(transactionField, "payer transitions", patientOK && payerOK);
 		check(proceduresField, "procedures ", patientOK && encounterOK);

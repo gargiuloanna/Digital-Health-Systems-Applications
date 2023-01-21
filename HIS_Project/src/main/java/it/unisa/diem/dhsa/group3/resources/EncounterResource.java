@@ -191,7 +191,7 @@ public class EncounterResource extends BaseResource {
 	}
 
 	private Encounter.EncounterStatus getStatus() {
-		if (STOP.after(START) && STOP != null)
+		if (STOP != null && STOP.after(START))
 			return Encounter.EncounterStatus.FINISHED;
 		if (START != null && STOP == null)
 			return Encounter.EncounterStatus.INPROGRESS;
@@ -199,7 +199,7 @@ public class EncounterResource extends BaseResource {
 			return Encounter.EncounterStatus.NULL;
 		if (START.after(DateTimeType.now().getValue()))
 			return Encounter.EncounterStatus.PLANNED;
-		if (STOP.before(START))
+		if (STOP != null && STOP.before(START))
 			return Encounter.EncounterStatus.CANCELLED;
 		else
 			return Encounter.EncounterStatus.UNKNOWN;
@@ -245,7 +245,8 @@ public class EncounterResource extends BaseResource {
 		Account a = new Account();
 		Coverage c = new Coverage();
 		c.setPolicyHolder(new Reference(payer));
-		c.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE));
+		if(PAYER_COVERAGE != null) {
+			c.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE));}
 		a.addCoverage().setCoverage(new Reference(c));
 		e.getAccount().add(new Reference(a));
 
