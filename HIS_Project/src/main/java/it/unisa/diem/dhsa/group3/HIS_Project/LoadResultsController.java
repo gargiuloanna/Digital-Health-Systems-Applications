@@ -2,6 +2,7 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 
 
 import org.hl7.fhir.r4.model.DiagnosticReport;
+import org.hl7.fhir.r4.model.ImagingStudy;
 
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 
@@ -130,10 +131,8 @@ public class LoadResultsController extends BasicController{
     		fileLabel.setText(path);
     		startDicomViewer(chosen.getCanonicalPath());
     	} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -162,7 +161,9 @@ public class LoadResultsController extends BasicController{
     			bodycodeField.getText(), bodydesField.getText(), modcodeField.getText(), moddesField.getText(),
     			sopcodeField.getText(), sopdesField.getText());
     	
-    	//set fields
+    	//upload imaging study on server
+    	uploadImagingStudy((ImagingStudy) i.createResource());
+    	//set fields    	
     	r.setPatientId(patientField.getText());
     	r.setEncounter(encounterField.getText());
     	r.setServiceRequest(MRIController.selectedlist.get(0).getId()); 
@@ -205,7 +206,7 @@ public class LoadResultsController extends BasicController{
 			@Override
 			public void handle(WorkerStateEvent event) {
 				String id = upload.getValue();
-				Alert alert = new Alert(AlertType.NONE, "Request with id:" +id +" updated correctly.",
+				Alert alert = new Alert(AlertType.NONE, "Report with id:" +id +" updated correctly.",
 						ButtonType.OK);
 				alert.showAndWait();
 				progressBar.setVisible(false);
@@ -229,6 +230,54 @@ public class LoadResultsController extends BasicController{
 		
 		
 	}	
+	private void uploadImagingStudy(ImagingStudy s){
+		Service<String> upload = new Service<String>() {
+
+			@Override
+			protected Task<String> createTask() throws FhirClientConnectionException {
+				
+				return new Task<String>() {
+
+					@Override
+					protected String call() throws FhirClientConnectionException {
+						return ServerInteraction.uploadResource(s.getIdentifierFirstRep().getValue(), s, true);
+
+					};
+				};
+			}
+		};
+	
+		upload.start();
+		upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				String id = upload.getValue();
+				Alert alert = new Alert(AlertType.NONE, "Study with id:" +id +" updated correctly.",
+						ButtonType.OK);
+				alert.showAndWait();
+				progressBar.setVisible(false);
+			}
+		});
+		
+		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (upload.getException() != null
+						&& upload.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+							ButtonType.OK);
+					alert.showAndWait();
+				}
+
+			}
+		});
+		
+		
+		
+		
+	}	
+	
 	
 	private boolean emptyFields() {
 		if (bodycodeField.getText().isBlank() || bodycodeField.getText().isEmpty() ||
