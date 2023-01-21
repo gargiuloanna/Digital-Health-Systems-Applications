@@ -40,6 +40,7 @@ public class DiagnosticReportResource extends BaseResource {
 	String path;
 	String patientId;
 	byte[] pixelData;
+	int frames = 0;
 	
 	
 	public String getServiceRequest() {
@@ -144,6 +145,7 @@ public class DiagnosticReportResource extends BaseResource {
 			byte[] bytes = baos.toByteArray();
 			
 			this.pixelData = bytes;
+			this.frames = dicomImage.getPageCount();
 
 		}
 	}
@@ -202,6 +204,7 @@ public class DiagnosticReportResource extends BaseResource {
 		// frames height modality
 		media.addPartOf(imagingStudyRef);
 		media.setSubject(patientRef);
+		media.setFrames(this.frames);
 		content.setData(pixelData);
 		media.setContent(content);
 		dr.addMedia(new DiagnosticReport.DiagnosticReportMediaComponent(new Reference(media)));
