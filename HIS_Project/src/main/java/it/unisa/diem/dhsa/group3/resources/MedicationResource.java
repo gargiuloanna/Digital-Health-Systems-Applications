@@ -2,13 +2,16 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
+import org.hl7.fhir.r4.model.Account;
 import org.hl7.fhir.r4.model.Annotation;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Coverage;
 import org.hl7.fhir.r4.model.Encounter;
 import org.hl7.fhir.r4.model.MedicationKnowledge;
 import org.hl7.fhir.r4.model.MedicationStatement;
 import org.hl7.fhir.r4.model.Money;
+import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
@@ -209,9 +212,18 @@ public class MedicationResource extends BaseResource {
 		// add reason (fields: reasoncode, reasondescription)
 		med.addReasonCode(new CodeableConcept(new Coding("https://www.snomed.org/", REASONCODE, REASONDESCRIPTION)));
 
+		//add account to code payer and payer_coverage
+		Account ac = new Account();
+		Coverage c = new Coverage();
+		Organization payer = (Organization) Memory.getMemory().get(PayerResource.class).get(PAYER);
+		c.setPolicyHolder(new Reference(payer));
+		c.addCostToBeneficiary().setValue(new Money().setCurrency("USD").setValue(PAYER_COVERAGE));
+		ac.addCoverage().setCoverage(new Reference(c));
+		med.addContained(ac);
+		
 		// add expenses and total_cost as annotation
 		Annotation a = new Annotation();
-		a.setText("Number of times the prescription was filled is = " + DISPENSES + "The total cost of the prescription, including all dispenses is:  " + TOTALCOST+ "$");
+		a.setText("Number of times the prescription was filled is = " + DISPENSES +" The total cost of the prescription, including all dispenses is:  " + TOTALCOST+ "$");
 		med.addNote(a);
 		
 		return med;
