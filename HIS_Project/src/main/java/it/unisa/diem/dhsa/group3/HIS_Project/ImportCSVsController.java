@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.CSV.LoadCSV;
 import it.unisa.diem.dhsa.group3.state.Memory;
 import it.unisa.diem.dhsa.group3.state.ServerInteraction;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -151,8 +154,7 @@ public class ImportCSVsController extends BasicController {
 		check(imagingStudiesField, "imaging studies", patientOK && encounterOK);
 		check(devicesField, "devices", patientOK && encounterOK);
 		try{
-			ServerInteraction.sendToServer(checkBox.isSelected());
-			progressFilter.setVisible(false);
+			upload();
 		} catch (FhirClientConnectionException e) {
 			error("Error in the connection with the server");
 		}
@@ -229,4 +231,61 @@ public class ImportCSVsController extends BasicController {
 		Text text = (Text) hbox.getChildren().get(0);
 		return text.getText();
 	}
+	
+	private void upload() {
+    	
+				
+    	Service<String> upload = new Service<String>() {
+
+			@Override
+			protected Task<String> createTask() throws FhirClientConnectionException {
+				return new Task<String>() {
+
+					@Override
+					protected String call() throws FhirClientConnectionException {
+						ServerInteraction.sendToServer(checkBox.isSelected());
+						return "uploaded";
+
+					};
+				};
+			}
+		};
+
+		upload.start();
+		upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Alert alert = new Alert(AlertType.NONE, "Resources uploaded correctly.",ButtonType.OK);
+				alert.showAndWait();
+				progressFilter.setVisible(false);
+				
+			}
+		});
+		
+		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (upload.getException() != null && upload.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",ButtonType.OK);
+					alert.showAndWait();
+				}
+
+			}
+		});
+		
+		
+		upload.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Alert alert = new Alert(AlertType.ERROR, "cancelled.",ButtonType.OK);
+				alert.showAndWait();
+				
+			}
+			
+		});
+		
+    }
 }
