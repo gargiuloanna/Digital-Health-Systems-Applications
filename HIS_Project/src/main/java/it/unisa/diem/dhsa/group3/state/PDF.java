@@ -25,6 +25,7 @@ import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.resources.DiagnosticReportResource;
 
 public final class PDF {
+	
 	private static PDDocument doc = new PDDocument();
 	private static PDPage page = new PDPage();
 	private static PDPageContentStream content;
@@ -41,10 +42,9 @@ public final class PDF {
 				metaData.put("patient surname", "");
 				if (!humanName.getGiven().isEmpty()) {
 					index = humanName.getGiven().size() - 1;
-					metaData.put("patient name", humanName.getGiven().get(index).getValueNotNull()); // it insert the last name in the field of the names
+					metaData.put("patient name", humanName.getGiven().get(index).getValueNotNull());
 					metaData.put("patient surname", humanName.getFamily());
 				}
-				//insert the prefix in the corresponding field
 				metaData.put("patient name prefix", "");
 				if (!humanName.getPrefix().isEmpty()) {
 					index = humanName.getPrefix().size() - 1;
@@ -171,6 +171,7 @@ public final class PDF {
 		content.showText("Hospital Information System - Diagnostic Report");
 		content.endText();
 		
+		//add text
 		List<String> report = new ArrayList<>();
 		report.add("PATIENT: " + metaData.get("patient name prefix") + " " 
 				+ metaData.get("patient name") + " " 
@@ -187,30 +188,15 @@ public final class PDF {
 		report.add("Technique: " + metaData.get("technique"));
 		report.add("Findings:" + metaData.get("findings"));
 		report.add("Conlusion:" + metaData.get("impression"));
-		//writeNewLine(-40, "Refer to Request  n. " + metaData.get("service request id"));
+		
 		writeText(-10,  report);
-		//writeNewLine(-30, metaData.get("imaging study modality") + " - " + metaData.get("body site"));
 		
-		//writeNewLine(-30, "(ENCOUNTER ID) " + metaData.get("encounter id"));
-		
-		//writeNewLine(-40, "Comparison: " + metaData.get("comparison"));
-		
-		//writeNewLine(-30, "Technique: " + metaData.get("technique"));
-		
-		//writeNewLine(-30, "Findings:");
-		//writeNewLine(-20, metaData.get("findings"));
-		
-		
-		//writeNewLine(-20, "Conlusion:");
-		//writeNewLine(-20, metaData.get("impression"));
-		
-		
-		//writeNewLine(-30, "Doctor: " + metaData.get("requester"));
 		content.endText();
 		content.close();
 		doc.save("Report" + metaData.get("service request id") + ".pdf");
 		doc.close();
 	}
+	
 	public static void  loadPDF(String report_number) throws IOException {
 		File file = new File("Report" + report_number + ".pdf");
 		Desktop desktop = Desktop.getDesktop();
