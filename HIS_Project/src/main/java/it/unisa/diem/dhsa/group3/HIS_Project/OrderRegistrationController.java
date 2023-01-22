@@ -1,8 +1,8 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.ZoneId;
-
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -119,14 +119,21 @@ public class OrderRegistrationController extends BasicController{
     
     @FXML
     void sendOrderPressed(ActionEvent event) {
+    	Boolean checkDate = datepicker.getValue().isBefore(LocalDate.now());
     	if(emptyFields()) {
-    		Alert alert = new Alert(AlertType.ERROR, "Fill all the fields",
-					ButtonType.OK);
+    		Alert alert = new Alert(AlertType.ERROR, "Fill all the fields",ButtonType.OK);
 			alert.showAndWait();
+    	}
+    	else {
+    	if(checkDate) {
+    		Alert alert = new Alert(AlertType.ERROR, "Select a valid date",ButtonType.OK);
+    		alert.showAndWait();
     	}else {
     		progressBar.setVisible(true);
     		getPatient();
     	}
+    	}
+    	
     }
     
     
