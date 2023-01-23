@@ -2,6 +2,10 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the specialty of the Practitioner, encoded with the SNOMED standard.
+ *
+ */
 public enum ProviderSpecialtySNOMED {
 
 	_394814009, /* GENERAL PRACTICE */
@@ -81,6 +85,12 @@ public enum ProviderSpecialtySNOMED {
 	_309445003, /* nurse - ANESTHESIOLOGY ASSISTANT */
 	NULL;
 
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the enumeration value for the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static ProviderSpecialtySNOMED fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
@@ -232,6 +242,11 @@ public enum ProviderSpecialtySNOMED {
 		throw new FHIRException("Unknown PracticeSettingCode code '" + codeString + "'");
 	}
 
+	/**
+	 * Utility function to map the specialty from references read in the CSV file.
+	 * @param description the description of the specialty read from the CSV
+	 * @return the enum value associated with the description
+	 */
 	public static ProviderSpecialtySNOMED fromCSV(String description) {
 		
 		if (description == null || "".equalsIgnoreCase(description))
@@ -394,6 +409,10 @@ public enum ProviderSpecialtySNOMED {
 
 	}
 
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case _394814009:
@@ -552,10 +571,18 @@ public enum ProviderSpecialtySNOMED {
 		return null;
 	}
 
+	/**
+	 * The function gets the system used to encode the specialty.
+	 * @return the system used to encode the specialty -- SNOMED
+	 */	
 	public String getSystem() {
 		return "https://www.snomed.org/";
 	}
 
+	/**
+	 * The function gets a human readable description associated with the specialty of the practinioner.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch (this) {
 		case _394814009:

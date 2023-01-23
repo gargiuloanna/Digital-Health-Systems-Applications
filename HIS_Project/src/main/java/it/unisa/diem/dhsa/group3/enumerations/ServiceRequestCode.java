@@ -2,6 +2,10 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the MRI request codes of the ServiceRequest.
+ *
+ */
 public enum ServiceRequestCode {
 	
 	_241601008, /*Magnetic resonance imaging of head*/
@@ -14,7 +18,12 @@ public enum ServiceRequestCode {
 	_6007000, /*Magnetic resonance imaging of chest*/
 	 NULL;
 	
-	
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the enumeration value for the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static ServiceRequestCode fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString)) return NULL;
 		if("Magnetic resonance imaging of head".equals(codeString)) return _241601008;
@@ -28,6 +37,10 @@ public enum ServiceRequestCode {
 		throw new FHIRException("Unknown PracticeSettingCode code '" + codeString + "'");
 	}
 	
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case _241601008: return "241601008"; /*Magnetic resonance imaging of head*/
@@ -43,10 +56,18 @@ public enum ServiceRequestCode {
 		return null;
 	}
 	
+	/**
+	 * The function gets the system used to encode the request.
+	 * @return the system used to encode the request code -- SNOMED
+	 */	
 	public String getSystem() {
 		return "http://snomed.info/sct";
 	}
 	
+	/**
+	 * The function gets a human readable description associated with the request code of the ServiceRequest.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch (this) {
 		case _241601008: return "Magnetic resonance imaging of head";

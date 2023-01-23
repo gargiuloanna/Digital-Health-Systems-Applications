@@ -2,10 +2,26 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the race of the patient.
+ *
+ */
 public enum OMBRaceCategories {
 
-	_10025, _20289, _20545, _20768, _21063, _21311, NULL;
+	_10025, /*AMERICAN INDIAND OR ALASKA NATIVE*/
+	_20289, /*ASIAN*/
+	_20545, /*BLACK OR AFRICAN AMERICAN*/
+	_20768, /*NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER*/
+	_21063, /*WHITE*/
+	_21311, /*OTHER RACE*/
+	NULL;
 
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the race associated with the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static OMBRaceCategories fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
@@ -25,7 +41,11 @@ public enum OMBRaceCategories {
 
 	}
 
-	
+	/**
+	 * Utility function to map the race of the patient from references read in the CSV file.
+	 * @param description the description of the race read from the CSV
+	 * @return the enum value associated with the description
+	 */
 	public static OMBRaceCategories fromCSV(String description) {
 		if (description == null || "".equals(description))
 			return NULL;
@@ -43,6 +63,10 @@ public enum OMBRaceCategories {
 			
 	}
 
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case _10025:
@@ -63,10 +87,18 @@ public enum OMBRaceCategories {
 		return null;
 	}
 
+	/**
+	 * The function gets the system used to encode the race of the patient.
+	 * @return the system used to encode the race of the patient
+	 */
 	public String getSystem() {
 		return "urn:oid:2.16.840.1.113883.6.238";
 	}
 
+	/**
+	 * The function gets a human readable description associated with the race code.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch (this) {
 		case _10025:

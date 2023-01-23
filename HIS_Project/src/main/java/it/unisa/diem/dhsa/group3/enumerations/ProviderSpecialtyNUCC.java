@@ -2,6 +2,10 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the specialty of the Practitioner, encoded with the NUCC standard.
+ *
+ */
 public enum ProviderSpecialtyNUCC {
 	
 	_208D00000X, /*GENERAL PRACTICE*/
@@ -38,7 +42,7 @@ public enum ProviderSpecialtyNUCC {
 	_208600000X, /*GENERAL SURGERY*/
 	_207RA0401X, /*ADDICTION MEDICINE*/
 	_208G00000X, /*THORACIC SURGERY*/
-	_235Z00000X,/*SPEECH LANGUAGE PATHOLOGIST*/
+	_235Z00000X, /*SPEECH LANGUAGE PATHOLOGIST*/
 	_207RP1001X, /*PULMONARY DISEASE*/
 	_208VP0014X, /*INTERVENTIONAL PAIN MANAGEMENT*/
 	_207Y00000X, /*OTOLARYNGOLOGY*/
@@ -53,10 +57,10 @@ public enum ProviderSpecialtyNUCC {
 	_204E00000X, /*MAXILLOFACIAL SURGERY*/
 	_2084P0805X, /*GERIATRIC PSYCHIATRY*/
 	_207K00000X, /*ALLERGY/IMMUNOLOGY*/
-	_207RC0001X,/*CARDIAC ELECTROPHYSIOLOGY*/
+	_207RC0001X, /*CARDIAC ELECTROPHYSIOLOGY*/
 	_207RN0300X, /*NEPHROLOGY*/
 	_208VP0000X, /*PAIN MANAGEMENT*/
-	_225X00000X,/*OCCUPATIONAL THERAPY*/
+	_225X00000X, /*OCCUPATIONAL THERAPY*/
 	_207VX0201X, /*GYNECOLOGICAL ONCOLOGY*/
 	_207RC0200X, /*CRITICAL CARE (INTENSIVISTS)*/
 	_207QS1201X, /*SLEEP MEDICINE*/
@@ -64,21 +68,27 @@ public enum ProviderSpecialtyNUCC {
 	_207L00000X, /*ANESTHESIOLOGY*/
 	_367500000X, /*CERTIFIED REGISTERED NURSE ANESTHETIST*/
 	_208C00000X, /*COLORECTAL SURGERY (PROCTOLOGY)*/
-	_NA,/*UNDEFINED PHYSICIAN TYPE (SPECIFY)*/
-	_2081H0002X,/*HOSPICE/PALLIATIVE CARE*/
+	_NA,		 /*UNDEFINED PHYSICIAN TYPE (SPECIFY)*/
+	_2081H0002X, /*HOSPICE/PALLIATIVE CARE*/
 	_207RX0202X, /*MEDICAL ONCOLOGY*/
-	_204C00000X,/*SPORTS MEDICINE*/
+	_204C00000X, /*SPORTS MEDICINE*/
 	_207RH0000X, /*HEMATOLOGY*/
 	_207T00000X, /*NEUROSURGERY*/
 	_207U00000X, /*NUCLEAR MEDICINE*/
 	_2085R0204X, /*INTERVENTIONAL RADIOLOGY*/
-	_207RA0001X,/*ADVANCED HEART FAILURE AND TRANSPLANT CARDIOLOGY*/
+	_207RA0001X, /*ADVANCED HEART FAILURE AND TRANSPLANT CARDIOLOGY*/
 	_2086X0206X, /*SURGICAL ONCOLOGY*/
 	_2084N0600X, /*NEUROPSYCHIATRY*/
 	_367H00000X, /*ANESTHESIOLOGY ASSISTANT*/
 	_2083P0901X, /*PREVENTATIVE MEDICINE*/
 	NULL;
 	
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the enumeration value for the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static ProviderSpecialtyNUCC fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
@@ -230,6 +240,11 @@ public enum ProviderSpecialtyNUCC {
 		throw new FHIRException("Unknown ProviderSpecialtyNUCC code '" + codeString + "'");
 	}
 
+	/**
+	 * Utility function to map the specialty from references read in the CSV file.
+	 * @param description the description of the specialty read from the CSV
+	 * @return the enum value associated with the description
+	 */
 	public static ProviderSpecialtyNUCC fromCSV(String description) {
 		
 		if (description == null || "".equalsIgnoreCase(description))
@@ -389,6 +404,10 @@ public enum ProviderSpecialtyNUCC {
 		return null;
 	}
 	
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case _208D00000X:
@@ -543,10 +562,18 @@ public enum ProviderSpecialtyNUCC {
 		return null;
 	}
 
+	/**
+	 * The function gets the system used to encode the specialty.
+	 * @return the system used to encode the specialty -- NUCC
+	 */	
 	public String getSystem() {
 		return "https://www.nucc.org/";
 	}
 
+	/**
+	 * The function gets a human readable description associated with the specialty of the practitioner.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch (this) {
 		case _208D00000X:

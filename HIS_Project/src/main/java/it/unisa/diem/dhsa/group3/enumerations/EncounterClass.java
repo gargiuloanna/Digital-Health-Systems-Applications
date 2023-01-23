@@ -2,19 +2,29 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the class of the encounter.
+ *
+ */
 public enum EncounterClass {
-	IMP, /*INPATIENT ENCOUNTER*/
-	AMB, /*AMBULATORY*/
+	
+	IMP, 	/*INPATIENT ENCOUNTER*/
+	AMB, 	/*AMBULATORY*/
 	OBSENC, /*OBSERVATION ENCOUNTER*/
-	EMER, /*EMERCENCY*/
-	VR, /*VIRTUAL*/
-	HH, /*HOME HEALTH*/
-	WEL, /*WELLNESS -- TODO: FITTIZIO PER IL MOMENTO, RIVEDERE COME FARE */
-	URG, /*URGENT CARE -- TODO: FITTIZIO PER IL MOMENTO, RIVEDERE COME FARE */
-	OTP, /*OUTPATIENT -- TODO: FITTIZIO PER IL MOMENTO, RIVEDERE COME FARE */
-	NULL; /* NO INFORMATION */
+	EMER, 	/*EMERCENCY*/
+	VR, 	/*VIRTUAL*/
+	HH, 	/*HOME HEALTH*/
+	WEL, 	/*WELLNESS*/
+	URG, 	/*URGENT CARE*/
+	OTP, 	/*OUTPATIENT*/
+	NULL; 	/*NO INFORMATION*/
 	
-	
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the enumeration value for the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static EncounterClass fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString)) 
 			return NULL;
@@ -40,6 +50,11 @@ public enum EncounterClass {
 		throw new FHIRException("Unknown EncounterClass code '" + codeString + "'");
 	}
 	
+	/**
+	 * Utility function to map the encounter class from references read in the CSV file.
+	 * @param description the description of the class read from the CSV
+	 * @return the enum value associated with the description
+	 */
 	public static EncounterClass fromCSV(String description) {
 		if (description == null || "".equals(description)) 
 			return NULL;
@@ -59,6 +74,10 @@ public enum EncounterClass {
 		return null;
 	}
 	
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case NULL : return null;
@@ -75,10 +94,18 @@ public enum EncounterClass {
 		return null;
 	}
 	
+	/**
+	 * The function gets the system used to encode the encounter class.
+	 * @return the system used to encode the encounter class
+	 */	
 	public String getSystem() {
 		return "https://terminology.hl7.org/4.0.0/CodeSystem-v3-ActCode.html";
 	}
 	
+	/**
+	 * The function gets a human readable description associated with the class of the encounter.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch(this) {
 		case NULL : return "No information";

@@ -2,6 +2,10 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the request codes of the ServiceRequest.
+ *
+ */
 public enum ServiceSequestAllCode {
 	
 	_104001, /*Excision of lesion of patella*/
@@ -1006,7 +1010,12 @@ public enum ServiceSequestAllCode {
 	_6670003, /*Closure of external fistula of trachea*/
 	 NULL;
 	
-	
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the enumeration value for the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static ServiceSequestAllCode fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
@@ -2013,6 +2022,10 @@ public enum ServiceSequestAllCode {
 		throw new FHIRException("Unknown PracticeSettingCode code '" + codeString + "'");
 	}
 	
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case _104001: return "104001"; /*Excision of lesion of patella*/
@@ -3020,10 +3033,18 @@ public enum ServiceSequestAllCode {
 		return null;
 	}
 	
+	/**
+	 * The function gets the system used to encode the request code.
+	 * @return the system used to encode the request code -- SNOMED
+	 */	
 	public String getSystem() {
 		return "http://snomed.info/sct";
 	}
 	
+	/**
+	 * The function gets a human readable description associated with the request code of the ServiceRequest.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch (this) {
 		case _104001: return "Excision of lesion of patella";

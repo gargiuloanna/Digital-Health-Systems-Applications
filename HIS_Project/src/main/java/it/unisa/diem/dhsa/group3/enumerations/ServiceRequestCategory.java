@@ -2,6 +2,10 @@ package it.unisa.diem.dhsa.group3.enumerations;
 
 import org.hl7.fhir.exceptions.FHIRException;
 
+/**
+ * Enumeration to represent valid values for the category of the ServiceRequest.
+ *
+ */
 public enum ServiceRequestCategory {
 	
 	 _386053000, /*Evaluation procedure (procedure)*/
@@ -13,7 +17,12 @@ public enum ServiceRequestCategory {
 	 _387713003, /*Surgical procedure*/
 	 NULL;
 	
-	
+	/**
+	 * The function gets the enum value associated with the string.
+	 * @param codeString the code to evaluate
+	 * @return the enumeration value for the code
+	 * @throws FHIRException if the code is not known
+	 */
 	public static ServiceRequestCategory fromCode(String codeString) throws FHIRException {
 		if (codeString == null || "".equals(codeString))
 			return NULL;
@@ -35,6 +44,10 @@ public enum ServiceRequestCategory {
 		throw new FHIRException("Unknown PracticeSettingCode code '" + codeString + "'");
 	}
 	
+	/**
+	 * The function maps the enum value to a string representing the code.
+	 * @return the string associated with the code
+	 */
 	public String toCode() {
 		switch (this) {
 		case _386053000:
@@ -57,10 +70,18 @@ public enum ServiceRequestCategory {
 		return null;
 	}
 	
+	/**
+	 * The function gets the system used to encode the category.
+	 * @return the system used to encode the category -- SNOMED
+	 */	
 	public String getSystem() {
 		return "http://snomed.info/sct";
 	}
 	
+	/**
+	 * The function gets a human readable description associated with the category of the ServiceRequest.
+	 * @return the description associated with the code
+	 */
 	public String getDefinition() {
 		switch (this) {
 		case _386053000:
