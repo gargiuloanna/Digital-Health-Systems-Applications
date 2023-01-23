@@ -74,9 +74,6 @@ public class PatientAdmissionController extends BasicController {
 	private TextField StateField;
 
 	@FXML
-	private TextField CoverageField;
-
-	@FXML
 	private TextField DriversField;
 
 	@FXML
@@ -123,9 +120,6 @@ public class PatientAdmissionController extends BasicController {
 
 	@FXML
 	private TextField CityField;
-
-	@FXML
-	private TextField ExpensesField;
 
 	@FXML
 	private TextField SuffixField;
@@ -398,7 +392,6 @@ public class PatientAdmissionController extends BasicController {
 		PrefixField.clear();;
 		CountyField.clear();
 		StateField.clear();
-		CoverageField.clear();
 		DriversField.clear();
 		MaidenField.clear();
 		ZIPField.clear();
@@ -409,7 +402,6 @@ public class PatientAdmissionController extends BasicController {
 		BirthPlaceField.clear();
 		searchPatientField.clear();
 		CityField.clear();
-		ExpensesField.clear();
 		SuffixField.clear();
 		IdentifierField.clear();
 		PassportField.clear();
@@ -559,7 +551,7 @@ public class PatientAdmissionController extends BasicController {
 	}
 
 	private PatientResource createPatient() throws NumberFormatException, ParseException {
-		float lat = 0, lon = 0, expenses = 0, coverage = 0;
+		float lat = 0, lon = 0;
 		String id;
 		if (IdentifierField.getText().isEmpty())
 			id = null;
@@ -569,10 +561,6 @@ public class PatientAdmissionController extends BasicController {
 			lat = Float.parseFloat(LATField.getText());
 		if (!LONField.getText().isEmpty())
 			lon = Float.parseFloat(LONField.getText());
-		if (!ExpensesField.getText().isEmpty())
-			expenses = Float.parseFloat(ExpensesField.getText());
-		if (!CoverageField.getText().isEmpty())
-			coverage = Float.parseFloat(CoverageField.getText());
 
 		return new PatientResource(id, BirthDatePicker.getValue(), DeathDatePicker.getValue(), SSNField.getText(),
 				DriversField.getText(), PassportField.getText(), PrefixField.getText(), FirstNameField.getText(),
@@ -580,7 +568,7 @@ public class PatientAdmissionController extends BasicController {
 				maritalCode(MaritalMenuButton.getText()), raceCode(RacePicker.getText()),
 				ethnicityCode(EthnicityPicker.getText()), gender(), BirthPlaceField.getText(), AddressField.getText(),
 				CityField.getText(), StateField.getText(), CountyField.getText(), ZIPField.getText(), lat, lon,
-				expenses, coverage);
+				Float.valueOf("0.0"), Float.valueOf("0.0"));
 	}
 
 }
