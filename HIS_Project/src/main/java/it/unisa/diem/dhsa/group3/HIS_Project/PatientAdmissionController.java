@@ -463,7 +463,7 @@ public class PatientAdmissionController extends BasicController {
 																										// deprecated or
 																										// don't work
 			DeathDatePicker.setDisable(true);
-		} // else System.out.println("he is not dead");
+		} 
 
 		// set gender
 		if (patient.getGender().equals(AdministrativeGender.FEMALE))
@@ -496,7 +496,6 @@ public class PatientAdmissionController extends BasicController {
 		if (patient.getExtensionByUrl(url) != null) {
 			CodeableConcept code = (CodeableConcept) patient.getExtensionByUrl(url)
 					.getExtensionByUrl("http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category").getValue();
-			System.out.println(code.getCoding());
 			EthnicityPicker.setText(code.getCodingFirstRep().getDisplay());
 			EthnicityPicker.setDisable(true);
 		}
