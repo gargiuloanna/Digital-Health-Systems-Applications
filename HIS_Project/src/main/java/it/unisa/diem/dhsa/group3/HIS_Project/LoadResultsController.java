@@ -1,6 +1,5 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
-
 import org.hl7.fhir.r4.model.DiagnosticReport;
 import org.hl7.fhir.r4.model.ImagingStudy;
 import org.hl7.fhir.r4.model.Patient;
@@ -38,6 +37,10 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 
+/**
+ * Controller for the LoadResults interface.
+ *
+ */
 public class LoadResultsController extends BasicController{
 
 	@FXML

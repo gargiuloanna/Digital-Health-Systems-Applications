@@ -30,6 +30,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Controller for the MRI interface.
+ *
+ */
 public class MRIController extends BasicController {
 	/* MRI */
 	@FXML

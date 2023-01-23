@@ -8,6 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+/**
+ * Basic Controller for the application
+ *
+ */
 public abstract class BasicController implements Initializable {
 
 	@Override
@@ -15,7 +19,12 @@ public abstract class BasicController implements Initializable {
 		return;
 	}
 	
-	 @FXML
+	/**
+	 * Switches the current interface to the opening page of the application.
+	 * @param event
+	 * @throws IOException
+	 */
+	@FXML
 	void SwitchToOpeningPage(ActionEvent event) throws IOException {
 		App.setRoot("OpeningPage");
 		}

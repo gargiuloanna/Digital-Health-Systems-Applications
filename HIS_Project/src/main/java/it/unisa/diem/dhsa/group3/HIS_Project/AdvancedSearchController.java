@@ -1,6 +1,7 @@
 package it.unisa.diem.dhsa.group3.HIS_Project;
 
 import java.io.IOException;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -32,6 +33,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 
+/**
+ * Controller for the AdvancedSearch interface.
+ *
+ */
 public class AdvancedSearchController extends BasicController {
 
 	@FXML
@@ -63,6 +68,9 @@ public class AdvancedSearchController extends BasicController {
 
 	private ObservableList<PatientListElem> list;
 
+	/**
+	 * Initializes the controller so that the fields show the correct information.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		progressBar.setVisible(false);
@@ -94,6 +102,10 @@ public class AdvancedSearchController extends BasicController {
 		App.setRoot("PatientAdmission");
 	}
 	
+	/**
+	 * Searches for the patient that satisfies the given criteria (name, surname, birth date, death date) on the server.
+	 * @param event
+	 */
 	@FXML
 	void searchPatient(ActionEvent event) {
 		getPatients(new Service<List<Resource>>() {
@@ -118,6 +130,10 @@ public class AdvancedSearchController extends BasicController {
 
 	}
 
+	/**
+	 * Searches for all the patient present on the server.
+	 * @param event
+	 */
 	@FXML
 	void viewAll(ActionEvent event) {
 		getPatients(new Service<List<Resource>>() {
@@ -142,6 +158,11 @@ public class AdvancedSearchController extends BasicController {
 
 	}
 
+	/**
+	 * Executes the given service and displays alert boxes if the search was unsuccessful and fills the fields of the TableView if the 
+	 * patients are found.
+	 * @param service the service to execute
+	 */
 	private void getPatients(Service<List<Resource>> service) {
 
 		list.clear();

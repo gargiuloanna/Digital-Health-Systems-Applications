@@ -4,6 +4,10 @@ package it.unisa.diem.dhsa.group3.HIS_Project;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
+/**
+ * Controller for the OpeningPage interface.
+ *
+ */
 public class OpeningPageController {
 
     

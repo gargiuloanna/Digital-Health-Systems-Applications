@@ -30,6 +30,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 
+/**
+ * Controller for the OrderRegistration interface.
+ *
+ */
 public class OrderRegistrationController extends BasicController{
 
 	@FXML

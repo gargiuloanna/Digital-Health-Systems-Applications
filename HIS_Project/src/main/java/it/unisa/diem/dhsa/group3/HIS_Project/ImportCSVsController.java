@@ -26,6 +26,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
+/**
+ * Controller for the ImportCSVs interface.
+ *
+ */
 public class ImportCSVsController extends BasicController {
 
 	@FXML

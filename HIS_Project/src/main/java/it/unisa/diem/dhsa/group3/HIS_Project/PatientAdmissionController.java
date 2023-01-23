@@ -44,6 +44,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
+/**
+ * Controller for the PatientAdmission interface.
+ *
+ */
 public class PatientAdmissionController extends BasicController {
 
 	@FXML
@@ -145,6 +149,9 @@ public class PatientAdmissionController extends BasicController {
 	@FXML
 	private ImageView progressBar;
 
+	/**
+	 *Initializes the controller so that the fields display the correct information.
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
@@ -180,11 +187,20 @@ public class PatientAdmissionController extends BasicController {
 
 	}
 
+	/**
+	 * The button click moves the current page of the application to AdvancedSearch.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void AdvancedSearch(ActionEvent event) throws IOException {
 		App.setRoot("AdvancedSearch");
 	}
 
+	/**
+	 * Searches for the patient with the given identifier on the server.
+	 * @param event
+	 */
 	@FXML
 	void searchCode(ActionEvent event) {
 		if (searchPatientField.getText().isEmpty() || searchPatientField.getText().isBlank()) {
@@ -195,6 +211,11 @@ public class PatientAdmissionController extends BasicController {
 
 	}
 
+	/**
+	 * Utility function to search the patient with the given id on the server.
+	 * If found, the function fills the textfields of the application.
+	 * Otherwise, it displays alert boxes to signal that the search was unsuccessful.
+	 */
 	private void getSetPatient() {
 
 		Service<Resource> getResource = new Service<Resource>() {
@@ -248,11 +269,18 @@ public class PatientAdmissionController extends BasicController {
 
 	}
 
+	/**
+	 * Loads a patient of the server with the given information.
+	 * @param event
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws ParseException
+	 */
 	@FXML
 	void submitPressed(ActionEvent event) throws IOException, NumberFormatException, ParseException {
 		PatientResource p = createPatient();
 		progressBar.setVisible(true);
-		Patient patient = (Patient) p.createResource(); // TODO add generation of ID
+		Patient patient = (Patient) p.createResource(); 
 		
 		
 		Service<String> upload = new Service<String>() {
@@ -303,6 +331,10 @@ public class PatientAdmissionController extends BasicController {
 
 	}
 
+	/**
+	 * Displays the chosen marital status on the menu button.
+	 * @param event
+	 */
 	@FXML
 	void maritalSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
@@ -310,6 +342,11 @@ public class PatientAdmissionController extends BasicController {
 	}
 	
 
+	/**
+	 * Gets the appropriate representation for the Marital Code, that can be lated inserted as a field of the patient on the server.
+	 * @param maritalText the marital status chosen
+	 * @return the associated code
+	 */
 	private String maritalCode(String maritalText) {
 		switch (maritalText) {
 		case "Marriage contract has been declared null and to not have existed":
@@ -337,13 +374,21 @@ public class PatientAdmissionController extends BasicController {
 		}
 	}
 	
-
+	/**
+	 * Gets the appropriate representation for the race, that can be lated inserted as a field of the patient on the server.
+	 * @param raceText the race chosen
+	 * @return the associated code
+	 */
 	private String raceCode(String raceText) {
 		String[] splitRace = raceText.split(" ");
 		return splitRace[0].toLowerCase();
 	}
 	
 
+	/**
+	 * Displays the chosen race on the menu button.
+	 * @param event
+	 */
 	@FXML
 	void raceSelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
@@ -351,12 +396,21 @@ public class PatientAdmissionController extends BasicController {
 	}
 	
 
+	/**
+	 * Displays the chosen ethnicity on the menu button.
+	 * @param event
+	 */
 	@FXML
 	void ethnicitySelected(ActionEvent event) {
 		MenuItem e = (MenuItem) event.getSource();
 		EthnicityPicker.setText(e.getText());
 	}
 
+	/**
+	 * Gets the appropriate representation for the Ehnicity code, that can be lated inserted as a field of the patient on the server.
+	 * @param ethnicityText the ethnicity chosen
+	 * @return the associated code
+	 */
 	private String ethnicityCode(String ethnicityText) {
 		switch (ethnicityText) {
 		case "Not Hispanic or Latino":
@@ -368,6 +422,9 @@ public class PatientAdmissionController extends BasicController {
 		}
 	}
 
+	/**
+	 * Enables the fields so that the user can write information in the fields.
+	 */
 	private void enableFields() {
 		TabPane.setDisable(false);
 		IDField.setDisable(false);
@@ -376,6 +433,9 @@ public class PatientAdmissionController extends BasicController {
 		searchPatientField.setDisable(true);
 	}
 
+	/**
+	 * Enables the fields so that the user can no longer write information in the fields.
+	 */
 	private void disableFields() {
 		searchPatientField.clear();
 		searchPatientField.setDisable(false);
@@ -385,6 +445,9 @@ public class PatientAdmissionController extends BasicController {
 		progressBar.setVisible(false);
 	}
 	
+	/**
+	 * Clears the fields from any information.
+	 */
 	private void clearAll() {
 		LONField.clear();
 		LastNameField.clear();
@@ -410,6 +473,10 @@ public class PatientAdmissionController extends BasicController {
 	}
 	
 
+	/**
+	 * Fills the fields with the information associated with the patient.
+	 * @param patient
+	 */
 	void fillFields(Patient patient) {
 
 		IdentifierField.setText(patient.getIdentifierFirstRep().getValue());
@@ -539,6 +606,10 @@ public class PatientAdmissionController extends BasicController {
 
 	}
 
+	/**
+	 * Geets the appropriate representation for the gender of the patient.
+	 * @return the code associated with the gender selected
+	 */
 	private String gender() {
 		if (MgenderButton.isSelected())
 			return "M";
@@ -549,6 +620,12 @@ public class PatientAdmissionController extends BasicController {
 		return null;
 	}
 
+	/**
+	 * Creates a PatientResource starting from the information contained in the fields.
+	 * @return the PatientResource associated with the fields.
+	 * @throws NumberFormatException
+	 * @throws ParseException
+	 */
 	private PatientResource createPatient() throws NumberFormatException, ParseException {
 		float lat = 0, lon = 0;
 		String id;
