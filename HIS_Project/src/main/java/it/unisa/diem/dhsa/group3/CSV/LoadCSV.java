@@ -4,7 +4,7 @@ import it.unisa.diem.dhsa.group3.resources.*;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
 /**
- * The class allows to read a bunch of CSVs and sava them in the Memory map
+ * The class allows to read a bunch of CSVs and saves them in the Memory map
  *
  */
 public final class LoadCSV {
