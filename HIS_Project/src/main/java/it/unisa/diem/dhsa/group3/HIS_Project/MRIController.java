@@ -78,7 +78,6 @@ public class MRIController extends BasicController {
 
 		getAll();
 
-		// potrebbe smettere di funzionare se garbage collected
 		ViewOrders.selectionModelProperty().getValue().selectedIndexProperty()
 				.addListener((prop, oldValue, newValue) -> {
 					selectedlist.clear();
@@ -91,7 +90,7 @@ public class MRIController extends BasicController {
 	}
 
 	/**
-	 * Filters the service requests of the orders list showing the ones that are after the selected date
+	 * Filters by date the service requests of the orders list, showing the ones with a date after or equal to the one selected
 	 * @param event
 	 */
 	@FXML
@@ -175,6 +174,9 @@ public class MRIController extends BasicController {
 
 	/* --- Private Service Methods --- */
 	
+    /**
+     * Searches the orders list for patients with the given identifier.
+     */
 	private void getPatientStudies() { 
 		 ObservableList<ServiceRequestResource> tmp = FXCollections.observableArrayList();
 		 for (ServiceRequestResource r : orderslist) {
@@ -186,7 +188,12 @@ public class MRIController extends BasicController {
 	 }
 	
 	 
-
+	/**
+	 * Searches the server for service requests with date after or equal to the one given as an input.
+	 * @param date the filter to use to search for service requests
+	 * It displays an alert box showing whether at least a request was found or not.
+	 * It displays an alert box in case of error during the connection to the server
+	 */
 	private void getOccurrence(DateTimeType date) {
 		Service<List<Resource>> service = new Service<List<Resource>>() {
 
@@ -241,13 +248,22 @@ public class MRIController extends BasicController {
 		});
 	}
 
-	
+	/**
+	 * Sets the primary page to the fxml given as input.
+	 * @param event
+	 * @param fxml the name of the fxml file to switch to
+	 * @throws IOException
+	 */
 	private void handle(ActionEvent event, String fxml) throws IOException {
 		App.setRoot("LoadResults");
 
 	}
 
 	
+	/**
+	 * Gets all the service requests from the server.
+	 * It displays an alert box in the case of error during the connection with the server
+	 */
 	private void getAll() {
 		Service<List<ServiceRequest>> getResource = new Service<List<ServiceRequest>>() {
 

@@ -88,7 +88,7 @@ public class ImportCSVsController extends BasicController {
 	
 	/**
 	 * Initializes the controller taking into account the dependencies of the data
-	 * it disables the fields that depends from others and add binding mechanism
+	 * it disables the fields that depend on others and adds a binding mechanism
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -177,9 +177,7 @@ public class ImportCSVsController extends BasicController {
 	}
 
 
-	/**
-	 * _____________________Private Methods_________________________
-	 */
+	/*_____________________Private Methods_________________________*/
 	
 	/**
 	 * Allow the user to choose the file associated to the resource
@@ -202,6 +200,11 @@ public class ImportCSVsController extends BasicController {
 
 	}
 
+	/**
+	 * Defines the logic to open the OS File Chooser.
+	 * @return the path of the file chosen
+	 * @throws IOException
+	 */
 	private String file_chooser() throws IOException {
 		FileChooser chooser = new FileChooser();
 		File filename = chooser.showOpenDialog(null);
@@ -211,11 +214,22 @@ public class ImportCSVsController extends BasicController {
 		throw new NullPointerException("file not selected");
 	}
 
+	/**
+	 * Utility method to display an error alert box.
+	 * @param message the message to display
+	 */
 	private void error(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
 		alert.showAndWait();
 	}
 
+	/**
+	 * Checks that the file can be read, then reads it.
+	 * @param field the field corresponding to the file to read
+	 * @param message message representing the accepted resource
+	 * @param condition condition that represents if the dependencies are furfilled or not
+	 * @return
+	 */
 	private boolean check(TextField field, String message, boolean condition) {
 
 		if (field.getText().isEmpty() |!condition)
@@ -253,6 +267,11 @@ public class ImportCSVsController extends BasicController {
 		transactionField.clear();
 	}
 
+	/**
+	 * Gets the text associated with the field
+	 * @param field
+	 * @return
+	 */
 	private String get_source_text(TextField field) {
 		HBox hbox = (HBox) field.getParent();
 		Text text = (Text) hbox.getChildren().get(0);
@@ -260,7 +279,8 @@ public class ImportCSVsController extends BasicController {
 	}
 	
 	/**
-	 * Upload all the resources on the server specifying if the user want to update them
+	 * Uploads all the resources on the server specifying if the user want to update them.
+	 * It displays an alert box if the upload was successful, or in the case of an error in the connection with the server
 	 */
 	private void upload() {
     	

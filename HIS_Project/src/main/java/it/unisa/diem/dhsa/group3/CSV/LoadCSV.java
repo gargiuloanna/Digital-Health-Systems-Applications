@@ -10,7 +10,7 @@ import it.unisa.diem.dhsa.group3.state.Memory;
 public final class LoadCSV {
 	
 	/**
-	 * The method get the FHIR class corresponding to the CSV read and inserts in the Memory map the corresponding class, and the resources
+	 * The method gets the FHIR class corresponding to the CSV read and inserts in the Memory map the corresponding class, and the resources
 	 * created reading the CSV.
 	 * @param filename  the file to read
 	 * @param resource	the string associated with the name of the resource

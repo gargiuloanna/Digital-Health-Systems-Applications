@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisa.diem.dhsa.group3.HIS_Project.OrderRegistrationController">
 	<children>
       <VBox prefHeight="200.0" prefWidth="400.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -147,7 +147,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="category" mnemonicParsing="false" onAction="#categoryMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Category" textFill="WHITE">
+                              <MenuButton fx:id="category" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Category" textFill="WHITE">
                                  <items>
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Evaluation procedure (procedure)" />
                                     <MenuItem mnemonicParsing="false" onAction="#categorySelected" text="Social service procedure (procedure)" />
@@ -193,7 +193,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="status" mnemonicParsing="false" onAction="#statusMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Status" textFill="WHITE">
+                              <MenuButton fx:id="status" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Status" textFill="WHITE">
                                  <items>
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Draft" />
                                     <MenuItem mnemonicParsing="false" onAction="#statusSelected" text="Active" />
@@ -222,7 +222,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="intent" mnemonicParsing="false" onAction="#intentMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Intent" textFill="WHITE">
+                              <MenuButton fx:id="intent" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Intent" textFill="WHITE">
                                  <items>
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Proposal" />
                                     <MenuItem mnemonicParsing="false" onAction="#intentSelected" text="Plan" />
@@ -253,7 +253,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="request" mnemonicParsing="false" onAction="#requestMenu" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Code" textFill="WHITE">
+                              <MenuButton fx:id="request" mnemonicParsing="false" prefHeight="26.0" prefWidth="232.0" style="-fx-background-color: #4c43aa;" text="Select Code" textFill="WHITE">
                                  <items>
                                     <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="Magnetic resonance imaging of head" />
                                     <MenuItem mnemonicParsing="false" onAction="#requestSelected" text="MRI of bladder" />

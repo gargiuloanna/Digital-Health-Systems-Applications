@@ -72,24 +72,6 @@ public class OrderRegistrationController extends BasicController{
     private ImageView progressBar;
    
     
-    @FXML
-    void categoryMenu(ActionEvent event) {
-
-    }
-    @FXML
-    void intentMenu(ActionEvent event) {
-
-    }
-    @FXML
-    void statusMenu(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void requestMenu(ActionEvent event) {
-
-    }
-    
     /**
 	 *Initializes the controller.
 	 */
@@ -140,19 +122,18 @@ public class OrderRegistrationController extends BasicController{
     }
 
     /**
-     * Checks if the date of the request is setted and if it is after today 
-     * and search the patient on the server through the getPatient method
+     * Performs checks to confirm that the fields are filled and that the date is valid.
+     * If the fields are filled, and the date is after today, searches the patient on the server through the getPatient method.
      * @param event
      */
     @FXML
     void sendOrderPressed(ActionEvent event) {
-    	Boolean checkDate = datepicker.getValue().isBefore(LocalDate.now());
     	if(emptyFields()) {
     		Alert alert = new Alert(AlertType.ERROR, "Fill all the fields",ButtonType.OK);
 			alert.showAndWait();
     	}
     	else {
-	    	if(checkDate) {
+	    	if(datepicker.getValue().isBefore(LocalDate.now())) {
 	    		Alert alert = new Alert(AlertType.ERROR, "Select a valid date",ButtonType.OK);
 	    		alert.showAndWait();
 	    	}else {
@@ -179,6 +160,7 @@ public class OrderRegistrationController extends BasicController{
 
     /**
      * Upload a FHIR ServiceRequest Resource on the server
+     * It displays an alert box to show whether the upload was successful or there was an error duirng the connection to the server.
      * @param r - ServiceRequestResource to upload
      */
     private void upload(ServiceRequestResource r) {
@@ -245,7 +227,7 @@ public class OrderRegistrationController extends BasicController{
     
     /**
      * Check if all the fields are filled or not
-     * @return True if all fields are filled, otherwise False
+     * @return True if one of the fiels is empty, false otherwise.
      */
     private boolean emptyFields() {
     	if(IDField.getText().isBlank() || IDField.getText().isEmpty() ||
@@ -265,8 +247,8 @@ public class OrderRegistrationController extends BasicController{
     }
     
     /**
-     * Search a Patient on the server using the getResource method of ServiceInteraction Class
-     * if the search is successful, it loads the service request on the server through upload method
+     * Searches for the patient to associate with the service request on the server.
+     * if the search is successful, it returns the patient found.
      * Otherwise, it displays alert box if an error occurs(patient not found or connection aborted)
      */
     private void getPatient() {

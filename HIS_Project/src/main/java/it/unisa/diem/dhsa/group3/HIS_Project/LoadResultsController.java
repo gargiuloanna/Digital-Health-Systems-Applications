@@ -107,7 +107,7 @@ public class LoadResultsController extends BasicController{
 	}
 	
 	/**
-	 * Creates the PDF report of the exam
+	 * Uploads the exam on the server.
 	 * @param event
 	 */
     @FXML
@@ -121,7 +121,8 @@ public class LoadResultsController extends BasicController{
     }
 
     /**
-     * 
+     * Allows the user to choose only a DICOM file to insert in the report to create.
+     * It displays the name of the file in a label after the selection, and opens the DicomViewer to display the image
      * @param event
      */
     @FXML
@@ -147,6 +148,12 @@ public class LoadResultsController extends BasicController{
     	
     }   
     
+    /**
+     * private function to execute the command to start the DICOM viewer.
+     * @param path the path of the file
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private static void startDicomViewer(String path) throws IOException, InterruptedException {
     	String[] cmd = {"java", "-jar", "src/main/resources/it/unisa/diem/dhsa/group3/HIS_Project/DicomView.jar", path};
 		Process pr =  Runtime.getRuntime().exec(cmd);
@@ -154,7 +161,8 @@ public class LoadResultsController extends BasicController{
     }
 	
 	/**
-	 * 
+	 * Defines the DiagnosticReport and the ImagingStudy resources to create and upload on the server.
+	 * Then, it uploads the resources.
 	 */
     private void uploadReport() {
     	//define report
@@ -185,6 +193,8 @@ public class LoadResultsController extends BasicController{
     	
 	/**
 	 * Uploads on the server the ImagingStudy resource.
+	 * After successfully uploading the ImagingStudy, calls a function to upload the DiagnosticReport.
+	 * It displays an alert to confirm the upload on the server, or in the case of an error in the connection to the server.
 	 * @param r - DiagnosticReportResource
 	 * @param i - ImagingStudyResource
 	 */
@@ -243,7 +253,8 @@ public class LoadResultsController extends BasicController{
 	
 	/**
 	 * Uploads diagnostic report on the server.
-	 * It displays Alert boxes if the PDF report is created or not.
+	 * It displays Alert boxes to show whether the PDF report is created or not, if the resource is uploaded correctly, or if there
+	 * was an error during the connection to the server.
 	 * @param r - DiagnosticReportResource
 	 * @param i - ImagingStudy
 	 */
@@ -312,7 +323,8 @@ public class LoadResultsController extends BasicController{
 	}	
 	
 	/**
-	 * @return True all fields are filled, Otherwise False. 
+	 * The function checks if there are any empty fields.
+	 * @return True if one of the fields is empty, false otherwise. 
 	 */
 	private boolean emptyFields() {
 		if (bodycodeField.getText().isBlank() || bodycodeField.getText().isEmpty() ||
