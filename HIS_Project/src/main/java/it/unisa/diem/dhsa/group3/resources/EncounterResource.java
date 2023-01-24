@@ -2,6 +2,7 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import java.util.Date;
 
+
 import org.hl7.fhir.r4.model.Account;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -23,6 +24,11 @@ import com.opencsv.bean.CsvDate;
 import it.unisa.diem.dhsa.group3.enumerations.EncounterClass;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * 
+ * This class allows to map the FHIR Resource Encounter
+ *
+ */
 public class EncounterResource extends BaseResource {
 
 	@CsvBindByName
@@ -181,6 +187,10 @@ public class EncounterResource extends BaseResource {
 		REASONDESCRIPTION = rEASONDESCRIPTION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "EncounterResource [Id=" + super.getId() + ", START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT
@@ -190,6 +200,10 @@ public class EncounterResource extends BaseResource {
 				+ ", REASONCODE=" + REASONCODE + ", REASONDESCRIPTION=" + REASONDESCRIPTION + "]";
 	}
 
+	/**
+	 * This method sets the status element of the encounter resource through the start and stop fields
+	 * @return the status from the EncounterStatus enumeration
+	 */
 	private Encounter.EncounterStatus getStatus() {
 		if (STOP != null && STOP.after(START))
 			return Encounter.EncounterStatus.FINISHED;
@@ -206,6 +220,10 @@ public class EncounterResource extends BaseResource {
 
 	}
 
+	/**
+	 * This method creates the Encounter Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Encounter Resource
+	 */
 	public Resource createResource() {
 
 		Encounter e = new Encounter();

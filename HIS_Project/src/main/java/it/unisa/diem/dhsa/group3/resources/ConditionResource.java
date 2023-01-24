@@ -10,6 +10,11 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * 
+ *  This class allows to map the FHIR Resource Condition 
+ *  
+ */
 public class ConditionResource extends BaseResource {
 
 	@CsvBindByName
@@ -80,12 +85,21 @@ public class ConditionResource extends BaseResource {
 		DESCRIPTION = dESCRIPTION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "ConditionResource [Id=" + super.getId() + ", START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT + ", ENCOUNTER="
 				+ ENCOUNTER + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + "]";
 	}
 
+
+	/**
+	 * This method creates the Condition Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Condition Resource 
+	 */
 	@Override
 	public Resource createResource() {
 

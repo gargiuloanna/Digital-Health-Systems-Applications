@@ -15,7 +15,11 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
-
+/**
+ * 
+ * This class allows to map the FHIR Resource AllergyIntollerance
+ * 
+ */
 public class AllergyIntoleranceResource extends BaseResource {
 
 	@CsvBindByName
@@ -38,6 +42,7 @@ public class AllergyIntoleranceResource extends BaseResource {
 	@CsvBindByName
 	private String DESCRIPTION = "";
 
+	
 	public Date getSTART() {
 		return START;
 	}
@@ -86,12 +91,20 @@ public class AllergyIntoleranceResource extends BaseResource {
 		DESCRIPTION = dESCRIPTION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "AllergyIntoleranceResource [Id=" + super.getId() + ", START=" + START + ", STOP=" + STOP + ", PATIENT="
 				+ PATIENT + ", ENCOUNTER=" + ENCOUNTER + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + "]";
 	}
-
+	
+	/**
+	 * This method creates the AllergyIntolerance Resource by mapping the fields of the correlated csv
+	 * @return the FHIR AllergyIntolerance Resource 
+	 */
 	@Override
 	public Resource createResource() {
 

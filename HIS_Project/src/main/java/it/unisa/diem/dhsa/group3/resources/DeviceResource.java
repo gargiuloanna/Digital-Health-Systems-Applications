@@ -8,7 +8,11 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
-
+/**
+ * 
+ * This class allows to map the FHIR Resource DeviceUseStatement
+ *
+ */
 public class DeviceResource extends BaseResource {
 
 	@CsvBindByName
@@ -90,12 +94,20 @@ public class DeviceResource extends BaseResource {
 		UDI = uDI;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "DeviceResource [Id=" + super.getId() + ",START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT
 				+ ", ENCOUNTER=" + ENCOUNTER + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + ", UDI=" + UDI + "]";
 	}
 
+	/**
+	 * This method creates the DeviceUseStatement Resource by mapping the fields of the correlated csv
+	 * @return the FHIR DeviceUseStatement Resource
+	 */
 	@Override
 	public Resource createResource() {
 

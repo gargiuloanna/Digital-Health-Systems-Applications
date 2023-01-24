@@ -2,6 +2,12 @@ package it.unisa.diem.dhsa.group3.resources;
 
 import com.opencsv.bean.CsvBindByName;
 
+/**
+ * 
+ * This class represent the base class to map the FHIR Resource Organization
+ *
+ */
+
 public abstract class BaseOrganization extends BaseResource{
 
 	@CsvBindByName
@@ -71,6 +77,10 @@ public abstract class BaseOrganization extends BaseResource{
 		REVENUE = rEVENUE;
 	}
 	
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "BaseOrganization [Id=" + super.getId() + ", NAME=" + NAME + ", ADDRESS=" + ADDRESS + ", CITY=" + CITY + ", ZIP=" + ZIP

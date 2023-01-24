@@ -18,6 +18,11 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * 
+ * This class allows to map the FHIR Resource Coverage
+ *
+ */
 public class CoverageResource extends BaseResource {
 
 	@CsvBindByName
@@ -78,12 +83,21 @@ public class CoverageResource extends BaseResource {
 		OWNERSHIP = oWNERSHIP;
 	}
 
+
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "CoverageResource [Id=" + super.getId() + ", PATIENT=" + PATIENT + ", START_YEAR=" + START_YEAR
 				+ ", END_YEAR=" + END_YEAR + ", PAYER=" + PAYER + ", OWNERSHIP=" + OWNERSHIP + "]";
 	}
 
+	/**
+	 * This method creates the Coverage Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Coverage Resource
+	 */
 	@Override
 	public Resource createResource() {
 		
