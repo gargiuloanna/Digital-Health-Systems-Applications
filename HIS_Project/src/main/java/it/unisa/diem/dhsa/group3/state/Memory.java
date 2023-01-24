@@ -8,16 +8,25 @@ import java.util.Set;
 import org.hl7.fhir.r4.model.Resource;
 import it.unisa.diem.dhsa.group3.resources.BaseResource;
 
-//Class necessary to keep the memory of the operations performed in the application
+/*
+ * Class necessary to keep the memory of the operations performed in the application
+ */
 public class Memory implements Map<Class<? extends BaseResource>, Map<String, Resource>> {
 
 	static private Memory mem = null;
 	private Map<Class<? extends BaseResource>, Map<String, Resource>> resources;
 
+	/**
+	 * private constructor
+	 */
 	private Memory() {
 		resources = new HashMap<>();
 	}
 
+	/**
+	 * factory method
+	 * @return Memory object
+	 */
 	public static Memory getMemory() {
 		if (mem == null)
 			mem = new Memory();
