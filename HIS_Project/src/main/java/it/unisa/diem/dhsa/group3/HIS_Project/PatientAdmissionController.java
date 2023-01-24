@@ -607,7 +607,7 @@ public class PatientAdmissionController extends BasicController {
 	}
 
 	/**
-	 * Geets the appropriate representation for the gender of the patient.
+	 * Gets the appropriate representation for the gender of the patient.
 	 * @return the code associated with the gender selected
 	 */
 	private String gender() {
