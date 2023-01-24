@@ -27,6 +27,9 @@ import it.unisa.diem.dhsa.group3.enumerations.OMBEthnicityCategories;
 import it.unisa.diem.dhsa.group3.enumerations.OMBRaceCategories;
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 
+/**
+ * This class allows to map the FHIR Resource Patient
+ */
 public class PatientResource extends BaseResource {
 
 	@CsvBindByName
@@ -295,9 +298,40 @@ public class PatientResource extends BaseResource {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
+	/**
+	 * Public Empty Constructor
+	 */
 	public PatientResource() {
 	}
 
+	/**
+	 * Public Constructor with all parameters
+	 * @param iD - String
+	 * @param bIRTHDATE - Date
+	 * @param dEATHDATE - Date
+	 * @param sSN - String
+	 * @param dRIVERS - String
+	 * @param pASSPORT - String
+	 * @param pREFIX - String
+	 * @param fIRST - String
+	 * @param lAST - String
+	 * @param sUFFIX - String
+	 * @param mAIDEN - String
+	 * @param mARITAL - String
+	 * @param rACE - String
+	 * @param eTHNICITY - String
+	 * @param gENDER - String
+	 * @param bIRTHPLACE - String
+	 * @param aDDRESS - String
+	 * @param cITY - String
+	 * @param sTATE - String
+	 * @param cOUNTY - String
+	 * @param zIP - String
+	 * @param lAT - Float
+	 * @param lON - Float
+	 * @param hEALTHCARE_EXPENSES - Float
+	 * @param hEALTHCARE_COVERAGE - Float
+	 */
 	public PatientResource(String iD, Date bIRTHDATE, Date dEATHDATE, String sSN, String dRIVERS, String pASSPORT,
 			String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL, String rACE,
 			String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
@@ -329,6 +363,35 @@ public class PatientResource extends BaseResource {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
+	/**
+	 * Public Constructor with all parameters
+	 * @param iD - String
+	 * @param bIRTHDATE - LocalDate
+	 * @param dEATHDATE - LocalDate
+	 * @param sSN - String
+	 * @param dRIVERS - String
+	 * @param pASSPORT - String
+	 * @param pREFIX - String
+	 * @param fIRST - String
+	 * @param lAST - String
+	 * @param sUFFIX - String
+	 * @param mAIDEN - String
+	 * @param mARITAL - String
+	 * @param rACE - String
+	 * @param eTHNICITY - String
+	 * @param gENDER - String
+	 * @param bIRTHPLACE - String
+	 * @param aDDRESS - String
+	 * @param cITY - String
+	 * @param sTATE - String
+	 * @param cOUNTY - String
+	 * @param zIP - String
+	 * @param lAT - Float
+	 * @param lON - Float
+	 * @param hEALTHCARE_EXPENSES - Float
+	 * @param hEALTHCARE_COVERAGE - Float
+	 * @throws ParseException
+	 */
 	public PatientResource(String iD, LocalDate bIRTHDATE, LocalDate dEATHDATE, String sSN, String dRIVERS,
 			String pASSPORT, String pREFIX, String fIRST, String lAST, String sUFFIX, String mAIDEN, String mARITAL,
 			String rACE, String eTHNICITY, String gENDER, String bIRTHPLACE, String aDDRESS, String cITY, String sTATE,
@@ -367,6 +430,10 @@ public class PatientResource extends BaseResource {
 		HEALTHCARE_COVERAGE = hEALTHCARE_COVERAGE;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "PatientResource [Id=" + super.getId() + ", BIRTHDATE=" + BIRTHDATE + ", DEATHDATE=" + DEATHDATE
@@ -378,6 +445,10 @@ public class PatientResource extends BaseResource {
 				+ ", HEALTHCARE_COVERAGE=" + HEALTHCARE_COVERAGE + "]";
 	}
 
+	/**
+	 * This method creates the Patient Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Patient Resource
+	 */
 	@Override
 	public Resource createResource() {
 

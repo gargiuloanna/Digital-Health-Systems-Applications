@@ -18,6 +18,9 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * This class allows to map the FHIR Resource Observation
+ */
 public class ObservationResource extends BaseResource {
 
 	@CsvBindByName
@@ -108,6 +111,10 @@ public class ObservationResource extends BaseResource {
 		TYPE = tYPE;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "ObservationResource [Id=" + super.getId() + ",DATE=" + DATE + ", PATIENT=" + PATIENT + ", ENCOUNTER=" + ENCOUNTER + ", CODE="
@@ -115,6 +122,10 @@ public class ObservationResource extends BaseResource {
 				+ "]";
 	}
 	
+	/**
+	 * This method sets the status element of the observation resource through the date field
+	 * @return the status from the ObservationStatus enumeration
+	 */
 	private Observation.ObservationStatus getStatus() {
 		if (DATE == null)
 			return ObservationStatus.NULL;
@@ -123,6 +134,10 @@ public class ObservationResource extends BaseResource {
 
 	}
 
+	/**
+	 * This method creates the Observation Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Observation Resource
+	 */
 	@Override
 	public Resource createResource() {
 		

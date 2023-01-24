@@ -20,6 +20,9 @@ import it.unisa.diem.dhsa.group3.enumerations.ProviderSpecialtyNUCC;
 import it.unisa.diem.dhsa.group3.enumerations.ProviderSpecialtySNOMED;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * This class allows to map the providers to the FHIR Resource Practitioner
+ */
 public class ProviderResource extends BaseResource{
 	
 	@CsvBindByName
@@ -144,6 +147,10 @@ public class ProviderResource extends BaseResource{
 		UTILIZATION = uTILIZATION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "ProviderResource [Id=" + super.getId() + ", ORGANIZATION=" + ORGANIZATION + ", NAME=" + NAME + ", GENDER=" + GENDER
@@ -151,6 +158,11 @@ public class ProviderResource extends BaseResource{
 				+ ", ZIP=" + ZIP + ", LAT=" + LAT + ", LON=" + LON + ", UTILIZATION=" + UTILIZATION + "]";
 	}
 	
+	/**
+	 * This method creates the Practitioner Resource by mapping the fields of the providers csv
+	 * @return the FHIR Practitioner Resource
+	 */
+	@Override
 	public Resource createResource() {
 
 		Practitioner d = new Practitioner();

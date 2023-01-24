@@ -29,8 +29,12 @@ import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.Media;
 import org.hl7.fhir.r4.model.Media.MediaStatus;
 
+import java.util.Arrays;
 import java.util.Base64;
 
+/**
+ * This class allow to build the FHIR Resource DiagnosticReport
+ */
 public class DiagnosticReportResource extends BaseResource {
 
 	String serviceRequest;
@@ -99,6 +103,21 @@ public class DiagnosticReportResource extends BaseResource {
 		this.patientId = patientId;
 	}
 	
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
+	@Override
+	public String toString() {
+		return "DiagnosticReportResource [serviceRequest=" + serviceRequest + ", encounter=" + encounter
+				+ ", imagingStudy=" + imagingStudy + ", conclusion=" + conclusion + ", path=" + path + ", patientId="
+				+ patientId + ", pixelData=" + Arrays.toString(pixelData) + ", frames=" + frames + "]";
+	}
+
+	/**
+	 * This method takes all the frames of the image, turns them into byte arrays and associates them to the Object
+	 * @param file - File representing the image to associate with the DiagnosticReportResource object
+	 */
 	public void setImage(File file) {
 		this.path = file.getName();
 		try {
@@ -110,14 +129,25 @@ public class DiagnosticReportResource extends BaseResource {
 	}
 
 	
+	/**
+	 * Public Empty Constructor
+	 */
 	public DiagnosticReportResource() {
 		super();
 	}
 
+	/**
+	 * Public Constructor with fields mapped from FHIR Resources
+	 * @param path - String
+	 * @param service_request - FHIR Resource
+	 * @param imaging_study - FHIR Resource
+	 * @param conclusion - FHIR Resource
+	 */
 	public DiagnosticReportResource(String path, Resource service_request, Resource imaging_study, String conclusion) {
 
 	}
-
+	
+	
 	private void handlePixelData() {
 		
 		LoadOptions lo = new LoadOptions();
@@ -150,6 +180,11 @@ public class DiagnosticReportResource extends BaseResource {
 		}
 	}
 	
+	/**
+	 * This method tries to read an image
+	 * @param bytes to read
+	 * @throws RuntimeException
+	 */
 	public static void getImageFromByte(byte[] bytes) {
 		InputStream is = new ByteArrayInputStream(bytes);
 		System.out.println(is);
@@ -163,10 +198,18 @@ public class DiagnosticReportResource extends BaseResource {
 	}
 	
 
+	/**
+	 * This method create a byte array starting from pixelData field 
+	 * @return byte array of pixelData
+	 */
 	public byte[] getEncoded() {
 		return Base64.getEncoder().encode(this.pixelData);
 	}
 
+	/**
+	 * This method creates the DiagnosticReport Resource by mapping the fields of the DiagnosticReportResource Object
+	 * @return the FHIR DiagnosticReport Resource
+	 */
 	@Override
 	public Resource createResource() {
 		Reference serviceRequestRef = new Reference().setIdentifier(new Identifier().setValue(serviceRequest));

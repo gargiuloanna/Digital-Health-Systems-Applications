@@ -11,6 +11,9 @@ import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.codesystems.OrganizationType;
 import com.opencsv.bean.CsvBindByName;
 
+/**
+ * This class allows to map the Medical organizations to the FHIR Resource Organization
+ */
 public class OrganizationResource extends BaseOrganization {
 
 	@CsvBindByName
@@ -58,6 +61,10 @@ public class OrganizationResource extends BaseOrganization {
 		UTILIZATION = uTILIZATION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "OrganizationResource [Id=" + super.getId() + ", NAME=" + super.getNAME() + ", ADDRESS="
@@ -66,6 +73,11 @@ public class OrganizationResource extends BaseOrganization {
 				+ ", UTILIZATION=" + UTILIZATION + "]";
 	}
 
+	/**
+	 * This method creates the Organization Resource by mapping the fields of the organizations csv
+	 * @return the FHIR Organization Resource representing the Provider entity
+	 */
+	@Override
 	public Resource createResource() {
 
 		Organization o = new Organization(); 

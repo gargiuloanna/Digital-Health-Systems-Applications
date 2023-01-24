@@ -5,7 +5,9 @@ import org.hl7.fhir.r4.model.ContactPoint.ContactPointSystem;
 import org.hl7.fhir.r4.model.codesystems.OrganizationType;
 
 import com.opencsv.bean.CsvBindByName;
-
+/**
+ * This class allows to map the Payer organizations to the FHIR Resource Organization
+ */
 public class PayerResource extends BaseOrganization {
 
 	@CsvBindByName
@@ -173,6 +175,10 @@ public class PayerResource extends BaseOrganization {
 		REVENUE = rEVENUE;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "PayerResource [Id=" + super.getId() + ", NAME=" + super.getNAME() + ", ADDRESS=" + super.getADDRESS()
@@ -186,6 +192,10 @@ public class PayerResource extends BaseOrganization {
 				+ ", QOLS_AVG=" + QOLS_AVG + ", MEMBER_MONTHS=" + MEMBER_MONTHS + "]";
 	}
 
+	/**
+	 * This method creates the Organization Resource by mapping the fields of the payers csv
+	 * @return the FHIR Organization Resource representing the Payer entity
+	 */
 	public Resource createResource() {
 
 		Organization payer = new Organization();

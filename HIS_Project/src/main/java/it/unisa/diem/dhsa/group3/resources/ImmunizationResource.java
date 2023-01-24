@@ -18,6 +18,9 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * This class allows to map the FHIR Resource Immunization
+ */
 public class ImmunizationResource extends BaseResource {
 
 	@CsvBindByName
@@ -87,12 +90,20 @@ public class ImmunizationResource extends BaseResource {
 		BASE_COST = bASE_COST;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "ImmunizationResource [Id=" + super.getId() + ",DATE=" + DATE + ", PATIENT=" + PATIENT + ", ENCOUNTER="
 				+ ENCOUNTER + ", CODE=" + CODE + ", DESCRIPTION=" + DESCRIPTION + ", BASE_COST=" + BASE_COST + "]";
 	}
 
+	/**
+	 * This method sets the status element of the immunization resource through the date field
+	 * @return the status from the ImmunizationStatus enumeration
+	 */
 	private Immunization.ImmunizationStatus getStatus() {
 		if (DATE == null)
 			return Immunization.ImmunizationStatus.NULL;
@@ -105,6 +116,10 @@ public class ImmunizationResource extends BaseResource {
 
 	}
 
+	/**
+	 * This method creates the Immunization Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Immunization Resource
+	 */
 	@Override
 	public Resource createResource() {
 		Immunization i = new Immunization();

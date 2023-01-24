@@ -6,7 +6,9 @@ import org.hl7.fhir.r4.model.*;
 
 import it.unisa.diem.dhsa.group3.enumerations.ServiceRequestCategory;
 import it.unisa.diem.dhsa.group3.enumerations.ServiceRequestCode;
-
+/**
+ * This class allow to build the FHIR Resource ServiceRequest
+ */
 public class ServiceRequestResource extends BaseResource {
 
 	/*Each Service Request must have:
@@ -23,8 +25,8 @@ public class ServiceRequestResource extends BaseResource {
 	
 	private String id;
 	private String statusCode;
-	private String intentCode; //proposal, plan, or order... si può filtrare sull'intent
-	private String requestCode; //defines what is being requested... serve l'enumeration
+	private String intentCode; //proposal, plan, or order
+	private String requestCode; //defines what is being requested
 	private String subject_id; // the patient
 	private String encounter_id;
 	private String category;
@@ -34,7 +36,20 @@ public class ServiceRequestResource extends BaseResource {
 	private String details;
 
 	
-	
+	/**
+	 * Public Constructor
+	 * @param id - String
+	 * @param statusCode - String 
+	 * @param intentCode - String
+	 * @param requestCode - String
+	 * @param subject - String
+	 * @param encounter - String
+	 * @param category - String
+	 * @param date - Date
+	 * @param when - Date
+	 * @param requester - String
+	 * @param details - String
+	 */
 	public ServiceRequestResource(String id, String statusCode, String intentCode, String requestCode, String subject,
 			String encounter, String category, Date date, Date when, String requester, String details) {
 		super(id);
@@ -50,7 +65,10 @@ public class ServiceRequestResource extends BaseResource {
 		this.details = details;
 	}
 
-
+	/**
+	 * The method create a ServiceRequestResource Object mapping the fields of the FHIR ServiceRequest r
+	 * @param r is the FHIR ServiceRequest Resource
+	 */
 	public ServiceRequestResource(ServiceRequest r) {
 		super();
 		this.subject_id = r.getSubject().getIdentifier().getValue();
@@ -194,6 +212,10 @@ public class ServiceRequestResource extends BaseResource {
 	}
 	
 	
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "Request id:" + id + "\nStatus Code: " + statusCode + "\nIntent Code: " + intentCode
@@ -204,6 +226,10 @@ public class ServiceRequestResource extends BaseResource {
 
 
 
+	/**
+	 * This method creates the ServiceRequest Resource by mapping the fields of the ServiceRequestResource Object
+	 * @return the FHIR ServiceRequest Resource
+	 */
 	@Override
 	public Resource createResource() {
 		ServiceRequest r = new ServiceRequest();

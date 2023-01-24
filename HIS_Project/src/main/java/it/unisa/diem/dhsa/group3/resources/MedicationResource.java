@@ -22,6 +22,9 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * This class allows to map the FHIR Resource Medication
+ */
 public class MedicationResource extends BaseResource {
 
 	@CsvBindByName
@@ -169,6 +172,10 @@ public class MedicationResource extends BaseResource {
 		REASONDESCRIPTION = rEASONDESCRIPTION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "MedicationResource [START=" + START + ", STOP=" + STOP + ", PATIENT=" + PATIENT + ", PAYER=" + PAYER
@@ -178,6 +185,10 @@ public class MedicationResource extends BaseResource {
 	}
 
 
+	/**
+	 * This method creates the Medication Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Medication Resource
+	 */
 	@Override
 	public Resource createResource() {
 		

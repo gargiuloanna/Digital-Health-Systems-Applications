@@ -18,6 +18,9 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * This class allows to map the FHIR Resource Procedure
+ */
 public class ProcedureResource extends BaseResource {
 
 	@CsvBindByName
@@ -109,6 +112,10 @@ public class ProcedureResource extends BaseResource {
 		REASONDESCRIPTION = rEASONDESCRIPTION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "ProcedureResource [Id=" + super.getId() + ",DATE= " + DATE + ", PATIENT=" + PATIENT + ", ENCOUNTER="
@@ -116,6 +123,10 @@ public class ProcedureResource extends BaseResource {
 				+ ", REASONCODE=" + REASONCODE + ", REASONDESCRIPTION=" + REASONDESCRIPTION + "]";
 	}
 
+	/**
+	 * This method sets the status element of the procedure resource through the date field
+	 * @return the status from the ProcedureStatus enumeration
+	 */
 	private Procedure.ProcedureStatus getStatus() {
 		if (DATE == null)
 			return Procedure.ProcedureStatus.NULL;
@@ -128,6 +139,10 @@ public class ProcedureResource extends BaseResource {
 
 	}
 
+	/**
+	 * This method creates the Procedure Resource by mapping the fields of the correlated csv
+	 * @return the FHIR Procedure Resource
+	 */
 	@Override
 	public Resource createResource() {
 

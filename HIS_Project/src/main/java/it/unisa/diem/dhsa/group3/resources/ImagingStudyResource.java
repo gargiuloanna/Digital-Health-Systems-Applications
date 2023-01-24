@@ -8,6 +8,9 @@ import com.opencsv.bean.CsvDate;
 
 import it.unisa.diem.dhsa.group3.state.Memory;
 
+/**
+ * This class allows to map the FHIR Resource ImagingStudy
+ */
 public class ImagingStudyResource extends BaseResource {
 
 	@CsvBindByName
@@ -131,6 +134,10 @@ public class ImagingStudyResource extends BaseResource {
 		SOP_DESCRIPTION = sOP_DESCRIPTION;
 	}
 
+	/**
+	 * This method returns the string representation of the resource class
+	 * @return the string representation
+	 */
 	@Override
 	public String toString() {
 		return "ImagingStudyResource [Id =" + super.getId() + DATE + ", PATIENT=" + PATIENT + ", ENCOUNTER=" + ENCOUNTER
@@ -139,6 +146,10 @@ public class ImagingStudyResource extends BaseResource {
 				+ SOP_CODE + ", SOP_DESCRIPTION=" + SOP_DESCRIPTION + "]";
 	}
 
+	/**
+	 * This method creates the ImagingStudy Resource by mapping the fields of the correlated csv
+	 * @return the FHIR ImagingStudy Resource
+	 */
 	@Override
 	public Resource createResource() {
 

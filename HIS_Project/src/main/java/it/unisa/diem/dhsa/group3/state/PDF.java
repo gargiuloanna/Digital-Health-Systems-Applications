@@ -103,6 +103,11 @@ public final class PDF {
 		
 	}
 	
+	/**
+	 * The method write the text of the report contained in the @param report taking into account the bounds of the file.
+	 * @param offset set the space between one section and the following inside the report.
+	 * @param report contains a list of strings, each one representing a section of the report.
+	 */
 	private static void writeText(int offset, List<String> report) {
 		
 		try {
@@ -165,6 +170,11 @@ public final class PDF {
 		}
 	}	    
 	
+	/**
+	 * The method create and same the file PDF by adding an icon, the title and the text to it.  
+	 * @param metaData is a map containing the data fields of the report.
+	 * @throws IOException
+	 */
 	public static void createPDF(Map<String,String> metaData) throws IOException{
 		doc.addPage(page);
 		
@@ -208,6 +218,11 @@ public final class PDF {
 		doc.close();
 	}
 	
+	/**
+	 * The method load and show the file PDF already created.
+	 * @param report_number refers to the report id.
+	 * @throws IOException
+	 */
 	public static void  loadPDF(String report_number) throws IOException {
 		File file = new File("Report" + report_number + ".pdf");
 		Desktop desktop = Desktop.getDesktop();

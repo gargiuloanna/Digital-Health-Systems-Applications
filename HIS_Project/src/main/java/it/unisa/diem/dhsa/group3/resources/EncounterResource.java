@@ -25,9 +25,7 @@ import it.unisa.diem.dhsa.group3.enumerations.EncounterClass;
 import it.unisa.diem.dhsa.group3.state.Memory;
 
 /**
- * 
  * This class allows to map the FHIR Resource Encounter
- *
  */
 public class EncounterResource extends BaseResource {
 
@@ -219,11 +217,12 @@ public class EncounterResource extends BaseResource {
 			return Encounter.EncounterStatus.UNKNOWN;
 
 	}
-
+	
 	/**
 	 * This method creates the Encounter Resource by mapping the fields of the correlated csv
 	 * @return the FHIR Encounter Resource
 	 */
+	@Override
 	public Resource createResource() {
 
 		Encounter e = new Encounter();
