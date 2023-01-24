@@ -24,12 +24,23 @@ import org.hl7.fhir.r4.model.ServiceRequest;
 import ca.uhn.fhir.rest.client.exceptions.FhirClientConnectionException;
 import it.unisa.diem.dhsa.group3.resources.DiagnosticReportResource;
 
+/*
+ * The class is used to create MRI report files in a PDF format using the library pdfbox.
+ */
 public final class PDF {
 	
 	private static PDDocument doc = new PDDocument();
 	private static PDPage page = new PDPage();
 	private static PDPageContentStream content;
 	
+	/**
+	 * The method build a Map with MRI report fields as keys and the specific file content as values.
+	 * @param drr is the DiagnosticReportResource the report refers to.
+	 * @param imStudy is the ImagingStudy the report refers to.
+	 * @param p is the Patient examined.
+	 * @param serviceReq is the ServiceRequest the report refers to.
+	 * @return a Map<String, String> used to compile the report.
+	 */
 	public static Map<String, String> getDataFieds(DiagnosticReportResource drr, ImagingStudy imStudy, Patient p, ServiceRequest serviceReq) throws FhirClientConnectionException{
 		String encounter= drr.getEncounter();
 		Map<String,String> metaData = new HashMap<>();
