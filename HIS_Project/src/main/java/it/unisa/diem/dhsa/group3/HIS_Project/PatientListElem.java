@@ -10,6 +10,11 @@ import org.hl7.fhir.r4.model.Patient;
 
 import it.unisa.diem.dhsa.group3.enumerations.PIdentifier;
 
+/**
+ * 
+ * This class allow to store Patient informations used in the AdvancedSearch interface
+ *
+ */
 public class PatientListElem {
 
 	String firstName = "";
@@ -19,6 +24,10 @@ public class PatientListElem {
 	String SSN = "";
 	String id = "";
 
+	/**
+	 * Public Constructor that maps the fields from a FHIR Patient Resource
+	 * @param patient - FHIR Resource passed to the constructor
+	 */
 	public PatientListElem(Patient patient) {
 		
 		firstName = patient.getNameFirstRep().getGivenAsSingleString();

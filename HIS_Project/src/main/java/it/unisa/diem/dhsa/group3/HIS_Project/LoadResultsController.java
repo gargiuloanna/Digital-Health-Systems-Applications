@@ -78,7 +78,10 @@ public class LoadResultsController extends BasicController{
     
     private File chosen = new File ("");
     
-	@Override
+	/**
+	 * Initializes the controller for the LoadResuld interface.
+	 */
+    @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		progressBar.setVisible(false);
 		
@@ -94,13 +97,20 @@ public class LoadResultsController extends BasicController{
     	
 	}
 	
-	@FXML
+	/**
+	 * Switches from the LoadResuld interface to the MRI one.
+	 */
+    @FXML
 	@Override
 	void SwitchToOpeningPage(ActionEvent event) throws IOException {
 		App.setRoot("MRI");
 	}
 	
-	@FXML
+	/**
+	 * Creates the PDF report of the exam
+	 * @param event
+	 */
+    @FXML
     void confirmAction(ActionEvent event) {
 		if(emptyFields()) {
     		Alert alert = new Alert(AlertType.ERROR, "Fill the fields",ButtonType.OK);
@@ -110,6 +120,10 @@ public class LoadResultsController extends BasicController{
 		}
     }
 
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void loadAction(ActionEvent event) {
     	FileChooser f = new FileChooser();
@@ -139,7 +153,10 @@ public class LoadResultsController extends BasicController{
 		pr.waitFor();
     }
 	
-	private void uploadReport() {
+	/**
+	 * 
+	 */
+    private void uploadReport() {
     	//define report
     	DiagnosticReportResource r = new DiagnosticReportResource();
     	
@@ -166,61 +183,70 @@ public class LoadResultsController extends BasicController{
     	upload(r, i);
     	}
     	
-
-private void upload(DiagnosticReportResource r, ImagingStudyResource i) {
-	ImagingStudy s = (ImagingStudy) i.createResource();
-	//check id
-	System.out.println("IMAGING RESOURCE ID      " +  i.getId() + " ASSEGNATO A DIAGNOSTIC REPORT");
-	System.out.println("IMAGING STUDY IDENTIFIER " +  s.getIdentifierFirstRep().getValue());
+	/**
+	 * Uploads on the server the ImagingStudy resource.
+	 * @param r - DiagnosticReportResource
+	 * @param i - ImagingStudyResource
+	 */
+	private void upload(DiagnosticReportResource r, ImagingStudyResource i) {
+		ImagingStudy s = (ImagingStudy) i.createResource();
+		//check id
+		System.out.println("IMAGING RESOURCE ID      " +  i.getId() + " ASSEGNATO A DIAGNOSTIC REPORT");
+		System.out.println("IMAGING STUDY IDENTIFIER " +  s.getIdentifierFirstRep().getValue());
+		
+		Service<String> upload = new Service<String>() {
 	
-	Service<String> upload = new Service<String>() {
-
-		@Override
-		protected Task<String> createTask() throws FhirClientConnectionException {
-			
-			return new Task<String>() {
-
-				@Override
-				protected String call() throws FhirClientConnectionException {
-					return ServerInteraction.uploadResource(s.getIdentifierFirstRep().getValue(), s, true);
-
+			@Override
+			protected Task<String> createTask() throws FhirClientConnectionException {
+				
+				return new Task<String>() {
+	
+					@Override
+					protected String call() throws FhirClientConnectionException {
+						return ServerInteraction.uploadResource(s.getIdentifierFirstRep().getValue(), s, true);
+	
+					};
 				};
-			};
-		}
-	};
-
-	upload.start();
-	upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-		@Override
-		public void handle(WorkerStateEvent event) {
-			String id = upload.getValue();
-			Alert alert = new Alert(AlertType.NONE, "Study with id:" +id +" updated correctly.",ButtonType.OK);
-			alert.showAndWait();
-			progressBar.setVisible(false);
-	    	if(r != null) {
-	    	progressBar.setVisible(true);
-	    	uploadDiagnosticReport(r, s);
-	    	}
-		}
-	});
-	
-	upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
-		@Override
-		public void handle(WorkerStateEvent event) {
-			if (upload.getException() != null
-					&& upload.getException().getClass() == FhirClientConnectionException.class) {
-				Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
-						ButtonType.OK);
-				alert.showAndWait();
 			}
-
-		}
-	});	
+		};
 	
-}
+		upload.start();
+		upload.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 	
+			@Override
+			public void handle(WorkerStateEvent event) {
+				String id = upload.getValue();
+				Alert alert = new Alert(AlertType.NONE, "Study with id:" +id +" updated correctly.",ButtonType.OK);
+				alert.showAndWait();
+				progressBar.setVisible(false);
+		    	if(r != null) {
+		    	progressBar.setVisible(true);
+		    	uploadDiagnosticReport(r, s);
+		    	}
+			}
+		});
+		
+		upload.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				if (upload.getException() != null
+						&& upload.getException().getClass() == FhirClientConnectionException.class) {
+					Alert alert = new Alert(AlertType.ERROR, "Error in the connection to the server.\nPlease retry.",
+							ButtonType.OK);
+					alert.showAndWait();
+				}
 	
+			}
+		});	
+		
+	}
+	
+	/**
+	 * Uploads diagnostic report on the server.
+	 * It displays Alert boxes if the PDF report is created or not.
+	 * @param r - DiagnosticReportResource
+	 * @param i - ImagingStudy
+	 */
 	private void uploadDiagnosticReport(DiagnosticReportResource r, ImagingStudy i){
 		DiagnosticReport s = (DiagnosticReport) r.createResource();
 		System.out.println("DIAGNOSTIC IMAGING IDENTIFIER " +  s.getImagingStudyFirstRep().getIdentifier().getValue());
@@ -285,7 +311,9 @@ private void upload(DiagnosticReportResource r, ImagingStudyResource i) {
 		
 	}	
 	
-	
+	/**
+	 * @return True all fields are filled, Otherwise False. 
+	 */
 	private boolean emptyFields() {
 		if (bodycodeField.getText().isBlank() || bodycodeField.getText().isEmpty() ||
  	   bodydesField.getText().isBlank() || bodydesField.getText().isEmpty() ||
@@ -296,4 +324,4 @@ private void upload(DiagnosticReportResource r, ImagingStudyResource i) {
 			return true;
 		return false;
 	}
-	}
+}

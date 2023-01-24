@@ -11,22 +11,39 @@ import javafx.fxml.FXML;
 public class OpeningPageController {
 
     
-    @FXML
+	/**
+	 * Switches from the opening page of the application to PatientAdmission interface.
+	 * @throws IOException
+	 */
+	@FXML
     private void patient_admission_btn()throws IOException{
     	App.setRoot("PatientAdmission");
     }
     
-    @FXML
+    
+	/**
+	 * Switches from the opening page of the application to OrderRegistration interface.
+	 * @throws IOException
+	 */
+	@FXML
     private void order_registration_btn ()throws IOException{
     	App.setRoot("OrderRegistration");
     }
     
-    @FXML
+	/**
+	 * Switches from the opening page of the application to MRI interface.
+	 * @throws IOException
+	 */
+	@FXML
     private void mri_btn()throws IOException{
     	App.setRoot("MRI");
     } 
-    
-    @FXML
+	
+	/**
+	 * Switches from the opening page of the application to ImportCSV interface.
+	 * @throws IOException
+	 */
+	@FXML
     private void import_csv_btn()throws IOException{
     	App.setRoot("ImportCSVs");
     }

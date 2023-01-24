@@ -67,6 +67,9 @@ public class MRIController extends BasicController {
 	private ObservableList<ServiceRequestResource> orderslist;
 	static ObservableList<ServiceRequestResource> selectedlist = FXCollections.observableArrayList();
 
+	/**
+	 * Initializes the controller of the MRI interface 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		progressBar.setVisible(true);
@@ -87,6 +90,10 @@ public class MRIController extends BasicController {
 				});
 	}
 
+	/**
+	 * Filters the service requests of the orders list showing the ones that are after the selected date
+	 * @param event
+	 */
 	@FXML
 	void FilterPressed(ActionEvent event) {
 		if (dateField.getValue() == null) {
@@ -101,6 +108,10 @@ public class MRIController extends BasicController {
 
 	}
 
+	/**
+	 * Filters the service requests of the orders list showing the ones that refer to the given patient
+	 * @param event
+	 */
 	@FXML
 	void searchPressed(ActionEvent event) {
 		if (searchField.getText().isEmpty() || searchField.getText().isBlank()) {
@@ -114,6 +125,12 @@ public class MRIController extends BasicController {
 		}
 	}
 
+	/**
+	 * Shows the PDF report associated with the selected service request.
+	 * It displays an information box specifying if the file is loaded.
+	 * It displays an alert box if the file non found or the order is not selected.
+	 * @param event
+	 */
 	@FXML
 	void viewPressed(ActionEvent event) {
 		try {
@@ -130,6 +147,12 @@ public class MRIController extends BasicController {
 		}
 	}
 
+	/**
+	 * Switches to the LoadResult interface to insert the details of MRI.
+	 * It displays an alert box if the order is not selected.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	void loadPressed(ActionEvent event) throws IOException {
 		if (MRIController.selectedlist.size() == 0) {
@@ -140,15 +163,19 @@ public class MRIController extends BasicController {
 		}
 	}
 	
-	   @FXML
-	    void viewAll(ActionEvent event) {
-		   
-		   getAll();
-	    }
+   
+	/**@FXML
+	 * Loads from the server all the service requests and shows them in the orders list.
+	 * @param event
+	 */
+    void viewAll(ActionEvent event) {
+	   
+	   getAll();
+    }
 
 	/* --- Private Service Methods --- */
 	
-	 private void getPatientStudies() { 
+	private void getPatientStudies() { 
 		 ObservableList<ServiceRequestResource> tmp = FXCollections.observableArrayList();
 		 for (ServiceRequestResource r : orderslist) {
 			 if(r.getSubject_id().equalsIgnoreCase(searchField.getText()))
@@ -157,6 +184,7 @@ public class MRIController extends BasicController {
 		 orderslist.clear();
 		 orderslist.addAll(tmp);
 	 }
+	
 	 
 
 	private void getOccurrence(DateTimeType date) {
@@ -213,11 +241,13 @@ public class MRIController extends BasicController {
 		});
 	}
 
+	
 	private void handle(ActionEvent event, String fxml) throws IOException {
 		App.setRoot("LoadResults");
 
 	}
 
+	
 	private void getAll() {
 		Service<List<ServiceRequest>> getResource = new Service<List<ServiceRequest>>() {
 

@@ -8,11 +8,19 @@ import javax.imageio.ImageIO;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * This class allow to assign a Icon to the application
+ *
+ */
 public final class Icon {
 
 	private Image icon, icon16, icon32, icon48, icon64, icon96, icon100;
 	private BufferedImage image;
 
+	/**
+	 * Public Constructor
+	 */
 	public Icon() {
 		icon = new Image(this.getClass().getResourceAsStream("icons/icons8-medical-doctor-100.png"));
 		icon16 = new Image(this.getClass().getResourceAsStream("icons/icons8-medical-doctor-16.png"));
@@ -29,12 +37,20 @@ public final class Icon {
 		}
 	}
 
+	/**
+	 * Manages the IOS MAC integration to display the Icon
+	 * @param stage
+	 */
 	public void macIntegration(Stage stage) {
 		Taskbar taskbar = Taskbar.getTaskbar();
 		taskbar.setIconImage(image);
 
 	}
 	
+	/**
+	 * Adds the icon to the application
+	 * @param stage
+	 */
 	public void addIcons(Stage stage) {
 		stage.getIcons().add(icon);
 		stage.getIcons().add(icon16);

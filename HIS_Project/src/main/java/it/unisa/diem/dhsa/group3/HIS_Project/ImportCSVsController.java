@@ -86,6 +86,10 @@ public class ImportCSVsController extends BasicController {
 	@FXML
 	private ImageView progressFilter;
 	
+	/**
+	 * Initializes the controller taking into account the dependencies of the data
+	 * it disables the fields that depends from others and add binding mechanism
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		progressFilter.setVisible(false);
@@ -129,6 +133,12 @@ public class ImportCSVsController extends BasicController {
 
 	}
 
+	
+	/**
+	 * Checks that all the dependencies are respected,
+	 * then imports all the data and uploads them on the server
+	 * @param event
+	 */
 	@FXML
 	void send_clicked(ActionEvent event) {
 		progressFilter.setVisible(true);
@@ -138,7 +148,7 @@ public class ImportCSVsController extends BasicController {
 		boolean providerOK = false;
 		boolean encounterOK = false;
 
-		// check that dependecies are ok before importing all
+		// check that dependencies are ok before importing all
 		if (!patientOK && !payerOK && !organizationOK) {
 			clearAll();
 			return;
@@ -166,6 +176,16 @@ public class ImportCSVsController extends BasicController {
 
 	}
 
+
+	/**
+	 * _____________________Private Methods_________________________
+	 */
+	
+	/**
+	 * Allow the user to choose the file associated to the resource
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	private void load_csv_btn(ActionEvent event) throws IOException {
 
@@ -212,6 +232,9 @@ public class ImportCSVsController extends BasicController {
 			
 	}
 
+	/**
+	 * Clears all text fields of the interface
+	 */
 	private void clearAll() {
 		allergyField.clear();
 		careplansField.clear();
@@ -236,6 +259,9 @@ public class ImportCSVsController extends BasicController {
 		return text.getText();
 	}
 	
+	/**
+	 * Upload all the resources on the server specifying if the user want to update them
+	 */
 	private void upload() {
     	
 				

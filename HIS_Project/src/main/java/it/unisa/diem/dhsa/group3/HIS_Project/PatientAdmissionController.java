@@ -150,7 +150,7 @@ public class PatientAdmissionController extends BasicController {
 	private ImageView progressBar;
 
 	/**
-	 *Initializes the controller so that the fields display the correct information.
+	 * Initializes the controller so that the fields display the correct information.
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -608,7 +608,7 @@ public class PatientAdmissionController extends BasicController {
 
 	/**
 	 * Gets the appropriate representation for the gender of the patient.
-	 * @return the code associated with the gender selected
+	 * @return the code associated with the gender selected.
 	 */
 	private String gender() {
 		if (MgenderButton.isSelected())

@@ -90,11 +90,18 @@ public class OrderRegistrationController extends BasicController{
 
     }
     
+    /**
+	 *Initializes the controller.
+	 */
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	progressBar.setVisible(false);
 	}
 
+    /**
+     * Set the code of the request
+     * @param event
+     */
     @FXML
     void requestSelected(ActionEvent event) {
     	MenuItem e = (MenuItem) event.getSource();
@@ -102,25 +109,41 @@ public class OrderRegistrationController extends BasicController{
     }
 
 
+    /**
+     * Set the category of the request
+     * @param event
+     */
     @FXML
     void categorySelected(ActionEvent event) {
     	MenuItem e = (MenuItem) event.getSource();
 		category.setText(e.getText());
     }
 
+    /**
+     * Set the intent of the request
+     * @param event
+     */
     @FXML
     void intentSelected(ActionEvent event) {
     	MenuItem e = (MenuItem) event.getSource();
 		intent.setText(e.getText());
     }
 
+    /**
+     * Set the status of the request
+     * @param event
+     */
     @FXML
     void statusSelected(ActionEvent event) {
     	MenuItem e = (MenuItem) event.getSource();
 		status.setText(e.getText());
     }
 
-    
+    /**
+     * Checks if the date of the request is setted and if it is after today 
+     * and search the patient on the server through the getPatient method
+     * @param event
+     */
     @FXML
     void sendOrderPressed(ActionEvent event) {
     	Boolean checkDate = datepicker.getValue().isBefore(LocalDate.now());
@@ -129,18 +152,23 @@ public class OrderRegistrationController extends BasicController{
 			alert.showAndWait();
     	}
     	else {
-    	if(checkDate) {
-    		Alert alert = new Alert(AlertType.ERROR, "Select a valid date",ButtonType.OK);
-    		alert.showAndWait();
-    	}else {
-    		progressBar.setVisible(true);
-    		getPatient();
-    	}
+	    	if(checkDate) {
+	    		Alert alert = new Alert(AlertType.ERROR, "Select a valid date",ButtonType.OK);
+	    		alert.showAndWait();
+	    	}else {
+	    		progressBar.setVisible(true);
+	    		getPatient();
+	    	}
     	}
     	
     }
     
-    
+    /**
+     * Create a service request taken the data fields from the interface
+     * @param p - FHIR Patient Resource to which the request refers to
+     * @return a ServiceRequestResource Object
+     * @throws FhirClientConnectionException
+     */
     private ServiceRequestResource create(Patient p) throws FhirClientConnectionException{
     	ServiceRequestResource r = new ServiceRequestResource(IDField.getText(), status.getText().toLowerCase(), intent.getText().toLowerCase(), request.getText(), 
     			p.getIdentifierFirstRep().getValue(), encounterField.getText(), category.getText(), 
@@ -149,6 +177,10 @@ public class OrderRegistrationController extends BasicController{
  
     }
 
+    /**
+     * Upload a FHIR ServiceRequest Resource on the server
+     * @param r - ServiceRequestResource to upload
+     */
     private void upload(ServiceRequestResource r) {
     	
     	ServiceRequest rr = (ServiceRequest) r.createResource();
@@ -211,7 +243,10 @@ public class OrderRegistrationController extends BasicController{
 		
     }
     
-    
+    /**
+     * Check if all the fields are filled or not
+     * @return True if all fields are filled, otherwise False
+     */
     private boolean emptyFields() {
     	if(IDField.getText().isBlank() || IDField.getText().isEmpty() ||
     	   status.getText().isBlank() || status.getText().isEmpty() ||
@@ -229,6 +264,11 @@ public class OrderRegistrationController extends BasicController{
     return false;
     }
     
+    /**
+     * Search a Patient on the server using the getResource method of ServiceInteraction Class
+     * if the search is successful, it loads the service request on the server through upload method
+     * Otherwise, it displays alert box if an error occurs(patient not found or connection aborted)
+     */
     private void getPatient() {
 
 		Service<Resource> getResource = new Service<Resource>() {
