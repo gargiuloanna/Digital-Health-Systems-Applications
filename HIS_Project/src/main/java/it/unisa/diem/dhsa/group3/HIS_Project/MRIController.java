@@ -163,10 +163,11 @@ public class MRIController extends BasicController {
 	}
 	
    
-	/**@FXML
+	/**
 	 * Loads from the server all the service requests and shows them in the orders list.
 	 * @param event
 	 */
+	@FXML
     void viewAll(ActionEvent event) {
 	   
 	   getAll();
